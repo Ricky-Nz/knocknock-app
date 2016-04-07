@@ -1,47 +1,35 @@
 import React from 'react';
-import Relay from 'react-relay';
 import ReactDOM from 'react-dom';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
+import reducers from './reducers';
 
-import { IndexRoute, Route } from 'react-router';
-import { RelayRouter } from 'react-router-relay';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-// import useScroll from 'scroll-behavior/lib/useStandardScroll';
-
-import RootQueries from './queries/RootQueries';
-import { HomePage } from './components/home';
-import { ProjectPage } from './components/project';
-import { Dashboard, DashboardConfigTab, DashboardProjectTab } from './components/dashboard';
-
-Relay.injectNetworkLayer(
-	new Relay.DefaultNetworkLayer('/api/graphql')
+const store = createStore(
+	combineReducers({
+		...reducers,
+		routing: routerReducer
+	}),
+	applyMiddleware(thunk, createLogger())
 );
 
-class Root extends React.Component {
-	render() {
-		return (
-			<div>
-				{this.props.children}
-			</div>
-		);
-	}
-}
+const history = syncHistoryWithStore(hashHistory, store);
+
+const Application = ({children}) => (
+	<div>
+		TESTssss
+	</div>
+);
 
 ReactDOM.render(
-	<RelayRouter history={createBrowserHistory()}>
-		<Route path='/' component={Root}>
-			<IndexRoute component={HomePage} queries={RootQueries}
-				queryParams={['filter']}/>
-			<Route path='project/:id' component={ProjectPage}
-				queries={RootQueries}/>
-			<Route path='console' component={Dashboard}>)}/>
-				<Route path='project' component={DashboardProjectTab}
-					queries={RootQueries}/>
-				<Route path='project/:id' component={DashboardProjectTab}
-					queries={RootQueries}/>
-				<Route path='configure' component={DashboardConfigTab}
-					queries={RootQueries}/>
+	<Provider store={store}>
+		<Router history={history}>
+			<Route path='/' component={Application}>
 			</Route>
-		</Route>
-	</RelayRouter>,
+		</Router>
+	</Provider>,
 	document.getElementById('root')
 );
