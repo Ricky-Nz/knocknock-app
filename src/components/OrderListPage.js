@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 import OrderListContainer from '../containers/OrderListContainer';
+import AddressListContainer from '../containers/AddressListContainer';
 
 class OrderListPage extends Component {
 	constructor(props) {
@@ -14,7 +15,7 @@ class OrderListPage extends Component {
 	render() {
 		return (
 			<div className='fillHeight' style={styles.container}>
-				
+				<AddressListContainer/>
 		    <FloatingActionButton style={styles.floatBtn} onTouchTap={this.onNewOrder}>
 		      <ContentAdd/>
 		    </FloatingActionButton>

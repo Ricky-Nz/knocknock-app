@@ -1,15 +1,15 @@
 import React, { Proptypes } from 'react';
 import ListItem from 'material-ui/lib/lists/list-item';
+import IconLocationCity from 'material-ui/lib/svg-icons/social/location-city';
+import IconCall from 'material-ui/lib/svg-icons/communication/call';
 
-let AddressListItem = ({name, address}) => (
-  <ListItem primaryText={name}
+let AddressListItem = ({name, address, unitNumber, contactNo, postalCode}) => (
+  <ListItem primaryText={<span>{name} ({contactNo})</span>}
     secondaryText={
       <p>
-        <span>{address}</span> --
-        I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
+        <span>{address}, {unitNumber}, {postalCode}</span>
       </p>
-    }
-    secondaryTextLines={2}/>
+    } secondaryTextLines={2}/>
 );
 
 export default AddressListItem;

@@ -5,7 +5,7 @@ import AddressListItem from './AddressListItem';
 
 class AddressList extends Component {
 	componentDidMount() {
-		this.props.loadOrders();
+		this.props.loadUserAddresses();
 	}
 	render() {
 		const { loading, addresses } = this.props;

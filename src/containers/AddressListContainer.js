@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getUserAddresses } from '../actions';
-import OrderList from '../components/OrderList';
+import AddressList from '../components/AddressList';
 
 const loadingStateSelector = state => state.appState.loadingAddresses;
 
@@ -19,4 +19,4 @@ const mapActionToProps = (dispatch) => ({
 	}
 });
 
-export default connect(mapStateToProps, mapActionToProps)(OrderList);
+export default connect(mapStateToProps, mapActionToProps)(AddressList);
