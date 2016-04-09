@@ -2,8 +2,8 @@ var path = require('path');
 
 module.exports = {
 	entry: [
-		'webpack-dev-server/client?http://localhost:8080',
-		'./src/app.js'
+		'webpack-dev-server/client?http://0.0.0.0:8080',
+		'./src/index.js'
 	],
 	output: {
 		publicPath: '/',
@@ -25,7 +25,7 @@ module.exports = {
 	devtool: 'source-map',
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),
-		host: 'localhost',
+		host: '0.0.0.0',
 		port: 8080,
 		historyApiFallback: true
 	}
