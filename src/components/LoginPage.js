@@ -53,7 +53,7 @@ class LoginPage extends Component {
 		const { username, password } = this.state;
 
 		return (
-			<div className='row'>
+			<div className='row fillHeight page'>
 				<div className='col-xs-10 col-xs-offset-1'>
 					<TextField fullWidth={true} value={username} disabled={loggingin}
 						floatingLabelText='User name' onChange={this.onUsernameChange}/>
