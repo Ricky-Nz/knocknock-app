@@ -42,7 +42,10 @@ class DashboardPage extends Component {
 		      <Menu value={selectMenu} onItemTouchTap={this.onMenuSelect}>
 		        <MenuItem primaryText='Orders' leftIcon={<PersonAdd/>} value='orders'/>
 		        <Divider />
-		        <MenuItem primaryText='Address' leftIcon={<PersonAdd/>} value='addressed'/>
+		        <MenuItem primaryText='Address' leftIcon={<PersonAdd/>} value='addresses'/>
+		        <MenuItem primaryText='Pricing' leftIcon={<PersonAdd/>} value='pricing'/>
+		        <MenuItem primaryText='Wallet' leftIcon={<PersonAdd/>} value='wallet'/>
+		        <MenuItem primaryText='Profile' leftIcon={<PersonAdd/>} value='profile'/>
 		      </Menu>
 		    </LeftNav>
 		    {this.props.children}

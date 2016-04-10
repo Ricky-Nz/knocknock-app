@@ -10,7 +10,7 @@ export function editAddress({addressId, address, postalCode, contactNo, unitNumb
 			dispatch,
 			actionName: ACTION_EDIT_ADDRESS,
 			method: 'PUT',
-			path: `user_addresses\${addressId}`,
+			path: `user_addresses/${addressId}`,
 			headers: {
 				'Authorization': `${appState.tokenType} ${appState.token}`
 			},

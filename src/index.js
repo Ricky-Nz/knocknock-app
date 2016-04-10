@@ -43,7 +43,7 @@ ReactDOM.render(
 				<Route path='dashboard' component={DashboardPage}>
 					<IndexRoute component={OrderListPage}/>
 					<Route path='orders' component={OrderListPage}/>
-					<Route path='addressed' component={AddressListPage}/>
+					<Route path='addresses' component={AddressListPage}/>
 				</Route>
 				<Route path='neworder' component={CreateOrderPage}/>
 				<Route path='address' component={AddressEditPageContainer}/>
