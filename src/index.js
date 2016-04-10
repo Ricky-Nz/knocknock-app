@@ -13,7 +13,9 @@ import LoginPageContainer from './containers/LoginPageContainer';
 import RegisterPageContainer from './containers/RegisterPageContainer';
 import DashboardPage from './components/DashboardPage';
 import OrderListPage from './components/OrderListPage';
+import AddressListPage from './components/AddressListPage';
 import CreateOrderPage from './components/CreateOrderPage';
+import AddressEditPageContainer from './containers/AddressEditPageContainer';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -41,8 +43,11 @@ ReactDOM.render(
 				<Route path='dashboard' component={DashboardPage}>
 					<IndexRoute component={OrderListPage}/>
 					<Route path='orders' component={OrderListPage}/>
+					<Route path='addressed' component={AddressListPage}/>
 				</Route>
 				<Route path='neworder' component={CreateOrderPage}/>
+				<Route path='address' component={AddressEditPageContainer}/>
+				<Route path='address/:addressId' component={AddressEditPageContainer}/>
 			</Route>
 		</Router>
 	</Provider>,

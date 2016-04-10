@@ -1,6 +1,7 @@
 export * from './login';
 export * from './register';
-export * from './getAccountInfo';
+export * from './createAddress';
+export * from './editAddress';
 export * from './getUserAddresses';
 export * from './getOrders';
 export * from './getProducts';
@@ -8,3 +9,8 @@ export * from './getDistricts';
 export * from './searchPlace';
 export * from './createOrder';
 export * from './localActions';
+export * from './getUserProfile';
+export * from './editUserProfile';
+export * from './editAvatar';
+export * from './resetPassword';
+export * from './getVouchers';

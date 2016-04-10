@@ -8,13 +8,13 @@ class AddressList extends Component {
 		this.props.loadUserAddresses();
 	}
 	render() {
-		const { loading, addresses } = this.props;
+		const { loading, addresses, onEditAddress } = this.props;
 		
 		return (
 			<List className='fillHeight' style={styles.container}>
 				{loading?<CircularProgress size={0.8}/>:
 					(addresses&&addresses.map((address, index) => (
-						<AddressListItem key={index} {...address}/>
+						<AddressListItem key={index} {...address} onEditAddress={onEditAddress}/>
 					)))
 				}
 			</List>
@@ -25,11 +25,13 @@ class AddressList extends Component {
 AddressList.propTypes = {
 	loading: PropTypes.bool,
 	addresses: PropTypes.array,
-	loadUserAddresses: PropTypes.func.isRequired
+	loadUserAddresses: PropTypes.func.isRequired,
+	onEditAddress: PropTypes.func.isRequired
 };
 
 const styles = {
 	container: {
+		paddingTop: '0px',
 		overflow: 'auto'
 	}
 };

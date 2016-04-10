@@ -24,7 +24,7 @@ class MessageToast extends Component {
 }
 
 MessageToast.propTypes = {
-	error: PropTypes.string
+	error: PropTypes.object
 };
 
 export default MessageToast;

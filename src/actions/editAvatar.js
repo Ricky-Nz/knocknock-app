@@ -1,19 +1,20 @@
 import runAction from './runAction';
 
-export const ACTION_GET_ACCOUNT_INFO = 'ACTION_GET_ACCOUNT_INFO';
+export const ACTION_EDIT_AVATAR = 'ACTION_EDIT_AVATAR';
 
-export function getAccountInfo(argument) {
+export function editAvatar(file) {
 	return (dispatch, getState) => {
 		const { appState } = getState();
 
 		runAction({
 			dispatch,
-			actionName: ACTION_GET_ACCOUNT_INFO,
-			method: 'GET',
-			path: 'users/me',
+			actionName: ACTION_EDIT_AVATAR,
+			method: 'POST',
+			path: `users/me/photo`,
 			headers: {
 				'Authorization': `${appState.tokenType} ${appState.token}`
-			}
+			},
+			body: file
 		});
 	};
 }
