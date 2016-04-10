@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import AddressListContainer from '../containers/AddressListContainer';
+import ProductGridContainer from '../containers/ProductGridContainer';
 
 class ProductPage extends Component {
 	constructor(props) {
@@ -13,11 +11,8 @@ class ProductPage extends Component {
 	}
 	render() {
 		return (
-			<div className='fillHeight page' style={styles.container}>
-				<AddressListContainer onEditAddress={this.onEditAddress}/>
-		    <FloatingActionButton style={styles.floatBtn} onClick={this.onEditAddress}>
-		      <ContentAdd/>
-		    </FloatingActionButton>
+			<div className='fillHeight page'>
+				<ProductGridContainer/>
 			</div>
 		);
 	}
@@ -28,14 +23,7 @@ ProductPage.contextTypes = {
 };
 
 const styles = {
-	container: {
-		position: 'relative'
-	},
-	floatBtn: {
-		position: 'absolute',
-		right: 25,
-		bottom: 85
-	}
+
 };
 
 export default ProductPage;

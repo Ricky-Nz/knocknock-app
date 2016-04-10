@@ -16,6 +16,7 @@ import OrderListPage from './components/OrderListPage';
 import AddressListPage from './components/AddressListPage';
 import CreateOrderPage from './components/CreateOrderPage';
 import AddressEditPageContainer from './containers/AddressEditPageContainer';
+import ProductPage from './components/ProductPage';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -44,6 +45,7 @@ ReactDOM.render(
 					<IndexRoute component={OrderListPage}/>
 					<Route path='orders' component={OrderListPage}/>
 					<Route path='addresses' component={AddressListPage}/>
+					<Route path='pricing' component={ProductPage}/>
 				</Route>
 				<Route path='neworder' component={CreateOrderPage}/>
 				<Route path='address' component={AddressEditPageContainer}/>
