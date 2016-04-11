@@ -2,20 +2,34 @@ import React, { Component, PropTypes } from 'react';
 import List from 'material-ui/lib/lists/list';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import AddressListItem from './AddressListItem';
+import IconButton from 'material-ui/lib/icon-button';
+import IconModeEdit from 'material-ui/lib/svg-icons/editor/mode-edit';
+import IconCheckBox from 'material-ui/lib/svg-icons/toggle/check-box';
+import IconCheckBoxEmpty from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
 
 class AddressList extends Component {
 	componentDidMount() {
-		this.props.loadUserAddresses();
+		!this.props.addresses&&this.props.loadUserAddresses();
 	}
 	render() {
-		const { loading, addresses, onEditAddress } = this.props;
+		const { selectable, selectItem, loading, addresses, onItemClicked } = this.props;
 		
 		return (
-			<List className='fillHeight' style={styles.container}>
+			<List style={styles.container}>
 				{loading?<CircularProgress size={0.8}/>:
-					(addresses&&addresses.map((address, index) => (
-						<AddressListItem key={index} {...address} onEditAddress={onEditAddress}/>
-					)))
+					(addresses&&addresses.map((address, index) => {
+						let rightIcon;
+						if (selectable) {
+							rightIcon = (selectItem&&(selectItem.id===address.id))?<IconCheckBox/>:<IconCheckBoxEmpty/>;
+						} else {
+							rightIcon = <IconModeEdit/>;
+						}
+
+						return (
+							<AddressListItem key={index} {...address} onClick={() => onItemClicked(address)}
+								rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
+						)
+					}))
 				}
 			</List>
 		);
@@ -23,10 +37,16 @@ class AddressList extends Component {
 }
 
 AddressList.propTypes = {
+	selectable: PropTypes.bool,
+	selectItem: PropTypes.object,
 	loading: PropTypes.bool,
 	addresses: PropTypes.array,
 	loadUserAddresses: PropTypes.func.isRequired,
-	onEditAddress: PropTypes.func.isRequired
+	onItemClicked: PropTypes.func.isRequired
+};
+
+AddressList.defaultProps = {
+	selectIndex: -1
 };
 
 const styles = {

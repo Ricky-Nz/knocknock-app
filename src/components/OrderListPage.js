@@ -15,7 +15,7 @@ class OrderListPage extends Component {
 		return (
 			<div className='fillHeight' style={styles.container}>
 				<OrderListContainer/>
-		    <FloatingActionButton style={styles.floatBtn} onTouchTap={this.onNewOrder}>
+		    <FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
 		      <ContentAdd/>
 		    </FloatingActionButton>
 			</div>

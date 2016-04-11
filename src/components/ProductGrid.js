@@ -5,17 +5,21 @@ import ProductGridItem from './ProductGridItem';
 
 class ProductGrid extends Component {
 	componentDidMount() {
-		this.props.loadProducts();
+		!this.props.products&&this.props.loadProducts();
 	}
 	render() {
-		const { loading, products } = this.props;
+		let { loading, products, filterCategoryId } = this.props;
+
+		if (filterCategoryId&&products) {
+			products = products.filter(product => product.subCategoryId === filterCategoryId);
+		}
 		
 		return (
-	    <GridList cellHeight={200} style={styles.gridList}>
+	    <GridList className='fillHeight' style={styles.gridList}>
 	    	{loading?<CircularProgress size={0.8}/>:
-	      	products.map((product, index) => (
+	      	(products&&products.map((product, index) => (
 	        	<ProductGridItem key={index} {...product}/>
-	      	))
+	      	)))
 	      }
 	    </GridList>
 		);
@@ -25,16 +29,15 @@ class ProductGrid extends Component {
 ProductGrid.propTypes = {
 	loading: PropTypes.bool,
 	products: PropTypes.array,
+	filterCategoryId: PropTypes.any,
 	loadProducts: PropTypes.func.isRequired
 };
 
 const styles = {
   gridList: {
-    width: 500,
-    height: 400,
     overflowY: 'auto',
-    marginBottom: 24,
-  },
+    padding: '0px 8px'
+  }
 };
 
 export default ProductGrid;

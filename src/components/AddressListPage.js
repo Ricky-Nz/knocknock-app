@@ -8,13 +8,13 @@ class AddressListPage extends Component {
 		super(props);
 		this.onEditAddress = this.onEditAddress.bind(this);
 	}
-	onEditAddress(event, addressId) {
-		this.context.router.push(addressId?`address/${addressId}`:'address');
+	onEditAddress(address) {
+		this.context.router.push(address.id?`address/${address.id}`:'address');
 	}
 	render() {
 		return (
 			<div className='fillHeight page' style={styles.container}>
-				<AddressListContainer onEditAddress={this.onEditAddress}/>
+				<AddressListContainer onItemClicked={this.onEditAddress}/>
 		    <FloatingActionButton style={styles.floatBtn} onClick={this.onEditAddress}>
 		      <ContentAdd/>
 		    </FloatingActionButton>

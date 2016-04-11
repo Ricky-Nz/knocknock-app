@@ -1,6 +1,6 @@
 import { ACTION_GET_DISTRICTS } from '../actions';
 
-export default function (districts = [], {type, running, error, data}) {
+export default function (districts = null, {type, running, error, data}) {
 	switch(type) {
 		case ACTION_GET_DISTRICTS:
 			if (!running && !error && data) {

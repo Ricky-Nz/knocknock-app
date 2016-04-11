@@ -1,10 +1,10 @@
-import { ACTION_GET_USER_INFO, ACTION_EDIT_USER_INFO,
+import { ACTION_GET_USER_PROFILE, ACTION_EDIT_USER_PROFILE,
 	ACTION_EDIT_AVATAR } from '../actions';
 
 export default function (user = null, {type, running, error, data}) {
 	switch(type) {
-		case ACTION_GET_USER_INFO:
-		case ACTION_EDIT_USER_INFO:
+		case ACTION_GET_USER_PROFILE:
+		case ACTION_EDIT_USER_PROFILE:
 			if (!running && !error && data && data.status && data.result) {
 				const result = data.result;
 				return {

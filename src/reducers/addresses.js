@@ -1,7 +1,7 @@
 import { ACTION_GET_USER_ADDRESSES, ACTION_CREATE_ADDRESS,
 	ACTION_EDIT_ADDRESS } from '../actions';
 
-export default function (addresses = [], {type, running, error, data}) {
+export default function (addresses = null, {type, running, error, data}) {
 	switch(type) {
 		case ACTION_GET_USER_ADDRESSES:
 			if (!running && !error && data) {

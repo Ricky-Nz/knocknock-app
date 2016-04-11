@@ -45,11 +45,10 @@ export default function (appState = {tokenType: "Bearer", token: "cfec7eb1dde92d
 		case ACTION_EDIT_AVATAR:
 			return statusProcess(appState, 'changingAvatar', action);
 		case ACTION_GET_USER_PROFILE:
-			return statusProcess(appState, 'loadingUserProfile', action);
 		case ACTION_EDIT_USER_PROFILE:
 			return statusProcess(appState, 'changingUserProfile', action);
 		case ACTION_CREATE_ORDER:
-			return statusProcess(appState, 'changingOrder', action);
+			return statusProcess(appState, 'creatingOrder', action);
 		default:
 			return appState;
 	}

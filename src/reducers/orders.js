@@ -1,6 +1,6 @@
 import { ACTION_GET_ORDERS, ACTION_CREATE_ORDER } from '../actions';
 
-export default function (orders = [], {type, running, error, data}) {
+export default function (orders = null, {type, running, error, data}) {
 	switch(type) {
 		// case ACTION_CREATE_ORDER:
 		// 	if (!running && !error && data) {

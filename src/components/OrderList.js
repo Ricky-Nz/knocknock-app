@@ -5,7 +5,7 @@ import OrderListItem from './OrderListItem';
 
 class OrderList extends Component {
 	componentDidMount() {
-		this.props.loadOrders();
+		!this.props.orders&&this.props.loadOrders();
 	}
 	render() {
 		const { loading, orders } = this.props;

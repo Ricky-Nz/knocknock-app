@@ -13,9 +13,11 @@ import LoginPageContainer from './containers/LoginPageContainer';
 import RegisterPageContainer from './containers/RegisterPageContainer';
 import DashboardPage from './components/DashboardPage';
 import OrderListPage from './components/OrderListPage';
+import OrderCreatePageContainer from './containers/OrderCreatePageContainer';
 import AddressListPage from './components/AddressListPage';
-import CreateOrderPage from './components/CreateOrderPage';
 import AddressEditPageContainer from './containers/AddressEditPageContainer';
+import ProfilePageContainer from './containers/ProfilePageContainer';
+import WalletPageContainer from './containers/WalletPageContainer';
 import ProductPage from './components/ProductPage';
 
 // Needed for onTouchTap
@@ -46,8 +48,10 @@ ReactDOM.render(
 					<Route path='orders' component={OrderListPage}/>
 					<Route path='addresses' component={AddressListPage}/>
 					<Route path='pricing' component={ProductPage}/>
+					<Route path='profile' component={ProfilePageContainer}/>
+					<Route path='wallet' component={WalletPageContainer}/>
 				</Route>
-				<Route path='neworder' component={CreateOrderPage}/>
+				<Route path='neworder' component={OrderCreatePageContainer}/>
 				<Route path='address' component={AddressEditPageContainer}/>
 				<Route path='address/:addressId' component={AddressEditPageContainer}/>
 			</Route>

@@ -1,6 +1,6 @@
 import { ACTION_GET_PRODUCTS } from '../actions';
 
-export default function (products = [], {type, running, error, data}) {
+export default function (products = null, {type, running, error, data}) {
 	switch(type) {
 		case ACTION_GET_PRODUCTS:
 			if (!running && !error && data) {
@@ -21,24 +21,7 @@ export default function (products = [], {type, running, error, data}) {
 					imageUrl: item.image_url,
 					createdOn: item.created_on,
 					disabled: item.disabled,
-					itemOrder: item.item_order,
-					subCategory: item.sub_category&&{
-						id: item.sub_category.id,
-						categoryId: item.sub_category.category_id,
-						nameEn: item.sub_category.name_en,
-						nameCn: item.sub_category.name_ch,
-						itemsCount: item.sub_category.items_count,
-						createdOn: item.sub_category.created_on,
-						imageUrl: item.sub_category.image_url,
-						itemOrder: item.sub_category.item_order,
-						category: {
-							id: item.sub_category.category.id,
-							nameEn: item.sub_category.category.name_en,
-							nameCn: item.sub_category.category.name_ch,
-							subCategoriesCount: item.sub_category.category.sub_categories_count,
-							createdOn: item.sub_category.category.created_on
-						}
-					}
+					itemOrder: item.item_order
 				}));
 			} else {
 				return products;

@@ -1,18 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import ProductGridContainer from '../containers/ProductGridContainer';
+import CategorySelectorContainer from '../containers/CategorySelectorContainer';
 
 class ProductPage extends Component {
 	constructor(props) {
 		super(props);
-		this.onEditAddress = this.onEditAddress.bind(this);
+		this.state = { selectCategory: null };
+		this.onSelectCategory = this.onSelectCategory.bind(this);
 	}
-	onEditAddress(event, addressId) {
-		this.context.router.push(addressId?`address/${addressId}`:'address');
+	onSelectCategory(categoryId) {
+		this.setState({selectCategory: categoryId});
 	}
 	render() {
 		return (
 			<div className='fillHeight page'>
-				<ProductGridContainer/>
+				<CategorySelectorContainer selectedKey={this.state.selectCategory}
+					onSelectItem={this.onSelectCategory}/>
+				<ProductGridContainer filterCategoryId={this.state.selectCategory}/>
 			</div>
 		);
 	}
