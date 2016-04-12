@@ -45,7 +45,8 @@ ReactDOM.render(
 				<Route path='register' component={RegisterPageContainer}/>
 				<Route path='dashboard' component={DashboardPage}>
 					<IndexRoute component={OrderManagePageContainer}/>
-					<Route path='orders' component={OrderManagePageContainer}/>
+					<Route path='activeorders' component={OrderManagePageContainer}/>
+					<Route path='historyorders' component={OrderManagePageContainer}/>
 					<Route path='addresses' component={AddressManagePageContainer}/>
 					<Route path='pricing' component={ProductPage}/>
 					<Route path='profile' component={ProfilePageContainer}/>

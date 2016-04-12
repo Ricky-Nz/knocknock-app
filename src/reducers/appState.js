@@ -2,7 +2,8 @@ import { ACTION_LOGIN, ACTION_GET_USER_ADDRESSES,
 	ACTION_GET_DISTRICTS, ACTION_GET_PRODUCTS, ACTION_GET_ORDERS, ACTION_REGISTER,
 	ACTION_TOAST_MESSAGE, ACTION_CREATE_ADDRESS, ACTION_EDIT_ADDRESS,
 	ACTION_GET_VOUCHERS, ACTION_RESET_PASSWORD, ACTION_GET_USER_PROFILE,
-	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR } from '../actions';
+	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR,
+	ACTION_CHANGE_ORDER_SORT } from '../actions';
 
 function statusProcess(state, statusKey, {running, error, data}, successToast, convertData) {
 	if (running) {
@@ -15,7 +16,8 @@ function statusProcess(state, statusKey, {running, error, data}, successToast, c
 	}
 }
 
-export default function (appState = {tokenType: "Bearer", token: "cfec7eb1dde92dcbdcd894ec3b92af94ca45bea1b7a8370b743c1e7a56c010cf"}, action) {
+export default function (appState = {tokenType: "Bearer", orderSortType: 'pickupDate',
+	token: "cfec7eb1dde92dcbdcd894ec3b92af94ca45bea1b7a8370b743c1e7a56c010cf"}, action) {
 	switch(action.type) {
 		case ACTION_TOAST_MESSAGE:
 			return {...appState, error: {message: action.message}};
@@ -44,12 +46,14 @@ export default function (appState = {tokenType: "Bearer", token: "cfec7eb1dde92d
 		case ACTION_EDIT_ADDRESS:
 			return statusProcess(appState, 'changingAddress', action, true);
 		case ACTION_EDIT_AVATAR:
-			return statusProcess(appState, 'changingAvatar', action);
+			return statusProcess(appState, 'changingAvatar', action, true);
 		case ACTION_GET_USER_PROFILE:
 		case ACTION_EDIT_USER_PROFILE:
-			return statusProcess(appState, 'changingUserProfile', action);
+			return statusProcess(appState, 'changingUserProfile', action, true);
 		case ACTION_CREATE_ORDER:
-			return statusProcess(appState, 'creatingOrder', action);
+			return statusProcess(appState, 'creatingOrder', action, true);
+		case ACTION_CHANGE_ORDER_SORT:
+			return {...appState, orderSortType: action.data};
 		default:
 			return appState;
 	}

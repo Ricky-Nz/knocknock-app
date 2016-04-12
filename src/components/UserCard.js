@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import Avatar from 'material-ui/lib/avatar';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import ListItem from 'material-ui/lib/lists/list-item';
+import IconAccountCircle from 'material-ui/lib/svg-icons/action/account-circle';
+import { deepOrange500 } from 'material-ui/lib/styles/colors';
 
 class UserCard extends Component {
 	componentDidMount() {
 		!this.props.user&&this.props.loadUser();
 	}
 	render() {
-		const { loading, user } = this.props;
+		const { loading, user, onClick } = this.props;
 
 		if (loading) {
 			return (
@@ -19,8 +22,13 @@ class UserCard extends Component {
 			return (
 				<div className='flex flex-column flex-center' style={styles.container}>
 					<Avatar style={styles.avatar} src={user&&user.avatarMd} size={90}/>
-					{(user&&(user.firstName||user.lastName))&&<p style={styles.text}>{user.firstName} {user.lastName}</p>}
-					<p style={styles.text}>{user&&(user.email||user.contact)}</p>
+				  <ListItem rightIcon={<IconAccountCircle color='white'/>} onClick={onClick}
+				  	primaryText={
+				  		(user&&(user.firstName||user.lastName))&&<p style={styles.text}>{user.firstName} {user.lastName}</p>
+				  	}
+				    secondaryText={
+				    	<p style={styles.text}>{user&&(user.email||user.contact)}</p>
+				    } secondaryTextLines={2}/>
 				</div>
 			);
 		}
@@ -35,15 +43,14 @@ UserCard.propTypes = {
 
 const styles = {
 	container: {
-		backgroundColor: '#FF5722',
-		padding: '16px'
+		backgroundColor: deepOrange500
 	},
 	avatar: {
-		marginBottom: '8px'
+		margin: '16 16 8 16'
 	},
 	text: {
 		color: 'white',
-		fontSize: '1.2em'
+		fontSize: '1.1em'
 	}
 };
 

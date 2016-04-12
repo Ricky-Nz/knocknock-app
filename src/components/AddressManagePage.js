@@ -22,13 +22,13 @@ class AddressManagePage extends Component {
 	}
 	render() {
 		return (
-			<div className='fillHeight page'>
+			<div className='flex flex-fill page'>
 				<AppBar title='Manage Address'
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
 					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				<div className='fillHeight' style={styles.container}>
-					<AddressListContainer onItemClicked={this.onCreateOrEditAddress}/>
+				<div className='flex flex-fill' style={styles.listContainer}>
+					<AddressListContainer/>
 			    <FloatingActionButton style={styles.floatBtn} onClick={this.onCreateOrEditAddress}>
 			      <ContentAdd/>
 			    </FloatingActionButton>
@@ -49,13 +49,13 @@ AddressManagePage.propTypes = {
 };
 
 const styles = {
-	container: {
+	listContainer: {
 		position: 'relative'
 	},
 	floatBtn: {
 		position: 'absolute',
 		right: 25,
-		bottom: 85
+		bottom: 25
 	}
 };
 

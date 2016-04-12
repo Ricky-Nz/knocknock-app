@@ -5,8 +5,9 @@ import IconRefresh from 'material-ui/lib/svg-icons/navigation/refresh';
 import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import OrderListContainer from '../containers/OrderListContainer';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import OrderListContainer from '../containers/OrderListContainer';
+import OrderDateSelectorContainer from '../containers/OrderDateSelectorContainer';
 
 class OrderManagePage extends Component {
 	constructor(props) {
@@ -22,13 +23,14 @@ class OrderManagePage extends Component {
 	}
 	render() {
 		return (
-			<div className='fillHeight page'>
-				<AppBar title='My Orders'
+			<div className='flex flex-fill page'>
+				<AppBar title={this.props.historyOrder?'History Orders':'Active Orders'}
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
 					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				<div style={styles.container}>
-					<OrderListContainer/>
+				<OrderDateSelectorContainer/>
+				<div className='flex flex-fill' style={styles.container}>
+					<OrderListContainer historyOrder={this.props.historyOrder}/>
 			    <FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
 			      <ContentAdd/>
 			    </FloatingActionButton>
@@ -43,6 +45,7 @@ OrderManagePage.contextTypes = {
 };
 
 OrderManagePage.propTypes = {
+	historyOrder: PropTypes.bool,
 	loading: PropTypes.bool,
 	loadOrders: PropTypes.func.isRequired,
 	onDrawerClick: PropTypes.func.isRequired
@@ -55,7 +58,7 @@ const styles = {
 	floatBtn: {
 		position: 'absolute',
 		right: 25,
-		bottom: 85
+		bottom: 25
 	}
 };
 

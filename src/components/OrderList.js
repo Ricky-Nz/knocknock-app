@@ -8,13 +8,13 @@ class OrderList extends Component {
 		!this.props.orders&&this.props.loadOrders();
 	}
 	render() {
-		const { loading, orders } = this.props;
+		const { loading, orderSortType, orders } = this.props;
 		
 		return (
 			<List className='fillHeight' style={styles.container}>
 				{(loading&&!orders)?<LoadingProgress/>:
 					(orders&&orders.map((order, index) => (
-						<OrderListItem key={index} {...order}/>
+						<OrderListItem key={index} orderSortType={orderSortType} {...order}/>
 					)))
 				}
 			</List>
@@ -25,13 +25,13 @@ class OrderList extends Component {
 OrderList.propTypes = {
 	loading: PropTypes.bool,
 	orders: PropTypes.array,
+	orderSortType: PropTypes.string.isRequired,
 	loadOrders: PropTypes.func.isRequired
 };
 
 const styles = {
 	container: {
 		paddingTop: '0px',
-		paddingBottom: '150px',
 		overflow: 'auto'
 	}
 };

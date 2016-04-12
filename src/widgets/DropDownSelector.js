@@ -8,21 +8,18 @@ class DropDownSelector extends Component {
 		this.onSelectField = this.onSelectField.bind(this);
 	}
 	onSelectField(event, index, value) {
-		this.props.onSelectItem(value==='ALL'?null:value);
+		this.props.onSelectItem(value);
 	}
 	render() {
 		const { selectedKey, items, itemKeyName, itemPrimaryName, itemSecondaryName } = this.props;
 
-		let options = [
-			<MenuItem key={-1} value='ALL' primaryText='All 所有分类'/>
-		];
-		items&&items.forEach((item, index) =>
-			options.push(<MenuItem key={index} value={item[itemKeyName]}
-      	primaryText={`${item[itemPrimaryName]} ${item[itemSecondaryName]}`}/>));
-
 		return (
-      <DropDownMenu value={selectedKey||'ALL'} onChange={this.onSelectField}>
-      	{options}
+      <DropDownMenu value={selectedKey} onChange={this.onSelectField}>
+      	{items&&
+      		items.map((item, index) =>
+						<MenuItem key={index} value={item[itemKeyName]}
+      				primaryText={`${item[itemPrimaryName]} ${item[itemSecondaryName]}`}/>)
+				}
       </DropDownMenu>
 		);
 	}
@@ -33,7 +30,7 @@ DropDownSelector.propTypes = {
 	itemKeyName: PropTypes.string.isRequired,
 	itemPrimaryName: PropTypes.string.isRequired,
 	itemSecondaryName: PropTypes.string.isRequired,
-	selectedKey: PropTypes.any,
+	selectedKey: PropTypes.any.isRequired,
 	onSelectItem: PropTypes.func.isRequired
 };
 

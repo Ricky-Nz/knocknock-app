@@ -4,7 +4,11 @@ import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Subheader from 'material-ui/lib/Subheader';
 import Divider from 'material-ui/lib/divider';
-import PersonAdd from 'material-ui/lib/svg-icons/social/person-add';
+import IconHistory from 'material-ui/lib/svg-icons/action/history';
+import IconLocalShipping from 'material-ui/lib/svg-icons/maps/local-shipping';
+import IconPlace from 'material-ui/lib/svg-icons/maps/place';
+import IconMoney from 'material-ui/lib/svg-icons/editor/attach-money';
+import IconWallet from 'material-ui/lib/svg-icons/action/account-balance-wallet';
 import UserCardContainer from '../containers/UserCardContainer';
 
 class DashboardPage extends Component {
@@ -16,6 +20,7 @@ class DashboardPage extends Component {
 		};
 		this.onToggleDrawer = this.onToggleDrawer.bind(this);
 		this.onMenuSelect = this.onMenuSelect.bind(this);
+		this.onSelectUser = this.onSelectUser.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.location.pathname !== this.props.location.pathname) {
@@ -27,8 +32,10 @@ class DashboardPage extends Component {
 			case '/dashboard/addresses': return 'addresses';
 			case '/dashboard/pricing': return 'pricing';
 			case '/dashboard/wallet': return 'wallet';
-			case '/dashboard/profile': return 'profile';
-			default: return 'orders';
+			case '/dashboard':
+			case '/dashboard/activeorders': return 'activeorders';
+			case '/dashboard/historyorders': return 'historyorders';
+			default: return null;
 		}
 	}
 	onToggleDrawer() {
@@ -41,24 +48,31 @@ class DashboardPage extends Component {
 
 		this.setState({navOpen: false});
 	}
+	onSelectUser() {
+		if ('profile' !== this.state.selectMenu) {
+			this.context.router.replace(`dashboard/profile`);
+		}
+
+		this.setState({navOpen: false});
+	}
 	render() {
 		const { navOpen, selectMenu } = this.state;
 
 		return (
-			<div className='fillHeight' style={styles.container}>
+			<div className='flex flex-fill' style={styles.container}>
 		    <LeftNav docked={false} open={navOpen}
 		    	onRequestChange={this.onToggleDrawer}>
-		    	<UserCardContainer/>
+		    	<UserCardContainer onClick={this.onSelectUser}/>
 		      <Menu value={selectMenu} onItemTouchTap={this.onMenuSelect}>
-		        <MenuItem primaryText='Orders' leftIcon={<PersonAdd/>} value='orders'/>
-		        <Divider />
-		        <MenuItem primaryText='Address' leftIcon={<PersonAdd/>} value='addresses'/>
-		        <MenuItem primaryText='Pricing' leftIcon={<PersonAdd/>} value='pricing'/>
-		        <MenuItem primaryText='Wallet' leftIcon={<PersonAdd/>} value='wallet'/>
-		        <MenuItem primaryText='Profile' leftIcon={<PersonAdd/>} value='profile'/>
+		        <MenuItem primaryText='Active order' leftIcon={<IconLocalShipping/>} value='activeorders'/>
+		        <MenuItem primaryText='History order' leftIcon={<IconHistory/>} value='historyorders'/>
+		        <MenuItem primaryText='Address' leftIcon={<IconPlace/>} value='addresses'/>
+		        <MenuItem primaryText='Pricing' leftIcon={<IconMoney/>} value='pricing'/>
+		        <MenuItem primaryText='Wallet' leftIcon={<IconWallet/>} value='wallet'/>
 		      </Menu>
 		    </LeftNav>
-		    {React.cloneElement(this.props.children, {onDrawerClick: this.onToggleDrawer})}
+		    {React.cloneElement(this.props.children,
+		    	{onDrawerClick: this.onToggleDrawer, historyOrder: selectMenu==='historyorders'})}
 			</div>
 		);
 	}

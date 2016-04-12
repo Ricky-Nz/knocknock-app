@@ -3,9 +3,10 @@ import user from './user';
 import districts from './districts';
 import products from './products';
 import categories from './categories';
-import orders from './orders';
 import addresses from './addresses';
 import place from './place';
+import activeOrders from './activeOrders';
+import historyOrders from './historyOrders';
 
 export default {
 	appState,
@@ -13,7 +14,8 @@ export default {
 	districts,
 	products,
 	categories,
-	orders,
 	addresses,
+	activeOrders,
+	historyOrders,
 	place
 };

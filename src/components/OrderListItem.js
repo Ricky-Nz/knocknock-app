@@ -1,21 +1,33 @@
-import React, { Proptypes } from 'react';
+import React, { PropTypes } from 'react';
 import Paper from 'material-ui/lib/paper';
 import ListItem from 'material-ui/lib/lists/list-item';
+import Subheader from 'material-ui/lib/Subheader';
 import { TimeDisplay } from '../widgets';
 
-let OrderListItem = ({pickupAddress, pickupDate, dropOffAddress,
-	dropOffDate, totalPrice, orderStatus}) => (
+function convertTypeDisplay(orderSortType) {
+	switch(orderSortType) {
+		case 'pickupDate': return 'Pickup date';
+		case 'dropOffDate': return 'Drop off date';
+		case 'createdOn': return 'Create date';
+	}
+}
+
+let OrderListItem = ({orderSortType, pickupAddress, totalPrice, orderStatus, ...props}) => (
 	<Paper style={styles.container} zDepth={1}>
-	  <ListItem primaryText={`${orderStatus.status} (Total Price: S${totalPrice})`}
+	  <ListItem primaryText={<p>{convertTypeDisplay(orderSortType)}: <TimeDisplay>{props[orderSortType]}</TimeDisplay></p>}
 	    secondaryText={
 	    	<div>
-	      	<p>Pickup Time: <TimeDisplay>{pickupDate}</TimeDisplay></p>
+	      	<p>{`${orderStatus.status} (Total Price: S${totalPrice})`}</p>
 	      	<p>Pickup Address: {pickupAddress}</p>
 	      </div>
 	    }
 	    secondaryTextLines={2}/>
   </Paper>
 );
+
+OrderListItem.propTypes = {
+	orderSortType: PropTypes.string.isRequired
+};
 
 const styles = {
 	container: {

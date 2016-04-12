@@ -9,7 +9,7 @@ import ProductSearchMenu from '../containers/ProductSearchMenu';
 class ProductPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { selectCategory: null };
+		this.state = { selectCategory: 'ALL' };
 		this.onSelectCategory = this.onSelectCategory.bind(this);
 	}
 	onSelectCategory(categoryId) {

@@ -132,50 +132,37 @@ class CreateOrderPage extends Component {
     const { address, note, pickupDate, pickupTime, dropOffDate, dropOffTime } = this.state;
 
 		return (
-			<div className='fillHeight page'>
+			<div className='fillHeight page' style={styles.page}>
 			  <AppBar title='Create Order'
 			    iconElementLeft={<IconButton onClick={this.onClosePage}><ArrowBack/></IconButton>}/>
-        <Stepper horizontal={true} activeStep={this.state.activeStep}
-          onStepHeaderTouch={creating?null:this.onSelectStep}
-          updateCompletedStatus={this.updateCompletedSteps}
-          createIcon={this.onCreateIcon}>
-          <Step orderStepLabel='1' stepLabel='Select Address'
-            actions={[
-              <RaisedButton key={0} label='Continue'
-                primary={true} onClick={this.onContinue}/>
-            ]}>
-            <AddressListContainer selectable={true} selectItem={address}
-              onItemClicked={this.onSelectAddress}/>
-          </Step>
+        <div className='fillHeight' style={styles.relativeContainer}>
+          <Stepper containerStyle={styles.fill} horizontal={true} activeStep={this.state.activeStep}
+            onStepHeaderTouch={creating?null:this.onSelectStep}
+            updateCompletedStatus={this.updateCompletedSteps}
+            createIcon={this.onCreateIcon}>
 
-          <Step orderStepLabel='2' stepLabel='Select Date'
-            actions={[
-              <FlatButton key={0} label='Back' onClick={this.onBack}/>,
-              <RaisedButton key={1} label='Continue'
-                primary={true} onClick={this.onContinue}/>
-            ]}>
-            <div style={styles.stepContainer}>
-              <Subheader>Pickup date:</Subheader>
-              <DatePicker hintText='Date: please select (optional)' value={pickupDate}
-                formatDate={this.onSelectDate} onChange={this.onPickupDateChange}/>
-              <TimePicker format='24hr' hintText='Time: please select' value={pickupTime}
-                onChange={this.onPickupTimeChange}/>
-              <Subheader>Drop off date:</Subheader>
-              <DatePicker hintText='Date: please select (optional)' value={dropOffDate}
-                formatDate={this.onSelectDate} onChange={this.onDropOffDateChange}/>
-              <TimePicker format='24hr' hintText='Time: please select' value={dropOffTime}
-                onChange={this.onDropOffTimeChange}/>
-            </div>
-          </Step>
+            <Step orderStepLabel='1' stepLabel='Select Address'>
+              <AddressListContainer selectable={true} selectItem={address}
+                onItemClicked={this.onSelectAddress}/>
+            </Step>
 
-          <Step orderStepLabel='3' stepLabel='Preview & Submit'
-            actions={[
-              <FlatButton key={0} label='Back' onClick={this.onBack} disabled={creating}/>,
-              <RaisedButton key={1} label='Submit Order' disabled={creating}
-                primary={true} onClick={this.onContinue}/>
-            ]}>
-            <div style={styles.stepContainer}>
-              <Paper style={styles.stepContainer} zDepth={1}>
+            <Step orderStepLabel='2' stepLabel='Select Date'>
+              <div style={styles.stepContainer}>
+                <Subheader>Pickup date:</Subheader>
+                <DatePicker hintText='Date: please select (optional)' value={pickupDate}
+                  formatDate={this.onSelectDate} onChange={this.onPickupDateChange}/>
+                <TimePicker format='24hr' hintText='Time: please select' value={pickupTime}
+                  onChange={this.onPickupTimeChange}/>
+                <Subheader>Drop off date:</Subheader>
+                <DatePicker hintText='Date: please select (optional)' value={dropOffDate}
+                  formatDate={this.onSelectDate} onChange={this.onDropOffDateChange}/>
+                <TimePicker format='24hr' hintText='Time: please select' value={dropOffTime}
+                  onChange={this.onDropOffTimeChange}/>
+              </div>
+            </Step>
+
+            <Step orderStepLabel='3' stepLabel='Preview & Submit'>
+              <Paper style={styles.pagerContainer} zDepth={1}>
                 <Subheader>New Order Preview</Subheader>
                 <IconParagraph icon={<IconPlace/>}>
                   Address: {address&&address.address}
@@ -194,9 +181,15 @@ class CreateOrderPage extends Component {
                 <TextField fullWidth={true} value={note} hintText='note: any special requirement?'
                   onChange={this.onNoteChange}/>
               </Paper>
-            </div>
-          </Step>
-        </Stepper>	
+            </Step>
+
+          </Stepper>
+
+          <div className='flex flex-row flex-align-center' style={styles.bottombar}>
+            <FlatButton label='Back' onClick={this.onBack}/>,
+            <RaisedButton label='Continue' primary={true} onClick={this.onContinue}/>
+          </div>
+        </div>
 			</div>
 		);
 	}
@@ -213,7 +206,28 @@ CreateOrderPage.propTypes = {
 };
 
 const styles = {
+  page: {
+    overflow: 'hidden'
+  },
+  relativeContainer: {
+    position: 'relative'
+  },
   stepContainer: {
+    padding: '16px'
+  },
+  pagerContainer: {
+    padding: '16px',
+    margin: '16px'
+  },
+  fill: {
+    height: '100%',
+    overflow: 'auto'
+  },
+  bottombar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     padding: '16px'
   }
 };

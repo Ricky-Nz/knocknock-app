@@ -50,12 +50,16 @@ class ProfilePage extends Component {
 			this.props.uploadAvatar(this.state.seletFile);
 		}
 
-		this.props.updateUser({
-			email: this.state.email,
-			contactNo: this.state.contactNo,
-			firstName: this.state.firstName,
-			lastName: this.state.lastName
-		});
+		const { firstName, lastName } = this.props.user;
+		if (firstName !== this.state.firstName ||
+			lastName !== this.state.lastName) {
+			this.props.updateUser({
+				email: this.state.email,
+				contactNo: this.state.contactNo,
+				firstName: this.state.firstName,
+				lastName: this.state.lastName
+			});
+		}
 	}
 	onSelectFile(files) {
 		if (files&&files[0]) {
