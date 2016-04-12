@@ -14,7 +14,7 @@ import RegisterPageContainer from './containers/RegisterPageContainer';
 import DashboardPage from './components/DashboardPage';
 import OrderListPage from './components/OrderListPage';
 import OrderCreatePageContainer from './containers/OrderCreatePageContainer';
-import AddressListPage from './components/AddressListPage';
+import AddressManagePageContainer from './containers/AddressManagePageContainer';
 import AddressEditPageContainer from './containers/AddressEditPageContainer';
 import ProfilePageContainer from './containers/ProfilePageContainer';
 import WalletPageContainer from './containers/WalletPageContainer';
@@ -46,7 +46,7 @@ ReactDOM.render(
 				<Route path='dashboard' component={DashboardPage}>
 					<IndexRoute component={OrderListPage}/>
 					<Route path='orders' component={OrderListPage}/>
-					<Route path='addresses' component={AddressListPage}/>
+					<Route path='addresses' component={AddressManagePageContainer}/>
 					<Route path='pricing' component={ProductPage}/>
 					<Route path='profile' component={ProfilePageContainer}/>
 					<Route path='wallet' component={WalletPageContainer}/>

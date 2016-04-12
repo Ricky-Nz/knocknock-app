@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import GridList from 'material-ui/lib/grid-list/grid-list';
-import CircularProgress from 'material-ui/lib/circular-progress';
 import ProductGridItem from './ProductGridItem';
+import { LoadingProgress } from '../widgets';
 
 class ProductGrid extends Component {
 	componentDidMount() {
@@ -16,7 +16,7 @@ class ProductGrid extends Component {
 		
 		return (
 	    <GridList className='fillHeight' style={styles.gridList}>
-	    	{loading?<CircularProgress size={0.8}/>:
+	    	{loading?<LoadingProgress/>:
 	      	(products&&products.map((product, index) => (
 	        	<ProductGridItem key={index} {...product}/>
 	      	)))

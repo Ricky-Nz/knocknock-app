@@ -2,7 +2,7 @@ import runAction from './runAction';
 
 export const ACTION_EDIT_AVATAR = 'ACTION_EDIT_AVATAR';
 
-export function editAvatar(file) {
+export function editAvatar(fileContent) {
 	return (dispatch, getState) => {
 		const { appState } = getState();
 
@@ -14,7 +14,7 @@ export function editAvatar(file) {
 			headers: {
 				'Authorization': `${appState.tokenType} ${appState.token}`
 			},
-			body: file
+			body: fileContent
 		});
 	};
 }

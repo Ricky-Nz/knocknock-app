@@ -134,7 +134,7 @@ class CreateOrderPage extends Component {
 		return (
 			<div className='fillHeight page'>
 			  <AppBar title='Create Order'
-			    iconElementLeft={<IconButton onTouchTap={this.onClosePage}><ArrowBack/></IconButton>}/>
+			    iconElementLeft={<IconButton onClick={this.onClosePage}><ArrowBack/></IconButton>}/>
         <Stepper horizontal={true} activeStep={this.state.activeStep}
           onStepHeaderTouch={creating?null:this.onSelectStep}
           updateCompletedStatus={this.updateCompletedSteps}

@@ -79,7 +79,7 @@ class RegisterPage extends Component {
 		return (
 			<div className='row'>
 			  <AppBar title='User Register'
-			    iconElementLeft={<IconButton onTouchTap={this.onBack}><ArrowBack/></IconButton>}/>
+			    iconElementLeft={<IconButton onClick={this.onBack}><ArrowBack/></IconButton>}/>
 				<div className='col-xs-10 col-xs-offset-1'>
 					<TextField fullWidth={true} value={username} disabled={registering}
 						floatingLabelText='User name' onChange={this.onUsernameChange}/>
@@ -94,7 +94,7 @@ class RegisterPage extends Component {
 							label='Show password' onCheck={this.onShowPasswordChange}/>
 					</div>
 			    <RaisedButton style={styles.button} label='Submit' fullWidth={true} primary={true}
-						icon={<ActionHome/>} onTouchTap={this.onRegisterClicked} disabled={registering}/>
+						icon={<ActionHome/>} onClick={this.onRegisterClicked} disabled={registering}/>
 					<div className='flex flex-center flex-align-center' style={styles.progressContainer}>
 						{registering&&<CircularProgress size={0.8}/>}
 					</div>

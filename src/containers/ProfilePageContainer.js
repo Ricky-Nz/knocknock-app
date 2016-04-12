@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getUserProfile, editUerProfile } from '../actions';
+import { getUserProfile, editUserProfile, editAvatar } from '../actions';
 import ProfilePage from '../components/ProfilePage';
 
 const loadingStateSelector = state => state.appState.changingUserProfile;
@@ -18,7 +18,10 @@ const mapActionToProps = (dispatch) => ({
 		dispatch(getUserProfile());
 	},
 	updateUser: (args) => {
-		dispatch(editUerProfile(args));
+		dispatch(editUserProfile(args));
+	},
+	uploadAvatar: (content) => {
+		dispatch(editAvatar(content));
 	}
 });
 

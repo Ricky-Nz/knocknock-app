@@ -62,11 +62,11 @@ class LoginPage extends Component {
 					<div className='row'>
 						<div className='col-xs-6'>
 					    <RaisedButton label='Register' fullWidth={true}
-								icon={<ActionHome/>} onTouchTap={this.onRegisterClicked} disabled={loggingin}/>
+								icon={<ActionHome/>} onClick={this.onRegisterClicked} disabled={loggingin}/>
 						</div>
 						<div className='col-xs-6'>
 					    <RaisedButton label='Login' primary={true} fullWidth={true}
-								icon={<ActionHome/>} onTouchTap={this.onLoginClicked} disabled={loggingin}/>
+								icon={<ActionHome/>} onClick={this.onLoginClicked} disabled={loggingin}/>
 						</div>
 					</div>
 					<div className='flex flex-center flex-align-center' style={styles.progressContainer}>

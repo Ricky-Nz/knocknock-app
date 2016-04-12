@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import List from 'material-ui/lib/lists/list';
-import CircularProgress from 'material-ui/lib/circular-progress';
 import OrderListItem from './OrderListItem';
+import { LoadingProgress } from '../widgets';
 
 class OrderList extends Component {
 	componentDidMount() {
@@ -12,7 +12,7 @@ class OrderList extends Component {
 		
 		return (
 			<List className='fillHeight' style={styles.container}>
-				{loading?<CircularProgress size={0.8}/>:
+				{loading?<LoadingProgress/>:
 					(orders&&orders.map((order, index) => (
 						<OrderListItem key={index} {...order}/>
 					)))

@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import List from 'material-ui/lib/lists/list';
-import CircularProgress from 'material-ui/lib/circular-progress';
 import AddressListItem from './AddressListItem';
 import IconButton from 'material-ui/lib/icon-button';
 import IconModeEdit from 'material-ui/lib/svg-icons/editor/mode-edit';
 import IconCheckBox from 'material-ui/lib/svg-icons/toggle/check-box';
 import IconCheckBoxEmpty from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
+import { LoadingProgress } from '../widgets';
 
 class AddressList extends Component {
 	componentDidMount() {
@@ -16,7 +16,7 @@ class AddressList extends Component {
 		
 		return (
 			<List style={styles.container}>
-				{loading?<CircularProgress size={0.8}/>:
+				{(loading&&!addresses)?<LoadingProgress/>:
 					(addresses&&addresses.map((address, index) => {
 						let rightIcon;
 						if (selectable) {

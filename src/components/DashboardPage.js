@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
 import LeftNav from 'material-ui/lib/left-nav';
 import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -46,19 +43,8 @@ class DashboardPage extends Component {
 	render() {
 		const { navOpen, selectMenu } = this.state;
 
-		let title;
-		switch(selectMenu) {
-			case 'addresses': title = 'Manage Addresses'; break;
-			case 'pricing': title = 'Product Procing'; break;
-			case 'wallet': title = 'My Wallet'; break;
-			case 'profile': title = 'Profile'; break;
-			default: title = 'My Orders';
-		}
-
 		return (
 			<div className='fillHeight' style={styles.container}>
-				<AppBar style={styles.actonbar} title={title}
-					iconElementLeft={<IconButton onTouchTap={this.onToggleDrawer}><IconMenu/></IconButton>}/>
 		    <LeftNav docked={false} open={navOpen}
 		    	onRequestChange={this.onToggleDrawer}>
 		    	<Subheader>Menus</Subheader>
@@ -71,7 +57,7 @@ class DashboardPage extends Component {
 		        <MenuItem primaryText='Profile' leftIcon={<PersonAdd/>} value='profile'/>
 		      </Menu>
 		    </LeftNav>
-		    {this.props.children}
+		    {React.cloneElement(this.props.children, {onDrawerClick: this.onToggleDrawer})}
 			</div>
 		);
 	}
