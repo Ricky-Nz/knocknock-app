@@ -12,7 +12,7 @@ class OrderList extends Component {
 		
 		return (
 			<List className='fillHeight' style={styles.container}>
-				{loading?<LoadingProgress/>:
+				{(loading&&!orders)?<LoadingProgress/>:
 					(orders&&orders.map((order, index) => (
 						<OrderListItem key={index} {...order}/>
 					)))
@@ -30,6 +30,8 @@ OrderList.propTypes = {
 
 const styles = {
 	container: {
+		paddingTop: '0px',
+		paddingBottom: '150px',
 		overflow: 'auto'
 	}
 };

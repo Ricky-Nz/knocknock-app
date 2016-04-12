@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import MessageToast from '../components/MessageToast';
 
-const errorSelector = state => state.appState.error;
+const toastSelector = state => state.appState.toast;
 
 const mapStateToProps = createSelector(
-	errorSelector,
-	(error) => ({error})
+	toastSelector,
+	(toast) => ({toast})
 );
 
 export default connect(mapStateToProps)(MessageToast);

@@ -1,12 +1,12 @@
 import doFetch from './doFetch';
 
-export default function ({dispatch, actionName, method, host, path, headers, params, body}) {
+export default function ({dispatch, actionName, ...args}) {
 	dispatch({
 		type: actionName,
 		running: true
 	});
 
-	doFetch({method, host, path, headers, params, body})
+	doFetch(args)
 		.then(data => {
 			dispatch({
 				type: actionName,

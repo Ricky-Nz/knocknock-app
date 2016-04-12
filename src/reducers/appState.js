@@ -4,13 +4,14 @@ import { ACTION_LOGIN, ACTION_GET_USER_ADDRESSES,
 	ACTION_GET_VOUCHERS, ACTION_RESET_PASSWORD, ACTION_GET_USER_PROFILE,
 	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR } from '../actions';
 
-function statusProcess (state, statusKey, {running, error, data}, convertData) {
+function statusProcess(state, statusKey, {running, error, data}, successToast, convertData) {
 	if (running) {
 		return {...state, [statusKey]: true};
 	} else if (error) {
-		return {...state, [statusKey]: false, error};
+		return {...state, [statusKey]: false, toast: {message: error.message, success: false}};
 	} else {
-		return {...state, [statusKey]: false, ...convertData&&convertData(data)};
+		return {...state, [statusKey]: false, ...convertData&&convertData(data),
+			toast: successToast?{message: 'Success', success: true}:state.toast};
 	}
 }
 
@@ -19,7 +20,7 @@ export default function (appState = {tokenType: "Bearer", token: "cfec7eb1dde92d
 		case ACTION_TOAST_MESSAGE:
 			return {...appState, error: {message: action.message}};
 		case ACTION_LOGIN:
-			return statusProcess(appState, 'loggingin', action, data => ({
+			return statusProcess(appState, 'loggingin', action, false, data => ({
 				token: data.access_token,
 				tokenType: 'Bearer', //data.token_type,
 				refreshToken: data.refresh_token,
@@ -41,7 +42,7 @@ export default function (appState = {tokenType: "Bearer", token: "cfec7eb1dde92d
 			return statusProcess(appState, 'resetingPassword', action);
 		case ACTION_CREATE_ADDRESS:
 		case ACTION_EDIT_ADDRESS:
-			return statusProcess(appState, 'changingAddress', action);
+			return statusProcess(appState, 'changingAddress', action, true);
 		case ACTION_EDIT_AVATAR:
 			return statusProcess(appState, 'changingAvatar', action);
 		case ACTION_GET_USER_PROFILE:

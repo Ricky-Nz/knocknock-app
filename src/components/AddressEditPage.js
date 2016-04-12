@@ -4,6 +4,7 @@ import IconButton from 'material-ui/lib/icon-button';
 import IconArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
 import IconDone from 'material-ui/lib/svg-icons/action/done';
 import TextField from 'material-ui/lib/text-field';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 class AddressEditPage extends Component {
 	constructor(props) {
@@ -71,17 +72,18 @@ class AddressEditPage extends Component {
 		return (
 			<div className='fillHeight page'>
 			  <AppBar title={addressObject?'Edit Address':'New Address'}
-			  	iconElementRight={<IconButton onClick={this.onSumbit}><IconDone/></IconButton>}
+			  	iconElementRight={this.props.editing?<CircularProgress size={0.5} color='white'/>:
+			  		<IconButton onClick={this.onSumbit}><IconDone/></IconButton>}
 			    iconElementLeft={<IconButton onClick={this.onBack}><IconArrowBack/></IconButton>}/>
 				<div className='row'>
 					<div className='col-xs-10 col-xs-offset-1'>
-						<TextField fullWidth={true} value={address} disabled={editing}
+						<TextField fullWidth={true} value={address}
 								floatingLabelText='Address' onChange={this.onAddressChange}/>
-						<TextField fullWidth={true} value={unitNumber} disabled={editing}
+						<TextField fullWidth={true} value={unitNumber}
 								floatingLabelText='Unit Number' onChange={this.onUnitNumberChange}/>
-						<TextField fullWidth={true} value={postalCode} disabled={editing}
+						<TextField fullWidth={true} value={postalCode}
 								floatingLabelText='Postal Code' onChange={this.onPostalCodeChange}/>
-						<TextField fullWidth={true} value={contactNo} disabled={editing}
+						<TextField fullWidth={true} value={contactNo}
 								floatingLabelText='Contact Number' onChange={this.onContactNumberChange}/>
 					</div>
 				</div>

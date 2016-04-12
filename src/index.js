@@ -9,16 +9,16 @@ import createLogger from 'redux-logger';
 import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './components/App';
+import DashboardPage from './components/DashboardPage';
+import ProductPage from './components/ProductPage';
 import LoginPageContainer from './containers/LoginPageContainer';
 import RegisterPageContainer from './containers/RegisterPageContainer';
-import DashboardPage from './components/DashboardPage';
-import OrderListPage from './components/OrderListPage';
+import OrderManagePageContainer from './containers/OrderManagePageContainer';
 import OrderCreatePageContainer from './containers/OrderCreatePageContainer';
 import AddressManagePageContainer from './containers/AddressManagePageContainer';
 import AddressEditPageContainer from './containers/AddressEditPageContainer';
 import ProfilePageContainer from './containers/ProfilePageContainer';
 import WalletPageContainer from './containers/WalletPageContainer';
-import ProductPage from './components/ProductPage';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -44,8 +44,8 @@ ReactDOM.render(
 				<Route path='login' component={LoginPageContainer}/>
 				<Route path='register' component={RegisterPageContainer}/>
 				<Route path='dashboard' component={DashboardPage}>
-					<IndexRoute component={OrderListPage}/>
-					<Route path='orders' component={OrderListPage}/>
+					<IndexRoute component={OrderManagePageContainer}/>
+					<Route path='orders' component={OrderManagePageContainer}/>
 					<Route path='addresses' component={AddressManagePageContainer}/>
 					<Route path='pricing' component={ProductPage}/>
 					<Route path='profile' component={ProfilePageContainer}/>

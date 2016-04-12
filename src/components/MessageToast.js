@@ -4,28 +4,40 @@ import Snackbar from 'material-ui/lib/snackbar';
 class MessageToast extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { toast: false };
+		this.state = { show: false };
 		this.onDismiss = this.onDismiss.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.error !== this.props.error) {
-			this.setState({toast: true});
+		if (nextProps.toast !== this.props.toast) {
+			this.setState({show: true});
 		}
 	}
 	onDismiss() {
-		this.setState({toast: false});
+		this.setState({show: false});
 	}
 	render() {
+		const toast = this.props.toast;
+
 		return (
-      <Snackbar open={this.state.toast} message={this.props.error?this.props.error.message:''}
-        autoHideDuration={3000} onRequestClose={this.onDismiss}/>
+      <Snackbar style={(toast&&toast.success)?styles.success:styles.failed}
+      	open={toast?this.state.show:false} message={toast?toast.message:''}
+        autoHideDuration={2000} onRequestClose={this.onDismiss}/>
 		);
 	}
 }
 
 MessageToast.propTypes = {
-	error: PropTypes.object
+	toast: PropTypes.object
 };
+
+const styles = {
+	success: {
+		color: 'green'
+	},
+	failed: {
+		color: 'red'
+	}
+}
 
 export default MessageToast;
 

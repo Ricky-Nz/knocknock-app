@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import Subheader from 'material-ui/lib/Subheader';
 import Divider from 'material-ui/lib/divider';
 import PersonAdd from 'material-ui/lib/svg-icons/social/person-add';
+import UserCardContainer from '../containers/UserCardContainer';
 
 class DashboardPage extends Component {
 	constructor(props) {
@@ -47,7 +48,7 @@ class DashboardPage extends Component {
 			<div className='fillHeight' style={styles.container}>
 		    <LeftNav docked={false} open={navOpen}
 		    	onRequestChange={this.onToggleDrawer}>
-		    	<Subheader>Menus</Subheader>
+		    	<UserCardContainer/>
 		      <Menu value={selectMenu} onItemTouchTap={this.onMenuSelect}>
 		        <MenuItem primaryText='Orders' leftIcon={<PersonAdd/>} value='orders'/>
 		        <Divider />

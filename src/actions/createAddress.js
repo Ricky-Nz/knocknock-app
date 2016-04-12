@@ -4,9 +4,6 @@ export const ACTION_CREATE_ADDRESS = 'ACTION_CREATE_ADDRESS';
 
 export function createAddress({address, postalCode, contactNo, unitNumber}) {
 	return (dispatch, getState) => {
-		if ('sf' === 'ff') {
-
-		}
 		const { appState } = getState();
 
 		runAction({
@@ -17,13 +14,13 @@ export function createAddress({address, postalCode, contactNo, unitNumber}) {
 			headers: {
 				'Authorization': `${appState.tokenType} ${appState.token}`
 			},
-			body: {
+			form: {
 				address,
 				name: 'home',
-				contact_no: contactNo,
 				postal_code: postalCode,
 				unit_number: unitNumber,
-				apartment_type: 'commercial'
+				apartment_type: 'hdb',
+				note: ''
 			}
 		});
 	};

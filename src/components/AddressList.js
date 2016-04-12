@@ -15,7 +15,7 @@ class AddressList extends Component {
 		const { selectable, selectItem, loading, addresses, onItemClicked } = this.props;
 		
 		return (
-			<List style={styles.container}>
+			<List className='fillHeight' style={styles.container}>
 				{(loading&&!addresses)?<LoadingProgress/>:
 					(addresses&&addresses.map((address, index) => {
 						let rightIcon;
@@ -52,6 +52,7 @@ AddressList.defaultProps = {
 const styles = {
 	container: {
 		paddingTop: '0px',
+		paddingBottom: '150px',
 		overflow: 'auto'
 	}
 };
