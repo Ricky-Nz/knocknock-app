@@ -17,13 +17,25 @@ import Paper from 'material-ui/lib/paper';
 import IconPlace from 'material-ui/lib/svg-icons/maps/place';
 import IconLocalPhone from 'material-ui/lib/svg-icons/maps/local-phone';
 import IconAccessTime from 'material-ui/lib/svg-icons/device/access-time';
+import CircularProgress from 'material-ui/lib/circular-progress';
 import { TimeDisplay, IconParagraph } from '../widgets';
 import moment from 'moment';
 
 class CreateOrderPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {activeStep: 0, lastActiveStep: 0, note: ''};
+
+    const minDate = moment().add(1, 'days').toDate();
+    const maxDate = moment().add(15, 'days').toDate();
+
+		this.state = {
+      activeStep: 0,
+      lastActiveStep: 0,
+      note: '',
+      pickupDate: minDate,
+      minPickDate: minDate,
+      maxPickDate: maxDate
+    };
 		this.onClosePage = this.onClosePage.bind(this);
 		this.onSelectStep = this.onSelectStep.bind(this);
 		this.updateCompletedSteps = this.updateCompletedSteps.bind(this);
@@ -37,6 +49,11 @@ class CreateOrderPage extends Component {
     this.onDropOffTimeChange = this.onDropOffTimeChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
 	}
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.creating&&this.props.creating) {
+      
+    }
+  }
 	onClosePage() {
 		this.context.router.goBack();
 	}
@@ -86,10 +103,10 @@ class CreateOrderPage extends Component {
       const { address, pickupDate, pickupTime, dropOffDate, dropOffTime, note } = this.state;
       this.props.createOrder({
         description: note,
-        pickupPostalCode: address.postialCode,
+        pickupPostalCode: address.postalCode,
         pickupAddress: address.address,
-        expressOrder: true,
-        pickupDate
+        pickupApartmentType: address.type,
+        pickupDate: moment(pickupDate).format('YYYY-MM-DD HH:mm:ss')
       });
     } else {
       this.setState({
@@ -129,14 +146,16 @@ class CreateOrderPage extends Component {
   }
 	render() {
     const { creating } = this.props;
-    const { address, note, pickupDate, pickupTime, dropOffDate, dropOffTime } = this.state;
+    const { activeStep, minPickDate, maxPickDate, 
+      address, note, pickupDate, pickupTime, dropOffDate, dropOffTime } = this.state;
 
 		return (
-			<div className='fillHeight page' style={styles.page}>
+			<div className='flex flex-fill page' style={styles.page}>
 			  <AppBar title='Create Order'
-			    iconElementLeft={<IconButton onClick={this.onClosePage}><ArrowBack/></IconButton>}/>
-        <div className='fillHeight' style={styles.relativeContainer}>
-          <Stepper containerStyle={styles.fill} horizontal={true} activeStep={this.state.activeStep}
+			    iconElementLeft={<IconButton onClick={this.onClosePage}><ArrowBack/></IconButton>}
+          iconElementRight={creating?<CircularProgress size={0.5} color='white'/>:null}/>
+        <div className='flex flex-fill position-relative'>
+          <Stepper style={styles.flexFill} containerStyle={styles.flexFillScroll} horizontal={true} activeStep={this.state.activeStep}
             onStepHeaderTouch={creating?null:this.onSelectStep}
             updateCompletedStatus={this.updateCompletedSteps}
             createIcon={this.onCreateIcon}>
@@ -147,48 +166,55 @@ class CreateOrderPage extends Component {
             </Step>
 
             <Step orderStepLabel='2' stepLabel='Select Date'>
-              <div style={styles.stepContainer}>
+              <div className='padding'>
                 <Subheader>Pickup date:</Subheader>
-                <DatePicker hintText='Date: please select (optional)' value={pickupDate}
-                  formatDate={this.onSelectDate} onChange={this.onPickupDateChange}/>
-                <TimePicker format='24hr' hintText='Time: please select' value={pickupTime}
-                  onChange={this.onPickupTimeChange}/>
+                <div className='padding-horizontal'>
+                  <DatePicker hintText='Date: please select' value={pickupDate}
+                    disableYearSelection={true} defaultDate={minPickDate} minDate={minPickDate} maxDate={maxPickDate}
+                    formatDate={this.onSelectDate} onChange={this.onPickupDateChange}/>
+                  <TimePicker format='24hr' hintText='Time: please select' value={pickupTime}
+                    onChange={this.onPickupTimeChange}/>
+                </div>
                 <Subheader>Drop off date:</Subheader>
-                <DatePicker hintText='Date: please select (optional)' value={dropOffDate}
-                  formatDate={this.onSelectDate} onChange={this.onDropOffDateChange}/>
-                <TimePicker format='24hr' hintText='Time: please select' value={dropOffTime}
-                  onChange={this.onDropOffTimeChange}/>
+                <div className='padding-horizontal'>
+                  <DatePicker hintText='Date: please select (optional)' value={dropOffDate}
+                    disableYearSelection={true}
+                    formatDate={this.onSelectDate} onChange={this.onDropOffDateChange}/>
+                  <TimePicker format='24hr' hintText='Time: please select (optional)' value={dropOffTime}
+                    onChange={this.onDropOffTimeChange}/>
+                </div>
               </div>
             </Step>
 
             <Step orderStepLabel='3' stepLabel='Preview & Submit'>
-              <Paper style={styles.pagerContainer} zDepth={1}>
-                <Subheader>New Order Preview</Subheader>
+              <Paper className='padding margin' zDepth={1}>
+                <p className='font-lg padding-bottom'>New Order Preview</p>
                 <IconParagraph icon={<IconPlace/>}>
-                  Address: {address&&address.address}
+                  Address: {address&&(`${address.address}, ${address.unitNumber}, ${address.postalCode}`)}
                 </IconParagraph>
                 <IconParagraph icon={<IconLocalPhone/>}>
                   Contact: {address&&address.contactNo}
                 </IconParagraph>
                 <IconParagraph icon={<IconAccessTime/>}>
-                  Pickup Time: <TimeDisplay>{pickupTime}</TimeDisplay> <TimeDisplay format='MMMM Do YYYY'>{pickupDate}</TimeDisplay>
+                  Pickup time: <TimeDisplay format='LT'>{pickupTime}</TimeDisplay>, <TimeDisplay format='MMMM Do YYYY'>{pickupDate}</TimeDisplay>
                 </IconParagraph>
                 {dropOffDate&&
                   <IconParagraph icon={<IconAccessTime/>}>
-                    Pickup Time: {dropOffTime&&<TimeDisplay>{pickupTime}</TimeDisplay>} <TimeDisplay format='MMMM Do YYYY'>{dropOffDate}</TimeDisplay>
+                    Drop off time: {dropOffTime&&<TimeDisplay>{pickupTime}</TimeDisplay>} <TimeDisplay format='MMMM Do YYYY'>{dropOffDate}</TimeDisplay>
                   </IconParagraph>
                 }
-                <TextField fullWidth={true} value={note} hintText='note: any special requirement?'
-                  onChange={this.onNoteChange}/>
+                <TextField fullWidth={true} value={note} hintText='any special requirement?'
+                  floatingLabelText='Note' onChange={this.onNoteChange}/>
               </Paper>
             </Step>
 
           </Stepper>
 
-          <div className='flex flex-row flex-align-center' style={styles.bottombar}>
-            <FlatButton label='Back' onClick={this.onBack}/>,
-            <RaisedButton label='Continue' primary={true} onClick={this.onContinue}/>
-          </div>
+          <Paper className='flex flex-row flex-space-between flex-align-center' style={styles.bottombar} zDepth={1}>
+            {(activeStep > 0)?<FlatButton label='Back' onClick={this.onBack} disabled={creating}/>:' '}
+            <RaisedButton label={activeStep===2?'Submit New Order':'Continue'}
+              primary={true} onClick={this.onContinue} disabled={creating}/>
+          </Paper>
         </div>
 			</div>
 		);
@@ -200,7 +226,7 @@ CreateOrderPage.contextTypes = {
 };
 
 CreateOrderPage.propTypes = {
-  creating: PropTypes.func.isRequired,
+  creating: PropTypes.bool,
   createOrder: PropTypes.func.isRequired,
   toast: PropTypes.func.isRequired
 };
@@ -209,18 +235,15 @@ const styles = {
   page: {
     overflow: 'hidden'
   },
-  relativeContainer: {
-    position: 'relative'
+  flexFill: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1
   },
-  stepContainer: {
-    padding: '16px'
-  },
-  pagerContainer: {
-    padding: '16px',
-    margin: '16px'
-  },
-  fill: {
-    height: '100%',
+  flexFillScroll: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
     overflow: 'auto'
   },
   bottombar: {

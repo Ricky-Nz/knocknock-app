@@ -8,6 +8,7 @@ import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import OrderListContainer from '../containers/OrderListContainer';
 import OrderDateSelectorContainer from '../containers/OrderDateSelectorContainer';
+import OrderStatusSelectorContainer from '../containers/OrderStatusSelectorContainer';
 
 class OrderManagePage extends Component {
 	constructor(props) {
@@ -22,18 +23,25 @@ class OrderManagePage extends Component {
 		this.props.loadOrders();
 	}
 	render() {
+		const { historyOrder, loading } = this.props;
+
 		return (
 			<div className='flex flex-fill page'>
-				<AppBar title={this.props.historyOrder?'History Orders':'Active Orders'}
+				<AppBar title={historyOrder?'History Orders':'Active Orders'}
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
+					iconElementRight={loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				<OrderDateSelectorContainer/>
-				<div className='flex flex-fill' style={styles.container}>
-					<OrderListContainer historyOrder={this.props.historyOrder}/>
-			    <FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
-			      <ContentAdd/>
-			    </FloatingActionButton>
+				<div className='flex flex-row'>
+					<OrderStatusSelectorContainer historyOrder={historyOrder} className='flex-fill'/>
+					<OrderDateSelectorContainer historyOrder={historyOrder} className='flex-fill'/>
+				</div>
+				<div className='flex flex-fill position-relative'>
+					<OrderListContainer historyOrder={historyOrder}/>
+			    {!historyOrder&&
+			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
+			      	<ContentAdd/>
+			    	</FloatingActionButton>
+			    }
 				</div>
 			</div>
 		);
@@ -52,9 +60,6 @@ OrderManagePage.propTypes = {
 };
 
 const styles = {
-	container: {
-		position: 'relative'
-	},
 	floatBtn: {
 		position: 'absolute',
 		right: 25,

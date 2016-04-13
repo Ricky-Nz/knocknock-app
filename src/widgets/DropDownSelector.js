@@ -11,14 +11,19 @@ class DropDownSelector extends Component {
 		this.props.onSelectItem(value);
 	}
 	render() {
-		const { selectedKey, items, itemKeyName, itemPrimaryName, itemSecondaryName } = this.props;
+		const { selectedKey, items, itemKeyName, displayPrefix,
+			itemPrimaryName } = this.props;
 
 		return (
       <DropDownMenu value={selectedKey} onChange={this.onSelectField}>
       	{items&&
-      		items.map((item, index) =>
-						<MenuItem key={index} value={item[itemKeyName]}
-      				primaryText={`${item[itemPrimaryName]} ${item[itemSecondaryName]}`}/>)
+      		items.map((item, index) => {
+      			const text = item[itemPrimaryName];
+      			return (
+							<MenuItem key={index} value={item[itemKeyName]}
+								label={displayPrefix&&`${displayPrefix} ${text}`} primaryText={text}/>
+      			);
+      		})
 				}
       </DropDownMenu>
 		);
@@ -26,10 +31,10 @@ class DropDownSelector extends Component {
 }
 
 DropDownSelector.propTypes = {
+	displayPrefix: PropTypes.string,
 	items: PropTypes.arrayOf(PropTypes.object.isRequired),
 	itemKeyName: PropTypes.string.isRequired,
 	itemPrimaryName: PropTypes.string.isRequired,
-	itemSecondaryName: PropTypes.string.isRequired,
 	selectedKey: PropTypes.any.isRequired,
 	onSelectItem: PropTypes.func.isRequired
 };

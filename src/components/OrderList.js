@@ -11,7 +11,7 @@ class OrderList extends Component {
 		const { loading, orderSortType, orders } = this.props;
 		
 		return (
-			<List className='fillHeight' style={styles.container}>
+			<List style={styles.container}>
 				{(loading&&!orders)?<LoadingProgress/>:
 					(orders&&orders.map((order, index) => (
 						<OrderListItem key={index} orderSortType={orderSortType} {...order}/>

@@ -13,11 +13,17 @@ const muiTheme = getMuiTheme({
 
 const Application = ({children}) => (
 	<MuiThemeProvider muiTheme={muiTheme}>
-		<div className='fillHeight flex'>
+		<div className='flex' style={styles.container}>
 			{children}
 			<MessageToastContainer/>
 		</div>
 	</MuiThemeProvider>
 );
+
+const styles = {
+	container: {
+		height: '100%'
+	}
+};
 
 export default Application;

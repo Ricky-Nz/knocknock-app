@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { changeOrderSort } from '../actions';
+import { changeActiveOrderSort, changeHistoryOrderSort } from '../actions';
 import { DropDownSelector } from '../widgets';
 
-const orderSortSelector = state => state.appState.orderSortType;
+const orderSortSelector = (state, {historyOrder}) =>
+	historyOrder?state.appState.historyOrderSortType:state.appState.activeOrderSortType;
 
 const dataSelector = state => state.orders;
 
@@ -12,20 +13,20 @@ const mapStateToProps = createSelector(
 	dataSelector,
 	(orderSortType, orders) => ({
 		selectedKey: orderSortType,
+		displayPrefix: 'Sort by:',
 		items: [
-			{ id: 'pickupDate', nameEn: 'Pickup date', nameCn: '取件时间' },
-			{ id: 'dropOffDate', nameEn: 'Drop off date', nameCn: '送还时间' },
-			{ id: 'createdOn', nameEn: 'Create date', nameCn: '下单时间' }
+			{ id: 'pickupDate', nameEn: 'Pickup date' },
+			{ id: 'dropOffDate', nameEn: 'Drop off date' },
+			{ id: 'createdOn', nameEn: 'Create date' }
 		],
 		itemKeyName: 'id',
-		itemPrimaryName: 'nameEn',
-		itemSecondaryName: 'nameCn'
+		itemPrimaryName: 'nameEn'
 	})
 );
 
-const mapActionToProps = dispatch => ({
+const mapActionToProps = (dispatch, {historyOrder}) => ({
 	onSelectItem: (value) => {
-		dispatch(changeOrderSort(value));
+		dispatch(historyOrder?changeHistoryOrderSort(value):changeActiveOrderSort());
 	}
 });
 

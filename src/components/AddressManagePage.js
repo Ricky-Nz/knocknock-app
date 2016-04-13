@@ -27,7 +27,7 @@ class AddressManagePage extends Component {
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
 					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				<div className='flex flex-fill' style={styles.listContainer}>
+				<div className='flex flex-fill position-relative'>
 					<AddressListContainer/>
 			    <FloatingActionButton style={styles.floatBtn} onClick={this.onCreateOrEditAddress}>
 			      <ContentAdd/>
@@ -49,9 +49,6 @@ AddressManagePage.propTypes = {
 };
 
 const styles = {
-	listContainer: {
-		position: 'relative'
-	},
 	floatBtn: {
 		position: 'absolute',
 		right: 25,

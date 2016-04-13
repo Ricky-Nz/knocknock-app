@@ -2,9 +2,9 @@ import runAction from './runAction';
 
 export const ACTION_CREATE_ORDER = 'ACTION_CREATE_ORDER';
 
-export function createOrder({description, lazyOrder, pickupPostalCode,
-		totalPrice, pickupAddress, expressOrder, pickupApartmentType,
-		orderSourceId, pickupDate, orderDetails}) {
+export function createOrder({description, pickupPostalCode,
+		totalPrice, pickupAddress, pickupApartmentType,
+		pickupDate, orderDetails}) {
 	return (dispatch, getState) => {
 		const { appState } = getState();
 
@@ -21,19 +21,19 @@ export function createOrder({description, lazyOrder, pickupPostalCode,
 			},
 			body: {
 				description,
-				lazy_order: lazyOrder,
+				lazy_order: !orderDetails||orderDetails.length===0,
 				pickup_postal_code: pickupPostalCode,
-				total_price: totalPrice,
+				total_price: totalPrice||0,
 				pickup_address: pickupAddress,
-				express_order: expressOrder,
+				express_order: false,
 				pickup_apartment_type: pickupApartmentType,
-				order_source_id: orderSourceId,
+				order_source_id: 3,
 				pickup_date: pickupDate,
 				order_details: orderDetails&&orderDetails.map(item => ({
-					item_id: itemId,
+					item_id: item.itemId,
 					quantity,
-					laundry_type: laundryType,
-					sub_total_price: subTotalPrice
+					laundry_type: item.laundryType,
+					sub_total_price: item.subTotalPrice
 				}))
 			}
 		});
