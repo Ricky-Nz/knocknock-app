@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import AutoComplete from 'material-ui/lib/auto-complete';
+import TextField from 'material-ui/lib/text-field';
 import IconButton from 'material-ui/lib/icon-button';
 import IconSearch from 'material-ui/lib/svg-icons/action/search';
 import IconClose from 'material-ui/lib/svg-icons/navigation/close';
@@ -17,19 +17,19 @@ class SearchMenu extends Component {
 			searchText: ''
 		});
 	}
-	onSearchChange(value) {
-		this.setState({searchText: value});
+	onSearchChange(event) {
+		this.setState({searchText: event.target.value});
+		this.props.onSearchTextChange(event.target.value);
 	}
 	render() {
 		const { expend, searchText } = this.state;
 
 		return (
 			expend?
-				<div className='flex flex-row flex-align-center'>
-					<AutoComplete hintText='search product' dataSource={this.props.dataSource}
-	          onUpdateInput={this.onSearchChange} inputStyle={styles.inputStyle}
-	          underlineFocusStyle={styles.underlineStyle} searchText={searchText}
-	          filter={AutoComplete.caseInsensitiveFilter}/>
+				<div className='flex flex-row flex-align-center padding-left'>
+					<TextField hintText='search product' dataSource={this.props.dataSource}
+	          onChange={this.onSearchChange} inputStyle={styles.inputStyle}
+	          underlineFocusStyle={styles.underlineStyle} searchText={searchText}/>
 	        <IconButton onClick={this.onToggleExpend}><IconClose color='white'/></IconButton>
         </div>:
 				<IconButton onClick={this.onToggleExpend}><IconSearch color='white'/></IconButton>
@@ -38,7 +38,7 @@ class SearchMenu extends Component {
 }
 
 SearchMenu.propTypes = {
-	dataSource: PropTypes.arrayOf(PropTypes.any).isRequired
+	onSearchTextChange: PropTypes.func.isRequired
 };
 
 const styles = {

@@ -5,21 +5,24 @@ import { LoadingProgress } from '../widgets';
 
 class ProductGrid extends Component {
 	componentDidMount() {
-		!this.props.products&&this.props.loadProducts();
+		!this.props.loading&&!this.props.products&&this.props.loadProducts();
 	}
 	render() {
-		let { loading, products, filterCategoryId } = this.props;
-
-		if (filterCategoryId&&products) {
-			products = products.filter(product => product.subCategoryId === filterCategoryId);
-		}
+		let { loading, searchText, products } = this.props;
 		
+		if (loading) {
+			return <LoadingProgress/>;
+		}
+
 		return (
-	    <GridList className='fillHeight' style={styles.gridList}>
-	    	{loading?<LoadingProgress/>:
-	      	(products&&products.map((product, index) => (
-	        	<ProductGridItem key={index} {...product}/>
-	      	)))
+	    <GridList style={styles.gridList}>
+	    	{products&&
+	    		products
+	    			.filter(item =>
+	    				searchText?(item.name_en.search(searchText)>=0||item.name_ch.search(searchText)>=0):true)
+	    			.map((item, index) => (
+		        	<ProductGridItem key={index} {...item}/>
+		      	))
 	      }
 	    </GridList>
 		);
@@ -28,15 +31,15 @@ class ProductGrid extends Component {
 
 ProductGrid.propTypes = {
 	loading: PropTypes.bool,
+	searchText: PropTypes.string,
 	products: PropTypes.array,
-	filterCategoryId: PropTypes.any,
 	loadProducts: PropTypes.func.isRequired
 };
 
 const styles = {
   gridList: {
     overflowY: 'auto',
-    padding: '0px 8px'
+    padding: '0 8'
   }
 };
 

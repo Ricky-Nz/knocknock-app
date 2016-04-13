@@ -2,11 +2,10 @@ import React, { PropTypes } from 'react';
 import Paper from 'material-ui/lib/paper';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 
-let ProductGridItem = ({id, nameCn, nameEn, ironPrice, imageUrl}) => (
+let ProductGridItem = ({id, name_ch, name_en, iron_price, image_url}) => (
 	<Paper style={styles.container} zDepth={1}>
-    <GridTile title={nameEn}
-      subtitle={<span>{nameCn} S${ironPrice}</span>}>
-      <img src={imageUrl} />
+    <GridTile title={name_en} subtitle={`S$${iron_price}`}>
+      <img src={image_url} />
     </GridTile>
   </Paper>
 );
@@ -17,7 +16,7 @@ ProductGridItem.propTypes = {
 
 const styles = {
 	container: {
-		margin: '10px 10px'
+		margin: 8
 	}
 };
 

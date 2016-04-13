@@ -25,7 +25,7 @@ const mapStateToProps = createSelector(
 const mapActionToProps = (dispatch, props) => ({
 	createOrEditAddress: (args) => {
 		if (props.params.addressId) {
-			dispatch(editAddress({addressId: props.params.addressId, ...args}));
+			dispatch(editAddress({id: props.params.addressId, ...args}));
 		} else {
 			dispatch(createAddress(args));
 		}

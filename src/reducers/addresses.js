@@ -1,21 +1,6 @@
 import { ACTION_GET_USER_ADDRESSES, ACTION_CREATE_ADDRESS,
 	ACTION_EDIT_ADDRESS } from '../actions';
-
-function convertAddress(item) {
-	return {
-		id: item.id,
-		userId: item.user_id,
-		name: item.name,
-		address: item.address,
-		postalCode: item.postal_code,
-		type: item.apartment_type,
-		districtId: item.district_id,
-		note: item.note,
-		createdOn: item.created_on,
-		unitNumber: item.unit_number,
-		contactNo: item.contact_no
-	};
-}
+import { convertAddress } from './dataConvertor';
 
 export default function (addresses = null, {type, running, error, data}) {
 	switch(type) {

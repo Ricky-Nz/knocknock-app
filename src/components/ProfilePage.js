@@ -75,7 +75,7 @@ class ProfilePage extends Component {
 		const { loading, user } = this.props;
 
 		return (
-			<div className='fillHeight page'>
+			<div className='flex flex-fill'>
 				<AppBar title='My Profile'
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
 					iconElementRight={loading?<CircularProgress size={0.5} color='white'/>:<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>

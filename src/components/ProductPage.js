@@ -3,27 +3,28 @@ import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
 import ProductGridContainer from '../containers/ProductGridContainer';
-import CategorySelectorContainer from '../containers/CategorySelectorContainer';
-import ProductSearchMenu from '../containers/ProductSearchMenu';
+import { CategorySelector } from '../containers';
+import { SearchMenu } from '../widgets';
 
 class ProductPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { selectCategory: 'ALL' };
-		this.onSelectCategory = this.onSelectCategory.bind(this);
+		this.state = {searchText: ''};
+		this.onSearchTextChange = this.onSearchTextChange.bind(this);
 	}
-	onSelectCategory(categoryId) {
-		this.setState({selectCategory: categoryId});
+	onSearchTextChange(value) {
+		this.setState({searchText: value});
 	}
 	render() {
 		return (
-			<div className='fillHeight page'>
+			<div className='flex flex-fill'>
 				<AppBar title='Product Pricing'
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={<ProductSearchMenu/>}/>
-				<CategorySelectorContainer selectedKey={this.state.selectCategory}
-					onSelectItem={this.onSelectCategory}/>
-				<ProductGridContainer filterCategoryId={this.state.selectCategory}/>
+					iconElementRight={<SearchMenu onSearchTextChange={this.onSearchTextChange}/>}/>
+				<div className='flex flex-fill'>
+					<CategorySelector/>
+					<ProductGridContainer searchText={this.state.searchText}/>
+				</div>
 			</div>
 		);
 	}
@@ -34,7 +35,7 @@ ProductPage.contextTypes = {
 };
 
 ProductPage.propTypes = {
-	onDrawerClick: PropTypes.func.isRequired
+	onDrawerClick: PropTypes.func
 };
 
 const styles = {

@@ -10,6 +10,7 @@ import IconPlace from 'material-ui/lib/svg-icons/maps/place';
 import IconMoney from 'material-ui/lib/svg-icons/editor/attach-money';
 import IconWallet from 'material-ui/lib/svg-icons/action/account-balance-wallet';
 import UserCardContainer from '../containers/UserCardContainer';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class DashboardPage extends Component {
 	constructor(props) {
@@ -59,7 +60,7 @@ class DashboardPage extends Component {
 		const { navOpen, selectMenu } = this.state;
 
 		return (
-			<div className='flex flex-fill' style={styles.container}>
+			<div className='flex flex-fill page' style={styles.container}>
 		    <LeftNav docked={false} open={navOpen}
 		    	onRequestChange={this.onToggleDrawer}>
 		    	<UserCardContainer onClick={this.onSelectUser}/>
@@ -71,8 +72,8 @@ class DashboardPage extends Component {
 		        <MenuItem primaryText='Wallet' leftIcon={<IconWallet/>} value='wallet'/>
 		      </Menu>
 		    </LeftNav>
-		    {React.cloneElement(this.props.children,
-		    	{onDrawerClick: this.onToggleDrawer, historyOrder: selectMenu==='historyorders'})}
+			    {React.cloneElement(this.props.children||<div/>,
+			    	{onDrawerClick: this.onToggleDrawer, key: selectMenu, historyOrder: selectMenu==='historyorders'})}
 			</div>
 		);
 	}

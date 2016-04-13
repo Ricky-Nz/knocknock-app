@@ -5,8 +5,8 @@ import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
 import IconRefresh from 'material-ui/lib/svg-icons/navigation/refresh';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import AddressListContainer from '../containers/AddressListContainer';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import { AddressList } from '../containers';
 
 class AddressManagePage extends Component {
 	constructor(props) {
@@ -22,13 +22,13 @@ class AddressManagePage extends Component {
 	}
 	render() {
 		return (
-			<div className='flex flex-fill page'>
+			<div className='flex flex-fill'>
 				<AppBar title='Manage Address'
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
 					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
 				<div className='flex flex-fill position-relative'>
-					<AddressListContainer/>
+					<AddressList onItemClicked={this.onCreateOrEditAddress}/>
 			    <FloatingActionButton style={styles.floatBtn} onClick={this.onCreateOrEditAddress}>
 			      <ContentAdd/>
 			    </FloatingActionButton>

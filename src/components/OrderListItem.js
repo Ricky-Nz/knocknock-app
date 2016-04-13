@@ -6,19 +6,19 @@ import { TimeDisplay } from '../widgets';
 
 function convertTypeDisplay(orderSortType) {
 	switch(orderSortType) {
-		case 'pickupDate': return 'Pickup date';
-		case 'dropOffDate': return 'Drop off date';
-		case 'createdOn': return 'Create date';
+		case 'pickup_date': return 'Pickup date';
+		case 'drop_off_date': return 'Drop off date';
+		case 'created_on': return 'Create date';
 	}
 }
 
-let OrderListItem = ({orderSortType, pickupAddress, totalPrice, orderStatus, ...props}) => (
+let OrderListItem = ({orderSortType, pickup_address, to_pay_price, status, onClick, ...props}) => (
 	<Paper style={styles.container} zDepth={1}>
-	  <ListItem primaryText={<p>{convertTypeDisplay(orderSortType)}: <TimeDisplay>{props[orderSortType]}</TimeDisplay></p>}
+	  <ListItem onClick={onClick} primaryText={<p>{convertTypeDisplay(orderSortType)}: <TimeDisplay>{props[orderSortType]}</TimeDisplay></p>}
 	    secondaryText={
 	    	<div>
-	      	<p>{`${orderStatus.status} (Total Price: S${totalPrice})`}</p>
-	      	<p>Pickup Address: {pickupAddress}</p>
+	      	<p>{`${status} (Total Price: S${to_pay_price})`}</p>
+	      	<p>Pickup Address: {pickup_address}</p>
 	      </div>
 	    }
 	    secondaryTextLines={2}/>

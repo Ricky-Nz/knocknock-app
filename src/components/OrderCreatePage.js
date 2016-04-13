@@ -8,7 +8,6 @@ import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
 import IconDone from 'material-ui/lib/svg-icons/action/done';
-import AddressListContainer from '../containers/AddressListContainer';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import TimePicker from 'material-ui/lib/time-picker/time-picker';
 import Subheader from 'material-ui/lib/Subheader';
@@ -18,6 +17,7 @@ import IconPlace from 'material-ui/lib/svg-icons/maps/place';
 import IconLocalPhone from 'material-ui/lib/svg-icons/maps/local-phone';
 import IconAccessTime from 'material-ui/lib/svg-icons/device/access-time';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import { AddressList } from '../containers';
 import { TimeDisplay, IconParagraph } from '../widgets';
 import moment from 'moment';
 

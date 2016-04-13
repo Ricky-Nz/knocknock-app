@@ -9,11 +9,11 @@ const dataSelector = state => state.products;
 const mapStateToProps = createSelector(
 	dataSelector,
 	(products) => ({
-		dataSource: products?products.map(item => ({
-			text: `${item.nameEn} ${item.nameCn}`,
+		dataSource: products?products.map(({name_en, iron_price}) => ({
+			text: name_en,
 			value: (
-	      <MenuItem primaryText={`${item.nameEn}`}
-	        secondaryText={`Price: S$${item.ironPrice}`}/>
+	      <MenuItem primaryText={name_en}
+	        secondaryText={`Price: S$${iron_price}`}/>
       )
 		})):[]
 	})

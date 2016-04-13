@@ -1,8 +1,8 @@
 import React from 'react';
-import MessageToastContainer from '../containers/MessageToastContainer';
 import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import { deepOrange500, blueGrey500 } from 'material-ui/lib/styles/colors';
+import { MessageToast } from '../containers';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -15,7 +15,7 @@ const Application = ({children}) => (
 	<MuiThemeProvider muiTheme={muiTheme}>
 		<div className='flex' style={styles.container}>
 			{children}
-			<MessageToastContainer/>
+			<MessageToast/>
 		</div>
 	</MuiThemeProvider>
 );

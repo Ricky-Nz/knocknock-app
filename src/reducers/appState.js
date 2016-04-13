@@ -4,7 +4,8 @@ import { ACTION_LOGIN, ACTION_GET_USER_ADDRESSES,
 	ACTION_GET_VOUCHERS, ACTION_RESET_PASSWORD, ACTION_GET_USER_PROFILE,
 	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR,
 	ACTION_CHANGE_ACTIVE_ORDER_SORT, ACTION_CHANGE_HISTORY_ORDER_SORT,
-	ACTION_CHANGE_ACTIVE_ORDER_FILETER, ACTION_CHANGE_HISTORY_ORDER_FILETER } from '../actions';
+	ACTION_CHANGE_ACTIVE_ORDER_FILETER, ACTION_CHANGE_HISTORY_ORDER_FILETER,
+	ACTION_CHANGE_PRODUCT_FILETER, ACTION_GET_ORDER_DETAIL } from '../actions';
 
 function statusProcess(state, statusKey, {running, error, data}, successToast, convertData) {
 	if (running) {
@@ -18,10 +19,11 @@ function statusProcess(state, statusKey, {running, error, data}, successToast, c
 }
 
 export default function (appState = {
-	activeOrderSortType: 'pickupDate',
-	historyOrderSortType: 'dropOffDate',
+	activeOrderSortType: 'pickup_date',
+	historyOrderSortType: 'drop_off_date',
 	activeOrderFilter: 'ALL',
 	historyOrderFileter: 'ALL',
+	productFilter: 'ALL',
 	tokenType: "Bearer",
 	token: "cfec7eb1dde92dcbdcd894ec3b92af94ca45bea1b7a8370b743c1e7a56c010cf"
 }, action) {
@@ -59,6 +61,8 @@ export default function (appState = {
 			return statusProcess(appState, 'changingUserProfile', action, true);
 		case ACTION_CREATE_ORDER:
 			return statusProcess(appState, 'creatingOrder', action, true);
+		case ACTION_GET_ORDER_DETAIL:
+			return statusProcess(appState, 'loadingOrder', action);
 		case ACTION_CHANGE_ACTIVE_ORDER_SORT:
 			return {...appState, activeOrderSortType: action.data};
 		case ACTION_CHANGE_HISTORY_ORDER_SORT:
@@ -67,6 +71,8 @@ export default function (appState = {
 			return {...appState, activeOrderFilter: action.data};
 		case ACTION_CHANGE_HISTORY_ORDER_FILETER:
 			return {...appState, historyOrderFileter: action.data};
+		case ACTION_CHANGE_PRODUCT_FILETER:
+			return {...appState, productFilter: action.data};
 		default:
 			return appState;
 	}

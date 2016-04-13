@@ -2,7 +2,7 @@ import runAction from './runAction';
 
 export const ACTION_CREATE_ADDRESS = 'ACTION_CREATE_ADDRESS';
 
-export function createAddress({address, postalCode, contactNo, unitNumber}) {
+export function createAddress({address, postal_code, contact_no, unit_number}) {
 	return (dispatch, getState) => {
 		const { appState } = getState();
 
@@ -16,11 +16,11 @@ export function createAddress({address, postalCode, contactNo, unitNumber}) {
 			},
 			form: {
 				address,
+				postal_code,
+				unit_number,
+				contact_no,
 				name: 'home',
-				postal_code: postalCode,
-				unit_number: unitNumber,
-				apartment_type: 'hdb',
-				note: ''
+				apartment_type: 'hdb'
 			}
 		});
 	};

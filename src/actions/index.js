@@ -14,3 +14,4 @@ export * from './editUserProfile';
 export * from './editAvatar';
 export * from './resetPassword';
 export * from './getVouchers';
+export * from './getOrderDetail';

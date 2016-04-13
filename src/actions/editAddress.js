@@ -2,7 +2,7 @@ import runAction from './runAction';
 
 export const ACTION_EDIT_ADDRESS = 'ACTION_EDIT_ADDRESS';
 
-export function editAddress({addressId, address, postalCode, contactNo, unitNumber}) {
+export function editAddress({id, address, postal_code, contact_no, unit_number}) {
 	return (dispatch, getState) => {
 		const { appState } = getState();
 
@@ -10,18 +10,18 @@ export function editAddress({addressId, address, postalCode, contactNo, unitNumb
 			dispatch,
 			actionName: ACTION_EDIT_ADDRESS,
 			method: 'PUT',
-			path: `user_addresses/${addressId}`,
+			path: `user_addresses/${id}`,
 			headers: {
 				'Authorization': `${appState.tokenType} ${appState.token}`
 			},
 			body: {
-				id: addressId,
+				id,
 				address,
+				postal_code,
+				unit_number,
+				contact_no,
 				name: 'home',
-				contact_no: contactNo,
-				postal_code: postalCode,
-				unit_number: unitNumber,
-				apartment_type: 'commercial'
+				apartment_type: 'hdb'
 			}
 		});
 	};

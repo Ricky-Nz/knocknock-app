@@ -7,6 +7,7 @@ import addresses from './addresses';
 import place from './place';
 import activeOrders from './activeOrders';
 import historyOrders from './historyOrders';
+import orderDetail from './orderDetail';
 
 export default {
 	appState,
@@ -17,5 +18,6 @@ export default {
 	addresses,
 	activeOrders,
 	historyOrders,
+	orderDetail,
 	place
 };

@@ -35,7 +35,7 @@ const mapStateToProps = createSelector(
 		loading,
 		orderSortType,
 		orders: orders&&
-			orders.filter(({orderStatus}) => filter==='ALL'?true:(filter===orderStatus.status))
+			orders.filter(order => filter==='ALL'?true:(filter===order.status))
 				.sort((a, b) => orderSort(a, b, orderSortType, historyOrder))
 	})
 );
