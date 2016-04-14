@@ -11,6 +11,7 @@ import activeOrders from './activeOrders';
 import historyOrders from './historyOrders';
 import orderDetail from './orderDetail';
 import topUp from './topUp';
+import settings from './settings';
 
 export default {
 	toast,
@@ -25,5 +26,6 @@ export default {
 	activeOrders,
 	historyOrders,
 	orderDetail,
-	topUp
+	topUp,
+	settings
 };

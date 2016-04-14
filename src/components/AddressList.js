@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import List from 'material-ui/lib/lists/list';
+import Paper from 'material-ui/lib/paper';
 import AddressListItem from './AddressListItem';
 import IconButton from 'material-ui/lib/icon-button';
 import IconModeEdit from 'material-ui/lib/svg-icons/editor/mode-edit';
@@ -12,7 +13,7 @@ class AddressList extends Component {
 		!this.props.addresses&&this.props.loadUserAddresses();
 	}
 	render() {
-		const { selectable, selectItem, loading, addresses, onItemClicked } = this.props;
+		const { paper, selectable, selectItem, loading, addresses, onItemClicked } = this.props;
 		
 		return (
 			<List style={styles.container}>
@@ -25,10 +26,19 @@ class AddressList extends Component {
 							rightIcon = <IconModeEdit/>;
 						}
 
-						return (
-							<AddressListItem key={index} {...address} onClick={() => onItemClicked(address)}
-								rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
-						)
+						if (paper) {
+							return (
+								<Paper key={index} className='margin' zDepth={1}>
+									<AddressListItem {...address} onClick={() => onItemClicked(address)}
+										rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
+								</Paper>
+							)
+						} else {
+							return (
+								<AddressListItem key={index} {...address} onClick={() => onItemClicked(address)}
+									rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
+							);
+						}
 					}))
 				}
 			</List>
@@ -37,6 +47,7 @@ class AddressList extends Component {
 }
 
 AddressList.propTypes = {
+	paper: PropTypes.bool,
 	selectable: PropTypes.bool,
 	selectItem: PropTypes.object,
 	loading: PropTypes.bool,

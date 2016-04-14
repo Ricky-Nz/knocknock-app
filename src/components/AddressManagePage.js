@@ -28,7 +28,7 @@ class AddressManagePage extends Component {
 					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
 				<div className='flex flex-fill position-relative'>
-					<AddressList onItemClicked={this.onCreateOrEditAddress}/>
+					<AddressList paper={true} onItemClicked={this.onCreateOrEditAddress}/>
 			    <FloatingActionButton style={styles.floatBtn} onClick={this.onCreateOrEditAddress}>
 			      <ContentAdd/>
 			    </FloatingActionButton>

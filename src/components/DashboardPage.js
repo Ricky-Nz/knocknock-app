@@ -34,6 +34,7 @@ class DashboardPage extends Component {
 			case '/dashboard/addresses': return 'addresses';
 			case '/dashboard/pricing': return 'pricing';
 			case '/dashboard/wallet': return 'wallet';
+			case '/dashboard/setting': return 'setting';
 			case '/dashboard':
 			case '/dashboard/activeorders': return 'activeorders';
 			case '/dashboard/historyorders': return 'historyorders';

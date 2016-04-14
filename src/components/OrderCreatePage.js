@@ -158,7 +158,7 @@ class CreateOrderPage extends Component {
             createIcon={this.onCreateIcon}>
 
             <Step orderStepLabel='1' stepLabel='Select Address'>
-              <AddressList selectable={true} selectItem={address}
+              <AddressList paper={true} selectable={true} selectItem={address}
                 onItemClicked={this.onSelectAddress}/>
             </Step>
 
