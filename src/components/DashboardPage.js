@@ -9,8 +9,8 @@ import IconLocalShipping from 'material-ui/lib/svg-icons/maps/local-shipping';
 import IconPlace from 'material-ui/lib/svg-icons/maps/place';
 import IconMoney from 'material-ui/lib/svg-icons/editor/attach-money';
 import IconWallet from 'material-ui/lib/svg-icons/action/account-balance-wallet';
-import UserCardContainer from '../containers/UserCardContainer';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { UserCard } from '../containers';
 
 class DashboardPage extends Component {
 	constructor(props) {
@@ -63,7 +63,7 @@ class DashboardPage extends Component {
 			<div className='flex flex-fill page' style={styles.container}>
 		    <LeftNav docked={false} open={navOpen}
 		    	onRequestChange={this.onToggleDrawer}>
-		    	<UserCardContainer onClick={this.onSelectUser}/>
+		    	<UserCard onClick={this.onSelectUser}/>
 		      <Menu value={selectMenu} onItemTouchTap={this.onMenuSelect}>
 		        <MenuItem primaryText='Active order' leftIcon={<IconLocalShipping/>} value='activeorders'/>
 		        <MenuItem primaryText='History order' leftIcon={<IconHistory/>} value='historyorders'/>

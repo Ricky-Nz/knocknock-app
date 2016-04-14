@@ -44,6 +44,15 @@ function convertOrderItem({
 	};
 }
 
+function tempStausStep(status) {
+	switch(status) {
+		case 'Pending Worker': return 0;
+		case 'Laundry in progress': return 1;
+		case 'Laundry Complete': return 2;
+		default: return -1;
+	}
+}
+
 export function convertDetailOrder({
 		id,
 		pickup_district_id,
@@ -74,6 +83,7 @@ export function convertDetailOrder({
 		to_pay_price,
 		qr_code_url,
 		status: order_status.status,
+		step: tempStausStep(order_status.status),
 		order_details: order_details&&order_details.map(convertOrderItem)
 	};
 }

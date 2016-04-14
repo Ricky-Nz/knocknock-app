@@ -1,17 +1,25 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { } from '../actions';
+import { getUserProfile, toastMessage } from '../actions';
 import WalletPage from '../components/WalletPage';
+
+const loadingStateSelector = state => state.appState.changingUserProfile;
 
 const dataSelector = state => state.user;
 
 const mapStateToProps = createSelector(
+	loadingStateSelector,
 	dataSelector,
-	(user) => ({user})
+	(loading, user) => ({loading, user})
 );
 
 const mapActionToProps = (dispatch) => ({
-
+	loadUser: () => {
+		dispatch(getUserProfile());
+	},
+	toast: (message) => {
+		dispatch(toastMessage(message));
+	}
 });
 
 export default connect(mapStateToProps, mapActionToProps)(WalletPage);

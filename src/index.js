@@ -11,13 +11,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './components/App';
 import DashboardPage from './components/DashboardPage';
 import ProductPage from './components/ProductPage';
-import RegisterPageContainer from './containers/RegisterPageContainer';
-import OrderManagePageContainer from './containers/OrderManagePageContainer';
-import OrderCreatePageContainer from './containers/OrderCreatePageContainer';
-import ProfilePageContainer from './containers/ProfilePageContainer';
-import WalletPageContainer from './containers/WalletPageContainer';
 import { OrderDetailPage, AddressEditPage, AddressManagePage,
-	LoginPage } from './containers';
+	LoginPage, OrderCreatePage, OrderManagePage, WalletPage,
+	ProfilePage, RegisterPage } from './containers';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -41,19 +37,19 @@ ReactDOM.render(
 			<Route path='/' component={App}>
 				<IndexRoute component={LoginPage}/>
 				<Route path='login' component={LoginPage}/>
-				<Route path='register' component={RegisterPageContainer}/>
+				<Route path='register' component={RegisterPage}/>
 				<Route path='dashboard' component={DashboardPage}>
-					<IndexRoute component={OrderManagePageContainer}/>
-					<Route path='activeorders' component={OrderManagePageContainer}/>
-					<Route path='historyorders' component={OrderManagePageContainer}/>
+					<IndexRoute component={OrderManagePage}/>
+					<Route path='activeorders' component={OrderManagePage}/>
+					<Route path='historyorders' component={OrderManagePage}/>
 					<Route path='addresses' component={AddressManagePage}/>
 					<Route path='pricing' component={ProductPage}/>
-					<Route path='profile' component={ProfilePageContainer}/>
-					<Route path='wallet' component={WalletPageContainer}/>
+					<Route path='profile' component={ProfilePage}/>
+					<Route path='wallet' component={WalletPage}/>
 				</Route>
-				<Route path='neworder' component={OrderCreatePageContainer}/>
 				<Route path='address' component={AddressEditPage}/>
 				<Route path='address/:addressId' component={AddressEditPage}/>
+				<Route path='order' component={OrderCreatePage}/>
 				<Route path='order/:orderId' component={OrderDetailPage}/>
 			</Route>
 		</Router>

@@ -6,9 +6,7 @@ import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 import CircularProgress from 'material-ui/lib/circular-progress';
-import OrderListContainer from '../containers/OrderListContainer';
-import OrderSortSelectorContainer from '../containers/OrderSortSelectorContainer';
-import OrderStatusSelectorContainer from '../containers/OrderStatusSelectorContainer';
+import { OrderSortSelector, OrderStatusSelector, OrderList } from '../containers';
 
 class OrderManagePage extends Component {
 	constructor(props) {
@@ -18,7 +16,7 @@ class OrderManagePage extends Component {
 		this.onOrderClicked = this.onOrderClicked.bind(this);
 	}
 	onNewOrder() {
-		this.context.router.push('neworder');
+		this.context.router.push('order');
 	}
 	onRefresh() {
 		this.props.loadOrders();
@@ -36,11 +34,11 @@ class OrderManagePage extends Component {
 					iconElementRight={loading?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
 				<div className='flex flex-row'>
-					<OrderStatusSelectorContainer historyOrder={historyOrder} className='flex-fill'/>
-					<OrderSortSelectorContainer historyOrder={historyOrder} className='flex-fill'/>
+					<OrderStatusSelector historyOrder={historyOrder} className='flex-fill'/>
+					<OrderSortSelector historyOrder={historyOrder} className='flex-fill'/>
 				</div>
 				<div className='flex flex-fill position-relative'>
-					<OrderListContainer historyOrder={historyOrder}
+					<OrderList historyOrder={historyOrder}
 						onItemClicked={this.onOrderClicked}/>
 			    {!historyOrder&&
 			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>

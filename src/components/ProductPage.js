@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
-import ProductGridContainer from '../containers/ProductGridContainer';
-import { CategorySelector } from '../containers';
+import { CategorySelector, ProductGrid } from '../containers';
 import { SearchMenu } from '../widgets';
 
 class ProductPage extends Component {
@@ -23,7 +22,7 @@ class ProductPage extends Component {
 					iconElementRight={<SearchMenu onSearchTextChange={this.onSearchTextChange}/>}/>
 				<div className='flex flex-fill'>
 					<CategorySelector/>
-					<ProductGridContainer searchText={this.state.searchText}/>
+					<ProductGrid searchText={this.state.searchText}/>
 				</div>
 			</div>
 		);

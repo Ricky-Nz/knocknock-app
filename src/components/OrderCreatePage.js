@@ -13,12 +13,9 @@ import TimePicker from 'material-ui/lib/time-picker/time-picker';
 import Subheader from 'material-ui/lib/Subheader';
 import TextField from 'material-ui/lib/text-field';
 import Paper from 'material-ui/lib/paper';
-import IconPlace from 'material-ui/lib/svg-icons/maps/place';
-import IconLocalPhone from 'material-ui/lib/svg-icons/maps/local-phone';
-import IconAccessTime from 'material-ui/lib/svg-icons/device/access-time';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import { AddressList } from '../containers';
-import { TimeDisplay, IconParagraph } from '../widgets';
+import OrderProfile from './OrderProfile';
 import moment from 'moment';
 
 class CreateOrderPage extends Component {
@@ -189,20 +186,8 @@ class CreateOrderPage extends Component {
             <Step orderStepLabel='3' stepLabel='Preview & Submit'>
               <Paper className='padding margin' zDepth={1}>
                 <p className='font-lg padding-bottom'>New Order Preview</p>
-                <IconParagraph icon={<IconPlace/>}>
-                  Address: {address&&(`${address.address}, ${address.unitNumber}, ${address.postalCode}`)}
-                </IconParagraph>
-                <IconParagraph icon={<IconLocalPhone/>}>
-                  Contact: {address&&address.contactNo}
-                </IconParagraph>
-                <IconParagraph icon={<IconAccessTime/>}>
-                  Pickup time: <TimeDisplay format='LT'>{pickupTime}</TimeDisplay>, <TimeDisplay format='MMMM Do YYYY'>{pickupDate}</TimeDisplay>
-                </IconParagraph>
-                {dropOffDate&&
-                  <IconParagraph icon={<IconAccessTime/>}>
-                    Drop off time: {dropOffTime&&<TimeDisplay>{pickupTime}</TimeDisplay>} <TimeDisplay format='MMMM Do YYYY'>{dropOffDate}</TimeDisplay>
-                  </IconParagraph>
-                }
+                {address&&<OrderProfile {...address} pickupTime={pickupTime}
+                  pickupDate={pickupDate} dropOffDate={dropOffDate} dropOffTime={dropOffTime}/>}
                 <TextField fullWidth={true} value={note} hintText='any special requirement?'
                   floatingLabelText='Note' onChange={this.onNoteChange}/>
               </Paper>

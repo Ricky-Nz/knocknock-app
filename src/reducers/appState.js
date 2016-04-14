@@ -5,7 +5,7 @@ import { ACTION_LOGIN, ACTION_GET_USER_ADDRESSES,
 	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR,
 	ACTION_CHANGE_ACTIVE_ORDER_SORT, ACTION_CHANGE_HISTORY_ORDER_SORT,
 	ACTION_CHANGE_ACTIVE_ORDER_FILETER, ACTION_CHANGE_HISTORY_ORDER_FILETER,
-	ACTION_CHANGE_PRODUCT_FILETER, ACTION_GET_ORDER_DETAIL } from '../actions';
+	ACTION_CHANGE_PRODUCT_FILETER, ACTION_GET_ORDER_DETAIL, ACTION_TOPUP } from '../actions';
 
 function statusProcess(state, statusKey, {running, error, data}, successToast, convertData) {
 	if (running) {
@@ -63,6 +63,8 @@ export default function (appState = {
 			return statusProcess(appState, 'creatingOrder', action, true);
 		case ACTION_GET_ORDER_DETAIL:
 			return statusProcess(appState, 'loadingOrder', action);
+		case ACTION_TOPUP:
+			return statusProcess(appState, 'toppingUp', action);
 		case ACTION_CHANGE_ACTIVE_ORDER_SORT:
 			return {...appState, activeOrderSortType: action.data};
 		case ACTION_CHANGE_HISTORY_ORDER_SORT:
