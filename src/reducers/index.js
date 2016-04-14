@@ -1,15 +1,21 @@
+import session from './session';
+import toast from './toast';
+import actionState from './actionState';
 import appState from './appState';
 import user from './user';
 import districts from './districts';
 import products from './products';
 import categories from './categories';
 import addresses from './addresses';
-import place from './place';
 import activeOrders from './activeOrders';
 import historyOrders from './historyOrders';
 import orderDetail from './orderDetail';
+import topUp from './topUp';
 
 export default {
+	toast,
+	session,
+	actionState,
 	appState,
 	user,
 	districts,
@@ -19,5 +25,5 @@ export default {
 	activeOrders,
 	historyOrders,
 	orderDetail,
-	place
+	topUp
 };

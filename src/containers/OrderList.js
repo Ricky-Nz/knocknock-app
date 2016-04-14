@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getOrders } from '../actions';
 import OrderList from '../components/OrderList';
 
-const loadingStateSelector = (state) => state.appState.loadingOrders;
+const loadingStateSelector = (state) => state.actionState.loadingOrders;
 
 const orderSortSelector = (state, {historyOrder}) =>
 	historyOrder?state.appState.historyOrderSortType:state.appState.activeOrderSortType;

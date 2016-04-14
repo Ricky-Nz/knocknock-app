@@ -19,8 +19,7 @@ class MessageToast extends Component {
 		const toast = this.props.toast;
 
 		return (
-      <Snackbar bodyStyle={(toast&&toast.success)?styles.success:styles.failed}
-      	open={toast?this.state.show:false} message={toast?toast.message:''}
+      <Snackbar open={this.state.show} message={toast.message||''}
         autoHideDuration={2500} onRequestClose={this.onDismiss}/>
 		);
 	}

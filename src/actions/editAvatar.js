@@ -4,7 +4,7 @@ export const ACTION_EDIT_AVATAR = 'ACTION_EDIT_AVATAR';
 
 export function editAvatar(fileContent) {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function editAvatar(fileContent) {
 			method: 'POST',
 			path: `users/me/photo`,
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			},
 			body: fileContent
 		});

@@ -7,18 +7,16 @@ class PaymentProcessingDialog extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {open: false};
-		this.pay = this.pay.bind(this);
 		this.paySuccess = this.paySuccess.bind(this);
 		this.payFailed = this.payFailed.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.toppingUp&&this.props.toppingUp&&nextProps.topUpInfo) {
-			window.open(topUpInfo.redirectUrl);
+			window.open(nextProps.topUpInfo.redirectUrl);
+		} else if (nextProps.amount>0&&nextProps.amount!==this.props.amount) {
+			this.props.topUp(nextProps.amount);
+			this.setState({open: true});
 		}
-	}
-	pay(amount) {
-		this.props.topUp(amount);
-		this.setState({open: true});
 	}
 	paySuccess() {
 		this.setState({open: false});
@@ -35,7 +33,7 @@ class PaymentProcessingDialog extends Component {
 
 		return (
 			<Dialog modal={true} open={this.state.open}
-				title={toppingUp?<p className='flex flex-row flex-align-center'><CircularProgress size={0.3}/>'Processing'</p>:'Payment complete?'}
+				title={toppingUp?'Processing':'Payment complete?'}
 				actions={toppingUp?null:[
 		      <FlatButton label='Failed' primary={true}
 		        onClick={this.payFailed}/>,
@@ -47,6 +45,7 @@ class PaymentProcessingDialog extends Component {
 }
 
 PaymentProcessingDialog.propTypes = {
+	amount: PropTypes.number,
 	toppingUp: PropTypes.bool,
 	topUpInfo: PropTypes.object,
 	topUp: PropTypes.func.isRequired,

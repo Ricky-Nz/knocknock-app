@@ -82,8 +82,8 @@ class OrderDetailPage extends Component {
 								<RaisedButton onClick={this.onPay} label={`Pay S$${to_pay_price}`} primary={true}/>}
 						</Paper>
 		        <div style={styles.container}>
-		        	<OrderProfile address={pickup_address} postalCode={pickup_postal_code}
-		        		contactNo={pickup_contact_no} pickupTime={pickup_time} pickupDate={pickup_date}/>
+		        	<OrderProfile address={pickup_address} postal_code={pickup_postal_code}
+		        		contact_no={pickup_contact_no} pickupTime={pickup_time} pickupDate={pickup_date}/>
 		        </div>
 					</div>
 				}

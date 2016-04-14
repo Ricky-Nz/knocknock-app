@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getUserAddresses } from '../actions';
 import AddressManagePage from '../components/AddressManagePage';
 
-const loadingStateSelector = state => state.appState.loadingAddresses;
+const loadingStateSelector = state => state.actionState.loadingAddresses;
 
 const mapStateToProps = createSelector(
 	loadingStateSelector,

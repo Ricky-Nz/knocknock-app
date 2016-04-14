@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getUserProfile } from '../actions';
 import UserCard from '../components/UserCard';
 
-const loadingStateSelector = state => state.appState.changingUserProfile;
+const loadingStateSelector = state => state.actionState.loadingUserProfile;
 
 const dataSelector = state => state.user;
 

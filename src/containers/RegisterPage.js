@@ -3,14 +3,11 @@ import { createSelector } from 'reselect';
 import { register, toastMessage } from '../actions';
 import RegisterPage from '../components/RegisterPage';
 
-const errorMessageSelector = state => state.appState.error;
-
-const registeringStateSelector = state => state.appState.registering;
+const registeringStateSelector = state => state.actionState.registering;
 
 const mapStateToProps = createSelector(
-	errorMessageSelector,
 	registeringStateSelector,
-	(error, registering) => ({error, registering})
+	(registering) => ({registering})
 );
 
 const mapActionToProps = (dispatch) => ({

@@ -8,13 +8,10 @@ const orderSortSelector = (state, {historyOrder}) =>
 
 const isHistorySelector = (state, {historyOrder}) => historyOrder;
 
-const dataSelector = state => state.orders;
-
 const mapStateToProps = createSelector(
 	orderSortSelector,
 	isHistorySelector,
-	dataSelector,
-	(orderSortType, historyOrder, orders) => ({
+	(orderSortType, historyOrder) => ({
 		selectedKey: orderSortType,
 		displayPrefix: 'Filter:',
 		items: historyOrder?[

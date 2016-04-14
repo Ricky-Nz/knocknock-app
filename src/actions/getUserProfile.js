@@ -4,7 +4,7 @@ export const ACTION_GET_USER_PROFILE = 'ACTION_GET_USER_PROFILE';
 
 export function getUserProfile() {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getUserProfile() {
 			method: 'GET',
 			path: `users/me`,
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			}
 		});
 	};

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { topUp } from '../actions';
 import PaymentProcessingDialog from '../components/PaymentProcessingDialog';
 
-const toppingUpStateSelector = state => state.appState.toppingUp;
+const toppingUpStateSelector = state => state.actionState.toppingUp;
 
 const topUpInfoSelector = state => state.topUp;
 

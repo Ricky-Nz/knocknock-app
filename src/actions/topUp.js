@@ -4,7 +4,7 @@ export const ACTION_TOPUP = 'ACTION_TOPUP';
 
 export function topUp(amount) {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function topUp(amount) {
 			method: 'POST',
 			path: 'credits/paypal',
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			},
 			body: {
 				payment_total: amount,

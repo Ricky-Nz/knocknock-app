@@ -4,7 +4,7 @@ export const ACTION_GET_DISTRICTS = 'ACTION_GET_DISTRICTS';
 
 export function getDistricts() {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getDistricts() {
 			method: 'GET',
 			path: 'districts',
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			},
 			params: {
 				available: true

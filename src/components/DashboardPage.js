@@ -9,6 +9,7 @@ import IconLocalShipping from 'material-ui/lib/svg-icons/maps/local-shipping';
 import IconPlace from 'material-ui/lib/svg-icons/maps/place';
 import IconMoney from 'material-ui/lib/svg-icons/editor/attach-money';
 import IconWallet from 'material-ui/lib/svg-icons/action/account-balance-wallet';
+import IconSettings from 'material-ui/lib/svg-icons/action/settings';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { UserCard } from '../containers';
 
@@ -70,6 +71,7 @@ class DashboardPage extends Component {
 		        <MenuItem primaryText='Address' leftIcon={<IconPlace/>} value='addresses'/>
 		        <MenuItem primaryText='Pricing' leftIcon={<IconMoney/>} value='pricing'/>
 		        <MenuItem primaryText='Wallet' leftIcon={<IconWallet/>} value='wallet'/>
+		        <MenuItem primaryText='Settings' leftIcon={<IconSettings/>} value='setting'/>
 		      </Menu>
 		    </LeftNav>
 			    {React.cloneElement(this.props.children||<div/>,

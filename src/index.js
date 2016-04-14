@@ -13,7 +13,7 @@ import DashboardPage from './components/DashboardPage';
 import ProductPage from './components/ProductPage';
 import { OrderDetailPage, AddressEditPage, AddressManagePage,
 	LoginPage, OrderCreatePage, OrderManagePage, WalletPage,
-	ProfilePage, RegisterPage } from './containers';
+	ProfilePage, RegisterPage, SettingPage } from './containers';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -46,6 +46,7 @@ ReactDOM.render(
 					<Route path='pricing' component={ProductPage}/>
 					<Route path='profile' component={ProfilePage}/>
 					<Route path='wallet' component={WalletPage}/>
+					<Route path='setting' component={SettingPage}/>
 				</Route>
 				<Route path='address' component={AddressEditPage}/>
 				<Route path='address/:addressId' component={AddressEditPage}/>

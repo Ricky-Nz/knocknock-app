@@ -4,7 +4,7 @@ export const ACTION_GET_VOUCHERS = 'ACTION_GET_VOUCHERS';
 
 export function getVouchers() {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getVouchers() {
 			method: 'GET',
 			path: 'vouchers',
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			},
 			params: {
 				expired: true

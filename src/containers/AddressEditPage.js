@@ -3,14 +3,14 @@ import { createSelector } from 'reselect';
 import { createAddress, editAddress, toastMessage } from '../actions';
 import AddressEditPage from '../components/AddressEditPage';
 
-const loadingStateSelector = state => state.appState.changingAddress;
+const updatingStateSelector = state => state.actionState.updatingAddress;
 
 const addressesSelector = state => state.addresses;
 
-const addressIdSelector = (state, props) => props.params.addressId;
+const addressIdSelector = (state, {params}) => params.addressId;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
+	updatingStateSelector,
 	addressesSelector,
 	addressIdSelector,
 	(editing, addresses, addressId) => {

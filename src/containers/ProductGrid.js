@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getProducts } from '../actions';
 import ProductGrid from '../components/ProductGrid';
 
-const loadingStateSelector = state => state.appState.loadingProducts;
+const loadingStateSelector = state => state.actionState.loadingProducts;
 
 const filterSelector = state => state.appState.productFilter;
 

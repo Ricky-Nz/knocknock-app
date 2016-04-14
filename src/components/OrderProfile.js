@@ -4,14 +4,14 @@ import IconLocalPhone from 'material-ui/lib/svg-icons/maps/local-phone';
 import IconAccessTime from 'material-ui/lib/svg-icons/device/access-time';
 import { TimeDisplay, IconParagraph } from '../widgets';
 
-let OrderProfile = ({address, unitNumber, postalCode, contactNo,
+let OrderProfile = ({address, unit_number, postal_code, contact_no,
 	pickupTime, pickupDate, dropOffDate, dropOffTime}) => (
 	<div>
     <IconParagraph icon={<IconPlace/>}>
-      Address: {`${address}, ${unitNumber}, ${postalCode}`}
+      Address: {`${address}, ${unit_number}, ${postal_code}`}
     </IconParagraph>
     <IconParagraph icon={<IconLocalPhone/>}>
-      Contact: {contactNo}
+      Contact: {contact_no}
     </IconParagraph>
     <IconParagraph icon={<IconAccessTime/>}>
       Pickup time: <TimeDisplay format='LT'>{pickupTime}</TimeDisplay>, <TimeDisplay format='MMMM Do YYYY'>{pickupDate}</TimeDisplay>
@@ -26,13 +26,13 @@ let OrderProfile = ({address, unitNumber, postalCode, contactNo,
 
 OrderProfile.propTypes = {
 	address: PropTypes.string,
-	unitNumber: PropTypes.any,
-	postalCode: PropTypes.any,
-	contactNo: PropTypes.any,
-	pickupTime: PropTypes.string,
-	pickupDate: PropTypes.string,
-	dropOffDate: PropTypes.string,
-	dropOffTime: PropTypes.string
+	unit_number: PropTypes.any,
+	postal_code: PropTypes.any,
+	contact_no: PropTypes.any,
+	pickupTime: PropTypes.any,
+	pickupDate: PropTypes.any,
+	dropOffDate: PropTypes.any,
+	dropOffTime: PropTypes.any
 };
 
 export default OrderProfile;

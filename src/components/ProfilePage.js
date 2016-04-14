@@ -8,7 +8,9 @@ import TextField from 'material-ui/lib/text-field';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import Avatar from 'material-ui/lib/avatar';
 import Dropzone from 'react-dropzone';
+import RaisedButton from 'material-ui/lib/raised-button';
 import { LoadingProgress } from '../widgets';
+import { red600 } from 'material-ui/lib/styles/colors';
 
 class ProfilePage extends Component {
 	constructor(props) {
@@ -72,17 +74,17 @@ class ProfilePage extends Component {
   }
 	render() {
 		const { firstName, lastName, email, contactNo, seletFile } = this.state;
-		const { loading, user } = this.props;
+		const { loading, updating, user, onDrawerClick, logout } = this.props;
 
 		return (
 			<div className='flex flex-fill'>
 				<AppBar title='My Profile'
-					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={loading?<CircularProgress size={0.5} color='white'/>:<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>
+					iconElementLeft={<IconButton onClick={onDrawerClick}><IconMenu/></IconButton>}
+					iconElementRight={(loading||updating)?<CircularProgress size={0.5} color='white'/>:<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>
 				{(loading&&!user)?<LoadingProgress/>:
-					<div style={styles.container}>
-						<div className='flex flex-center flex-align-center' style={styles.container}>
-							<div style={styles.avatarContainer}>
+					<div className='padding'>
+						<div className='flex flex-center flex-align-center padding'>
+							<div className='position-relative'>
 								<Avatar src={seletFile?seletFile.preview:(user&&user.avatarMd)} size={120}/>
 								<IconEdit style={styles.avatarEditIcon}/>
 		            <Dropzone style={styles.dropZone} multiple={false} accept='image/*' onDrop={this.onSelectFile}/>
@@ -96,6 +98,8 @@ class ProfilePage extends Component {
 							floatingLabelText='Email'/>
 						<TextField fullWidth={true} value={contactNo} disabled={true}
 							floatingLabelText='Contact Number'/>
+						<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
+							backgroundColor={red600} labelColor='white' onClick={logout}/>
 					</div>
 				}
 			</div>
@@ -106,18 +110,17 @@ class ProfilePage extends Component {
 ProfilePage.propTypes = {
 	onDrawerClick: PropTypes.func.isRequired,
 	loading: PropTypes.bool,
+	updating: PropTypes.bool,
 	user: PropTypes.object,
 	loadUser: PropTypes.func.isRequired,
 	updateUser: PropTypes.func.isRequired,
-	uploadAvatar: PropTypes.func.isRequired
+	uploadAvatar: PropTypes.func.isRequired,
+	logout: PropTypes.func.isRequired
 };
 
 const styles = {
-	container: {
-		padding: '16px'
-	},
-	avatarContainer: {
-		position: 'relative'
+	logoutButton: {
+		marginTop: 50
 	},
 	dropZone: {
 		height: 120,

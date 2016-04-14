@@ -3,9 +3,9 @@ import { createSelector } from 'reselect';
 import { login } from '../actions';
 import LoginPage from '../components/LoginPage';
 
-const tokenSelector = state => state.appState.token;
+const tokenSelector = state => state.session.token;
 
-const logingInStateSelector = state => state.appState.loggingin;
+const logingInStateSelector = state => state.actionState.loggingin;
 
 const mapStateToProps = createSelector(
 	tokenSelector,

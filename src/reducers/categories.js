@@ -4,7 +4,7 @@ import { convertCategory } from './dataConvertor';
 export default function (categories = null, {type, running, error, data}) {
 	switch(type) {
 		case ACTION_GET_PRODUCTS:
-			if (!running && !error && data) {
+			if (!running&&!error&&data) {
 				const rawCategories = data.map(({sub_category}) => convertCategory(sub_category));
 				
 				let record = {};

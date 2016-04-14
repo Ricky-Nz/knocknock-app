@@ -4,7 +4,7 @@ export const ACTION_GET_ORDER_DETAIL = 'ACTION_GET_ORDER_DETAIL';
 
 export function getOrderDetail(orderId) {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getOrderDetail(orderId) {
 			method: 'GET',
 			path: `orders/${orderId}`,
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			}
 		});
 	};

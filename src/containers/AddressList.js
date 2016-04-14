@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getUserAddresses } from '../actions';
 import AddressList from '../components/AddressList';
 
-const loadingStateSelector = state => state.appState.loadingAddresses;
+const loadingStateSelector = state => state.actionState.loadingAddresses;
 
 const dataSelector = state => state.addresses;
 

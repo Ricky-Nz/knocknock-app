@@ -4,7 +4,7 @@ export const ACTION_GET_ORDERS = 'ACTION_GET_ORDERS';
 
 export function getOrders() {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getOrders() {
 			method: 'GET',
 			path: 'orders',
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			}
 		});
 	};

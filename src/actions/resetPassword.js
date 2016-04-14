@@ -4,7 +4,7 @@ export const ACTION_RESET_PASSWORD = 'ACTION_RESET_PASSWORD';
 
 export function resetPassword(password) {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function resetPassword(password) {
 			method: 'PUT',
 			path: `users/me/password`,
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			},
 			body: {
 				password,

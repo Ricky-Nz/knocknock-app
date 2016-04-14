@@ -4,7 +4,7 @@ export const ACTION_GET_PRODUCTS = 'ACTION_GET_PRODUCTS';
 
 export function getProducts() {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getProducts() {
 			method: 'GET',
 			path: 'items',
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			}
 		});
 	};

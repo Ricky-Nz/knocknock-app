@@ -6,12 +6,9 @@ import { DropDownSelector } from '../widgets';
 const orderSortSelector = (state, {historyOrder}) =>
 	historyOrder?state.appState.historyOrderSortType:state.appState.activeOrderSortType;
 
-const dataSelector = state => state.orders;
-
 const mapStateToProps = createSelector(
 	orderSortSelector,
-	dataSelector,
-	(orderSortType, orders) => ({
+	(orderSortType) => ({
 		selectedKey: orderSortType,
 		displayPrefix: 'Sort by:',
 		items: [

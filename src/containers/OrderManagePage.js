@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getOrders } from '../actions';
 import OrderManagePage from '../components/OrderManagePage';
 
-const loadingStateSelector = state => state.appState.loadingOrders;
+const loadingStateSelector = state => state.actionState.loadingOrders;
 
 const mapStateToProps = createSelector(
 	loadingStateSelector,

@@ -4,11 +4,13 @@ export { default as AddressManagePage } from './AddressManagePage';
 
 export { default as LoginPage } from './LoginPage';
 export { default as RegisterPage } from './RegisterPage';
+export { default as WalletPage } from './WalletPage';
+export { default as ProfilePage } from './ProfilePage';
+export { default as SettingPage } from './SettingPage';
+
 export { default as MessageToast } from './MessageToast';
 export { default as UserCard } from './UserCard';
-export { default as WalletPage } from './WalletPage';
 export { default as PaymentProcessingDialog } from './PaymentProcessingDialog';
-
 export { default as ProductGrid } from './ProductGrid';
 export { default as CategorySelector } from './CategorySelector';
 

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getUserProfile, toastMessage } from '../actions';
 import WalletPage from '../components/WalletPage';
 
-const loadingStateSelector = state => state.appState.changingUserProfile;
+const loadingStateSelector = state => state.actionState.updatingUserProfile;
 
 const dataSelector = state => state.user;
 

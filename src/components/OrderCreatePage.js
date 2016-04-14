@@ -47,8 +47,9 @@ class CreateOrderPage extends Component {
     this.onNoteChange = this.onNoteChange.bind(this);
 	}
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.creating&&this.props.creating) {
-      
+    if (!nextProps.creating&&this.props.creating&&nextProps.success) {
+      this.props.refreshOrders();
+      this.context.router.goBack();  
     }
   }
 	onClosePage() {
@@ -100,9 +101,8 @@ class CreateOrderPage extends Component {
       const { address, pickupDate, pickupTime, dropOffDate, dropOffTime, note } = this.state;
       this.props.createOrder({
         description: note,
-        pickupPostalCode: address.postalCode,
+        pickupPostalCode: address.postal_code,
         pickupAddress: address.address,
-        pickupApartmentType: address.type,
         pickupDate: moment(pickupDate).format('YYYY-MM-DD HH:mm:ss')
       });
     } else {
@@ -151,14 +151,14 @@ class CreateOrderPage extends Component {
 			  <AppBar title='Create Order'
 			    iconElementLeft={<IconButton onClick={this.onClosePage}><ArrowBack/></IconButton>}
           iconElementRight={creating?<CircularProgress size={0.5} color='white'/>:null}/>
-        <div className='flex flex-fill position-relative'>
+        <div className='flex flex-fill'>
           <Stepper style={styles.flexFill} containerStyle={styles.flexFillScroll} horizontal={true} activeStep={this.state.activeStep}
             onStepHeaderTouch={creating?null:this.onSelectStep}
             updateCompletedStatus={this.updateCompletedSteps}
             createIcon={this.onCreateIcon}>
 
             <Step orderStepLabel='1' stepLabel='Select Address'>
-              <AddressListContainer selectable={true} selectItem={address}
+              <AddressList selectable={true} selectItem={address}
                 onItemClicked={this.onSelectAddress}/>
             </Step>
 
@@ -189,13 +189,13 @@ class CreateOrderPage extends Component {
                 {address&&<OrderProfile {...address} pickupTime={pickupTime}
                   pickupDate={pickupDate} dropOffDate={dropOffDate} dropOffTime={dropOffTime}/>}
                 <TextField fullWidth={true} value={note} hintText='any special requirement?'
-                  floatingLabelText='Note' onChange={this.onNoteChange}/>
+                  floatingLabelText='Note' disabled={creating} onChange={this.onNoteChange}/>
               </Paper>
             </Step>
 
           </Stepper>
 
-          <Paper className='flex flex-row flex-space-between flex-align-center' style={styles.bottombar} zDepth={1}>
+          <Paper className='flex flex-row flex-space-between flex-align-center padding' zDepth={1}>
             {(activeStep > 0)?<FlatButton label='Back' onClick={this.onBack} disabled={creating}/>:' '}
             <RaisedButton label={activeStep===2?'Submit New Order':'Continue'}
               primary={true} onClick={this.onContinue} disabled={creating}/>
@@ -212,7 +212,9 @@ CreateOrderPage.contextTypes = {
 
 CreateOrderPage.propTypes = {
   creating: PropTypes.bool,
+  success: PropTypes.bool,
   createOrder: PropTypes.func.isRequired,
+  refreshOrders: PropTypes.func.isRequired,
   toast: PropTypes.func.isRequired
 };
 
@@ -230,13 +232,6 @@ const styles = {
     flexDirection: 'column',
     flex: 1,
     overflow: 'auto'
-  },
-  bottombar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: '16px'
   }
 };
 

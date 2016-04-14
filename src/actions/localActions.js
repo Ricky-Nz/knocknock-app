@@ -4,11 +4,12 @@ export const ACTION_CHANGE_HISTORY_ORDER_SORT = 'ACTION_CHANGE_HISTORY_ORDER_SOR
 export const ACTION_CHANGE_ACTIVE_ORDER_FILETER = 'ACTION_CHANGE_ACTIVE_ORDER_FILETER';
 export const ACTION_CHANGE_HISTORY_ORDER_FILETER = 'ACTION_CHANGE_HISTORY_ORDER_FILETER';
 export const ACTION_CHANGE_PRODUCT_FILETER = 'ACTION_CHANGE_PRODUCT_FILETER';
+export const ACTION_LOGOUT = 'ACTION_LOGOUT';
 
-export function toastMessage(message) {
+export function toastMessage(data) {
 	return {
 		type: ACTION_TOAST_MESSAGE,
-		message
+		data
 	};
 }
 
@@ -46,3 +47,13 @@ export function changeProductFilter(id) {
 		data: id
 	};
 }
+
+export function logout() {
+	return {
+		type: ACTION_LOGOUT
+	};
+}
+
+
+
+

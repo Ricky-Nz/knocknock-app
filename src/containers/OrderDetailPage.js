@@ -5,7 +5,7 @@ import OrderDetailPage from '../components/OrderDetailPage';
 
 const orderSelector = state => state.orderDetail;
 
-const loadingStateSelector = state => state.appState.loadingOrder;
+const loadingStateSelector = state => state.actionState.loadingOrder;
 
 const mapStateToProps = createSelector(
 	orderSelector,

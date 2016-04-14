@@ -1,18 +1,24 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { createOrder, toastMessage } from '../actions';
+import { createOrder, getOrders, toastMessage } from '../actions';
 import OrderCreatePage from '../components/OrderCreatePage';
 
-const loadingStateSelector = state => state.appState.creatingOrder;
+const creatingStateSelector = state => state.actionState.creatingOrder;
+
+const resultSelector = state => state.actionState.creatingOrderSuccess;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
-	(creating) => ({creating})
+	creatingStateSelector,
+	resultSelector,
+	(creating, success) => ({creating, success})
 );
 
 const mapActionToProps = (dispatch, props) => ({
 	createOrder: (args) => {
 		dispatch(createOrder(args));
+	},
+	refreshOrders: () => {
+		dispatch(getOrders());
 	},
 	toast: (message) => {
 		dispatch(toastMessage(message));

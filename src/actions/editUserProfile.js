@@ -4,7 +4,7 @@ export const ACTION_EDIT_USER_PROFILE = 'ACTION_EDIT_USER_PROFILE';
 
 export function editUserProfile({contactNo, email, firstName, lastName}) {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function editUserProfile({contactNo, email, firstName, lastName}) {
 			method: 'PUT',
 			path: `users/me`,
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			},
 			body: {
 				email,

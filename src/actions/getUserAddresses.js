@@ -4,7 +4,7 @@ export const ACTION_GET_USER_ADDRESSES = 'ACTION_GET_USER_ADDRESSES';
 
 export function getUserAddresses() {
 	return (dispatch, getState) => {
-		const { appState } = getState();
+		const { session } = getState();
 
 		runAction({
 			dispatch,
@@ -12,7 +12,7 @@ export function getUserAddresses() {
 			method: 'GET',
 			path: 'user_addresses',
 			headers: {
-				'Authorization': `${appState.tokenType} ${appState.token}`
+				'Authorization': `${session.tokenType} ${session.token}`
 			}
 		});
 	};
