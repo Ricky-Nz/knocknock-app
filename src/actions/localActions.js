@@ -5,6 +5,9 @@ export const ACTION_CHANGE_ACTIVE_ORDER_FILETER = 'ACTION_CHANGE_ACTIVE_ORDER_FI
 export const ACTION_CHANGE_HISTORY_ORDER_FILETER = 'ACTION_CHANGE_HISTORY_ORDER_FILETER';
 export const ACTION_CHANGE_PRODUCT_FILETER = 'ACTION_CHANGE_PRODUCT_FILETER';
 export const ACTION_LOGOUT = 'ACTION_LOGOUT';
+export const ACTION_SET_DEFAULT_ADDRESS = 'ACTION_SET_DEFAULT_ADDRESS';
+export const ACTION_SET_DEFAULT_PICKUP_TIME = 'ACTION_SET_DEFAULT_PICKUP_TIME';
+export const ACTION_SET_DEFAULT_NOTE = 'ACTION_SET_DEFAULT_NOTE';
 
 export function toastMessage(data) {
 	return {
@@ -54,6 +57,26 @@ export function logout() {
 	};
 }
 
+export function setDefaultAddress(address) {
+	return {
+		type: ACTION_SET_DEFAULT_ADDRESS,
+		data: address
+	};
+}
+
+export function setDefaultPickupTime(pickupAddress) {
+	return {
+		type: ACTION_SET_DEFAULT_PICKUP_TIME,
+		data: pickupAddress
+	};
+}
+
+export function setDefaultNote(note) {
+	return {
+		type: ACTION_SET_DEFAULT_NOTE,
+		data: note
+	};
+}
 
 
 

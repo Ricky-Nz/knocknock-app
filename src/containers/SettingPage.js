@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import {  } from '../actions';
+import { setDefaultAddress, setDefaultPickupTime, setDefaultNote } from '../actions';
 import SettingPage from '../components/SettingPage';
 
 const settingSelector = state => state.settings;
@@ -11,7 +11,15 @@ const mapStateToProps = createSelector(
 );
 
 const mapActionToProps = (dispatch) => ({
-
+	setDefaultAddress: (address) => {
+		dispatch(setDefaultAddress(address));
+	},
+	setDefaultPickupTime: (pickupTime) => {
+		dispatch(setDefaultPickupTime(pickupTime));
+	},
+	setDefaultNote: (note) => {
+		dispatch(setDefaultNote(note));
+	}
 });
 
 export default connect(mapStateToProps, mapActionToProps)(SettingPage);

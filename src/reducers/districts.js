@@ -1,4 +1,4 @@
-import { ACTION_GET_DISTRICTS } from '../actions';
+import { ACTION_GET_DISTRICTS, ACTION_LOGOUT } from '../actions';
 
 export default function (districts = null, {type, running, error, data}) {
 	switch(type) {
@@ -14,6 +14,8 @@ export default function (districts = null, {type, running, error, data}) {
 			} else {
 				return districts;
 			}
+		case ACTION_LOGOUT:
+			return null;
 		default:
 			return districts;
 	}

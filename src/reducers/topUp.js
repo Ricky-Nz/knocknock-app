@@ -1,4 +1,4 @@
-import { ACTION_TOPUP } from '../actions';
+import { ACTION_TOPUP, ACTION_LOGOUT } from '../actions';
 
 export default function (topUp = null, {type, running, error, data}) {
 	switch(type) {
@@ -11,6 +11,8 @@ export default function (topUp = null, {type, running, error, data}) {
 			} else {
 				return null;
 			}
+		case ACTION_LOGOUT:
+			return null;
 		default:
 			return topUp;
 	}

@@ -1,5 +1,5 @@
 import { ACTION_GET_USER_ADDRESSES, ACTION_CREATE_ADDRESS,
-	ACTION_EDIT_ADDRESS } from '../actions';
+	ACTION_EDIT_ADDRESS, ACTION_LOGOUT } from '../actions';
 import { convertAddress } from './dataConvertor';
 
 export default function (addresses = null, {type, running, error, data}) {
@@ -27,6 +27,8 @@ export default function (addresses = null, {type, running, error, data}) {
 			} else {
 				return addresses;
 			}
+		case ACTION_LOGOUT:
+			return null;
 		default:
 			return addresses;
 	}

@@ -1,4 +1,4 @@
-import { ACTION_GET_PRODUCTS } from '../actions';
+import { ACTION_GET_PRODUCTS, ACTION_LOGOUT } from '../actions';
 import { convertProduct } from './dataConvertor';
 
 export default function (products = null, {type, running, error, data}) {
@@ -9,6 +9,8 @@ export default function (products = null, {type, running, error, data}) {
 			} else {
 				return products;
 			}
+		case ACTION_LOGOUT:
+			return null;
 		default:
 			return products;
 	}

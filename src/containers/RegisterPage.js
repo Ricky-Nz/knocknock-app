@@ -5,14 +5,17 @@ import RegisterPage from '../components/RegisterPage';
 
 const registeringStateSelector = state => state.actionState.registering;
 
+const registeringResultSelector = state => state.actionState.registeringSuccess;
+
 const mapStateToProps = createSelector(
 	registeringStateSelector,
-	(registering) => ({registering})
+	registeringResultSelector,
+	(registering, registerSuccess) => ({registering, registerSuccess})
 );
 
 const mapActionToProps = (dispatch) => ({
-	onRegister: ({username, password, contactNo}) => {
-		dispatch(register({username, password, contactNo}));
+	onRegister: (args) => {
+		dispatch(register(args));
 	},
 	toast: (message) => {
 		dispatch(toastMessage(message));

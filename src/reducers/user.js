@@ -1,5 +1,5 @@
 import { ACTION_GET_USER_PROFILE, ACTION_EDIT_USER_PROFILE,
-	ACTION_EDIT_AVATAR } from '../actions';
+	ACTION_EDIT_AVATAR, ACTION_LOGOUT } from '../actions';
 
 export default function (user = null, {type, running, error, data}) {
 	switch(type) {
@@ -40,6 +40,8 @@ export default function (user = null, {type, running, error, data}) {
 			} else {
 				return user;
 			}
+		case ACTION_LOGOUT:
+			return null;
 		default:
 			return user;
 	}

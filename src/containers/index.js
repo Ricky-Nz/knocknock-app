@@ -13,6 +13,7 @@ export { default as UserCard } from './UserCard';
 export { default as PaymentProcessingDialog } from './PaymentProcessingDialog';
 export { default as ProductGrid } from './ProductGrid';
 export { default as CategorySelector } from './CategorySelector';
+export { default as QuickOrderButton } from './QuickOrderButton';
 
 export { default as OrderCreatePage } from './OrderCreatePage';
 export { default as OrderDetailPage } from './OrderDetailPage';

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { List } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import AddressListItem from './AddressListItem';
 import IconButton from 'material-ui/IconButton';
 import IconModeEdit from 'material-ui/svg-icons/editor/mode-edit';
@@ -35,8 +36,11 @@ class AddressList extends Component {
 							)
 						} else {
 							return (
-								<AddressListItem key={index} {...address} onClick={() => onItemClicked(address)}
-									rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
+								<div key={index}>
+									<AddressListItem {...address} onClick={() => onItemClicked(address)}
+										rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
+									<Divider/>
+								</div>
 							);
 						}
 					}))

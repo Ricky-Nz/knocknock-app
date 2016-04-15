@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import { AddressList } from '../containers';
 
-let AddressSelectDialog = ({open, defaultAddress, onSelect, onClose}) => (
-	<Dialog open={open} bodyStyle={styles.container}>
+let AddressSelectDialog = ({open, defaultAddress, onSelect, onCancel}) => (
+	<Dialog contentStyle={styles.container} bodyStyle={styles.bodyStyle} open={open}>
 		<AddressList selectable={true} selectItem={defaultAddress}
-			onItemClicked={onSelect} onRequestClose={onClose}/>
+			onItemClicked={onSelect} onRequestClose={onCancel}/>
 	</Dialog>
 );
 
@@ -13,7 +13,7 @@ AddressSelectDialog.propTypes = {
 	defaultAddress: PropTypes.object,
 	open: PropTypes.bool,
 	onSelect: PropTypes.func.isRequired,
-	onClose: PropTypes.func.isRequired
+	onCancel: PropTypes.func.isRequired
 };
 
 AddressSelectDialog.defaultProps = {
@@ -21,9 +21,12 @@ AddressSelectDialog.defaultProps = {
 };
 
 const styles = {
+	bodyStyle: {
+		padding: 0
+	},
 	container: {
-		padding: 0,
-		height: 400
+		height: 500,
+		overflow: 'auto'
 	}
 };
 

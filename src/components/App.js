@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { deepOrange500, blueGrey500 } from 'material-ui/styles/colors';
 import { MessageToast } from '../containers';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -11,14 +12,18 @@ const muiTheme = getMuiTheme({
   }
 });
 
-const Application = ({children}) => (
+let Application = ({children, location}) => (
 	<MuiThemeProvider muiTheme={muiTheme}>
-		<div className='flex' style={styles.container}>
+		<div className='app flex flex-fill'>
 			{children}
 			<MessageToast/>
 		</div>
 	</MuiThemeProvider>
 );
+
+Application.contextTypes = {
+  router: React.PropTypes.object
+};
 
 const styles = {
 	container: {

@@ -3,14 +3,14 @@ import { createSelector } from 'reselect';
 import { login } from '../actions';
 import LoginPage from '../components/LoginPage';
 
-const tokenSelector = state => state.session.token;
-
 const logingInStateSelector = state => state.actionState.loggingin;
 
+const logingInResultSelector = state => state.actionState.logginginSuccess;
+
 const mapStateToProps = createSelector(
-	tokenSelector,
 	logingInStateSelector,
-	(token, loggingin) => ({token, loggingin})
+	logingInResultSelector,
+	(loggingin, loginSuccess) => ({loggingin, loginSuccess})
 );
 
 const mapActionToProps = (dispatch) => ({

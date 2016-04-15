@@ -12,30 +12,24 @@ class RegisterPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: 'ruiqi.sg@gmail.com',
-			password: '96452556',
-			repeatPassword: '96452556',
-			contactNo: '96452556',
-			showPassword: false
+			showPassword: false,
+			phoneNumber: '',
+			password: '',
+			repeatPassword: ''
 		};
-		this.onUsernameChange = this.onUsernameChange.bind(this);
+		this.onPhoneChange = this.onPhoneChange.bind(this);
 		this.onPasswordChange = this.onPasswordChange.bind(this);
 		this.onRepeatPasswordChange = this.onRepeatPasswordChange.bind(this);
-		this.onContactNoChange = this.onContactNoChange.bind(this);
 		this.onRegisterClicked = this.onRegisterClicked.bind(this);
 		this.onShowPasswordChange = this.onShowPasswordChange.bind(this);
-		this.onBack = this.onBack.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		if (!nextProps.running&&!nextProps.error&&this.props.running) {
-			this.context.router.replace('login');
+		if (!nextProps.registering&&this.props.registering&&nextProps.registerSuccess) {
+			this.context.router.goBack();
 		}
 	}
-	onBack() {
-		this.context.router.replace('login');
-	}
-	onUsernameChange(event) {
-		this.setState({username: event.target.value});
+	onPhoneChange(event) {
+		this.setState({phoneNumber: event.target.value});
 	}
 	onPasswordChange(event) {
 		this.setState({password: event.target.value});
@@ -50,22 +44,21 @@ class RegisterPage extends Component {
 		this.setState({showPassword: !this.state.showPassword});
 	}
 	onRegisterClicked() {
-		if (!this.state.username) {
-			this.props.toast('User nmae can not be empty');
+		let { phoneNumber, password, repeatPassword } = this.state;
+
+		phoneNumber = phoneNumber&&phoneNumber.replace(/ /g,'');
+
+		if (!phoneNumber || phoneNumber.length !== 8 || isNaN(phoneNumber)) {
+			this.props.toast('Please enter a valid phone number as your login username');
 			return;
 		}
 
-		if (!this.state.contactNo) {
-			this.props.toast('Contact number can not be empty');
+		if (!password || password.length < 8) {
+			this.props.toast('Password is too short, try one with at least 8 characters');
 			return;
 		}
 
-		if (!this.state.password) {
-			this.props.toast('Login password can not be empty');
-			return;
-		}
-
-		if (this.state.password !== this.state.repeatPassword) {
+		if (password !== repeatPassword) {
 			this.props.toast('Password not match, please reenter');
 			return;
 		}
@@ -74,30 +67,26 @@ class RegisterPage extends Component {
 	}
 	render() {
 		const { registering } = this.props;
-		const { username, contactNo, password, repeatPassword, showPassword } = this.state;
+		const { phoneNumber, password, repeatPassword, showPassword } = this.state;
 
 		return (
-			<div className='row'>
+			<div className='flex flex-fill page'>
 			  <AppBar title='User Register'
-			    iconElementLeft={<IconButton onClick={this.onBack}><ArrowBack/></IconButton>}/>
-				<div className='col-xs-10 col-xs-offset-1'>
-					<TextField fullWidth={true} value={username} disabled={registering}
-						floatingLabelText='User name' onChange={this.onUsernameChange}/>
-					<TextField fullWidth={true} value={contactNo} disabled={registering}
-						floatingLabelText='Contact number' onChange={this.onContactNoChange}/>
+			    iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBack/></IconButton>}
+					iconElementRight={registering?<CircularProgress size={0.5} color='white'/>:null}/>
+				<div className='padding margin'>
+					<TextField fullWidth={true} type='number' value={phoneNumber} disabled={registering}
+						floatingLabelText='Phone' onChange={this.onPhoneChange} disabled={registering}/>
 					<TextField type={showPassword?'text':'password'} fullWidth={true} value={password} disabled={registering}
-						floatingLabelText='Password' onChange={this.onPasswordChange}/>
+						floatingLabelText='Password' onChange={this.onPasswordChange} disabled={registering}/>
 					<TextField type={showPassword?'text':'password'} fullWidth={true} value={repeatPassword} disabled={registering}
-						floatingLabelText='Repeat password' onChange={this.onRepeatPasswordChange}/>
+						floatingLabelText='Repeat password' onChange={this.onRepeatPasswordChange} disabled={registering}/>
 					<div>
-						<Checkbox style={styles.checkbox} checked={showPassword}
+						<Checkbox style={styles.checkbox} checked={showPassword} disabled={registering}
 							label='Show password' onCheck={this.onShowPasswordChange}/>
 					</div>
 			    <RaisedButton style={styles.button} label='Submit' fullWidth={true} primary={true}
-						icon={<ActionHome/>} onClick={this.onRegisterClicked} disabled={registering}/>
-					<div className='flex flex-center flex-align-center' style={styles.progressContainer}>
-						{registering&&<CircularProgress size={0.8}/>}
-					</div>
+						icon={<ActionHome/>} onClick={this.onRegisterClicked} registering={registering}/>
 				</div>
 			</div>
 		);
@@ -109,16 +98,13 @@ RegisterPage.contextTypes = {
 };
 
 RegisterPage.propTypes = {
-	error: PropTypes.string,
 	registering: PropTypes.bool,
+	registerSuccess: PropTypes.bool,
 	onRegister: PropTypes.func.isRequired,
 	toast: PropTypes.func.isRequired
 };
 
 const styles = {
-	progressContainer: {
-		paddingTop: 30
-	},
 	checkbox: {
 		padding: '10px 0px'
 	},

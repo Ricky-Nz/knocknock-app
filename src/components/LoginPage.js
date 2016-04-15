@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import IconPersonAdd from 'material-ui/svg-icons/social/person-add';
+import IconCheck from 'material-ui/svg-icons/navigation/check';
+import { deepOrange500 } from 'material-ui/styles/colors';
 
 class LoginPage extends Component {
 	constructor(props) {
@@ -16,14 +18,9 @@ class LoginPage extends Component {
 		this.onLoginClicked = this.onLoginClicked.bind(this);
 		this.onRegisterClicked = this.onRegisterClicked.bind(this);
 	}
-	componentDidMount() {
-		if (this.props.token) {
-			this.context.router.replace('dashboard');
-		}
-	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.token) {
-			this.context.router.replace('dashboard');
+		if (!nextProps.loggingin&&this.props.loggingin&&nextProps.loginSuccess) {
+			this.context.router.replace('/dashboard');
 		}
 	}
 	onUsernameChange(event) {
@@ -33,7 +30,7 @@ class LoginPage extends Component {
 		this.setState({password: event.target.value});
 	}
 	onRegisterClicked() {
-		this.context.router.replace('register');
+		this.context.router.push('register');
 	}
 	onLoginClicked() {
 		if (!this.state.username) {
@@ -53,21 +50,20 @@ class LoginPage extends Component {
 		const { username, password } = this.state;
 
 		return (
-			<div className='row fillHeight page'>
-				<div className='col-xs-10 col-xs-offset-1'>
+			<div className='flex flex-fill page'>
+				<div className='flex flex-center flex-align-center'>
+					<p style={styles.title}>Knocknock</p>
+				</div>
+				<div className='padding margin'>
 					<TextField fullWidth={true} value={username} disabled={loggingin}
-						floatingLabelText='User name' onChange={this.onUsernameChange}/>
+						floatingLabelText='Email / Phone' onChange={this.onUsernameChange}/>
 					<TextField type='password' fullWidth={true} value={password} disabled={loggingin}
 						floatingLabelText='Password' onChange={this.onPasswordChange}/>
-					<div className='row'>
-						<div className='col-xs-6'>
-					    <RaisedButton label='Register' fullWidth={true}
-								icon={<ActionHome/>} onClick={this.onRegisterClicked} disabled={loggingin}/>
-						</div>
-						<div className='col-xs-6'>
-					    <RaisedButton label='Login' primary={true} fullWidth={true}
-								icon={<ActionHome/>} onClick={this.onLoginClicked} disabled={loggingin}/>
-						</div>
+					<div className='flex flex-row padding-top'>
+				    <RaisedButton className='flex-fill' style={styles.leftButton} label='Register'
+							icon={<IconPersonAdd/>} onClick={this.onRegisterClicked} disabled={loggingin}/>
+				    <RaisedButton className='flex-fill' style={styles.rightButton} label='Login' primary={true}
+							icon={<IconCheck/>} onClick={this.onLoginClicked} disabled={loggingin}/>
 					</div>
 					<div className='flex flex-center flex-align-center' style={styles.progressContainer}>
 						{loggingin&&<CircularProgress size={0.8}/>}
@@ -83,14 +79,26 @@ LoginPage.contextTypes = {
 };
 
 LoginPage.propTypes = {
-	token: PropTypes.string,
 	loggingin: PropTypes.bool,
+	loginSuccess: PropTypes.bool,
 	onLogin: PropTypes.func.isRequired
 };
 
 const styles = {
 	progressContainer: {
 		paddingTop: 50
+	},
+	title: {
+		marginTop: 72,
+		fontSize: '3em',
+		color: deepOrange500,
+		textAlign: 'center'
+	},
+	leftButton: {
+		marginRight: 4
+	},
+	rightButton: {
+		marginLeft: 4
 	}
 };
 

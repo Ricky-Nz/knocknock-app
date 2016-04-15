@@ -19,6 +19,7 @@ class ProfilePage extends Component {
 		this.onFirstNameChange = this.onFirstNameChange.bind(this);
 		this.onLastNameChange = this.onLastNameChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.onLogout = this.onLogout.bind(this);
 		this.onSelectFile = this.onSelectFile.bind(this);
 	}
 	componentDidMount() {
@@ -63,6 +64,10 @@ class ProfilePage extends Component {
 			});
 		}
 	}
+	onLogout() {
+		this.props.logout();
+		this.context.router.replace('/login');
+	}
 	onSelectFile(files) {
 		if (files&&files[0]) {
 			if (files[0].type.startsWith('image')) {
@@ -74,7 +79,7 @@ class ProfilePage extends Component {
   }
 	render() {
 		const { firstName, lastName, email, contactNo, seletFile } = this.state;
-		const { loading, updating, user, onDrawerClick, logout } = this.props;
+		const { loading, updating, user, onDrawerClick } = this.props;
 
 		return (
 			<div className='flex flex-fill'>
@@ -99,7 +104,7 @@ class ProfilePage extends Component {
 						<TextField fullWidth={true} value={contactNo} disabled={true}
 							floatingLabelText='Contact Number'/>
 						<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
-							backgroundColor={red600} labelColor='white' onClick={logout}/>
+							backgroundColor={red600} labelColor='white' onClick={this.onLogout}/>
 					</div>
 				}
 			</div>
@@ -116,6 +121,10 @@ ProfilePage.propTypes = {
 	updateUser: PropTypes.func.isRequired,
 	uploadAvatar: PropTypes.func.isRequired,
 	logout: PropTypes.func.isRequired
+};
+
+ProfilePage.contextTypes = {
+  router: React.PropTypes.object
 };
 
 const styles = {

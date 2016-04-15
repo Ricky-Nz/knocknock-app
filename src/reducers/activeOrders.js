@@ -1,4 +1,4 @@
-import { ACTION_GET_ORDERS, ACTION_CREATE_ORDER } from '../actions';
+import { ACTION_GET_ORDERS, ACTION_CREATE_ORDER, ACTION_LOGOUT } from '../actions';
 import { convertCompactOrder } from './dataConvertor';
 
 export default function (orders = null, {type, running, error, data}) {
@@ -17,6 +17,8 @@ export default function (orders = null, {type, running, error, data}) {
 			} else {
 				return orders;
 			}
+		case ACTION_LOGOUT:
+			return null;
 		default:
 			return orders;
 	}

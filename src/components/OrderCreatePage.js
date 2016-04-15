@@ -23,13 +23,25 @@ class CreateOrderPage extends Component {
     const minDate = moment().add(1, 'days').toDate();
     const maxDate = moment().add(15, 'days').toDate();
 
-		this.state = {
-      activeStep: 0,
-      note: '',
-      pickupDate: minDate,
-      minPickDate: minDate,
-      maxPickDate: maxDate
-    };
+    if (props.location.query.express) {
+      this.state = {
+        activeStep: 2,
+        address: props.defaultAddress,
+        note: props.defaultNote,
+        pickupTime: props.defaultPickupTime,
+        pickupDate: minDate,
+        minPickDate: minDate,
+        maxPickDate: maxDate
+      };
+    } else {
+      this.state = {
+        activeStep: 0,
+        note: '',
+        pickupDate: minDate,
+        minPickDate: minDate,
+        maxPickDate: maxDate
+      };
+    }
 		this.onClosePage = this.onClosePage.bind(this);
 		this.onSelectStep = this.onSelectStep.bind(this);
 		this.onContinue = this.onContinue.bind(this);
@@ -117,7 +129,7 @@ class CreateOrderPage extends Component {
     this.setState({note: event.target.value});
   }
   renderStepContent({activeStep, minPickDate, maxPickDate, 
-      address, note, pickupDate, pickupTime, dropOffDate, dropOffTime}) {
+      address, note, pickupDate, pickupTime, dropOffDate, dropOffTime}, creating) {
     switch(activeStep) {
       case 0:
         return (
@@ -174,7 +186,7 @@ class CreateOrderPage extends Component {
             <Step><StepLabel>Preview&Submit</StepLabel></Step>
           </Stepper>
           <div className='flex flex-fill'>
-            {this.renderStepContent(this.state)}
+            {this.renderStepContent(this.state, creating)}
           </div>
           <Paper className='flex flex-row flex-space-between flex-align-center padding' zDepth={2}>
             {(activeStep > 0)?<FlatButton label='Back' onClick={this.onBack} disabled={creating}/>:<p/>}
@@ -192,6 +204,9 @@ CreateOrderPage.contextTypes = {
 };
 
 CreateOrderPage.propTypes = {
+  defaultAddress: PropTypes.object,
+  defaultPickupTime: PropTypes.any,
+  defaultNote: PropTypes.string,
   creating: PropTypes.bool,
   success: PropTypes.bool,
   createOrder: PropTypes.func.isRequired,

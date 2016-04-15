@@ -11,7 +11,7 @@ import IconMoney from 'material-ui/svg-icons/editor/attach-money';
 import IconWallet from 'material-ui/svg-icons/action/account-balance-wallet';
 import IconSettings from 'material-ui/svg-icons/action/settings';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { UserCard } from '../containers';
+import { UserCard, QuickOrderButton } from '../containers';
 
 class DashboardPage extends Component {
 	constructor(props) {
@@ -67,13 +67,16 @@ class DashboardPage extends Component {
 		    	onRequestChange={this.onToggleDrawer}>
 		    	<UserCard onClick={this.onSelectUser}/>
 		      <Menu value={selectMenu} onItemTouchTap={this.onMenuSelect}>
-		        <MenuItem primaryText='Active order' leftIcon={<IconLocalShipping/>} value='activeorders'/>
-		        <MenuItem primaryText='History order' leftIcon={<IconHistory/>} value='historyorders'/>
-		        <MenuItem primaryText='Address' leftIcon={<IconPlace/>} value='addresses'/>
+		        <MenuItem primaryText='Active Orders' leftIcon={<IconLocalShipping/>} value='activeorders'/>
+		        <MenuItem primaryText='History Orders' leftIcon={<IconHistory/>} value='historyorders'/>
+		        <MenuItem primaryText='Addresses' leftIcon={<IconPlace/>} value='addresses'/>
 		        <MenuItem primaryText='Pricing' leftIcon={<IconMoney/>} value='pricing'/>
 		        <MenuItem primaryText='Wallet' leftIcon={<IconWallet/>} value='wallet'/>
 		        <MenuItem primaryText='Settings' leftIcon={<IconSettings/>} value='setting'/>
 		      </Menu>
+		      <div className='padding'>
+		      	<QuickOrderButton/>
+		      </div>
 		    </Drawer>
 			    {React.cloneElement(this.props.children||<div/>,
 			    	{onDrawerClick: this.onToggleDrawer, key: selectMenu, historyOrder: selectMenu==='historyorders'})}
