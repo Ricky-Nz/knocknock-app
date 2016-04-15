@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
-import IconEdit from 'material-ui/lib/svg-icons/editor/mode-edit';
-import Subheader from 'material-ui/lib/Subheader';
-import ListItem from 'material-ui/lib/lists/list-item';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Subheader from 'material-ui/Subheader';
+import { ListItem } from 'material-ui/List';
 import AddressSelectDialog from './AddressSelectDialog';
 
 class SettingPage extends Component {

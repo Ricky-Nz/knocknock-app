@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import Checkbox from 'material-ui/lib/checkbox';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
-import ActionHome from 'material-ui/lib/svg-icons/action/home';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
+import Checkbox from 'material-ui/Checkbox';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import ActionHome from 'material-ui/svg-icons/action/home';
 
 class RegisterPage extends Component {
 	constructor(props) {

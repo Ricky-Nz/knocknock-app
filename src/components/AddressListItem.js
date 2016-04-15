@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ListItem from 'material-ui/lib/lists/list-item';
+import { ListItem } from 'material-ui/List';
 
 let AddressListItem = ({id, address, unit_number, contact_no, postal_code,
 	rightIconButton, onClick}) => (

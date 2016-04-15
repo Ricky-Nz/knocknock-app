@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import List from 'material-ui/lib/lists/list';
-import Paper from 'material-ui/lib/paper';
+import { List } from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 import AddressListItem from './AddressListItem';
-import IconButton from 'material-ui/lib/icon-button';
-import IconModeEdit from 'material-ui/lib/svg-icons/editor/mode-edit';
-import IconCheckBox from 'material-ui/lib/svg-icons/toggle/check-box';
-import IconCheckBoxEmpty from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
+import IconButton from 'material-ui/IconButton';
+import IconModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import IconCheckBox from 'material-ui/svg-icons/toggle/check-box';
+import IconCheckBoxEmpty from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import { LoadingProgress } from '../widgets';
 
 class AddressList extends Component {

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import LeftNav from 'material-ui/lib/left-nav';
-import Menu from 'material-ui/lib/menus/menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import Subheader from 'material-ui/lib/Subheader';
-import Divider from 'material-ui/lib/divider';
-import IconHistory from 'material-ui/lib/svg-icons/action/history';
-import IconLocalShipping from 'material-ui/lib/svg-icons/maps/local-shipping';
-import IconPlace from 'material-ui/lib/svg-icons/maps/place';
-import IconMoney from 'material-ui/lib/svg-icons/editor/attach-money';
-import IconWallet from 'material-ui/lib/svg-icons/action/account-balance-wallet';
-import IconSettings from 'material-ui/lib/svg-icons/action/settings';
+import Drawer from 'material-ui/Drawer';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import IconHistory from 'material-ui/svg-icons/action/history';
+import IconLocalShipping from 'material-ui/svg-icons/maps/local-shipping';
+import IconPlace from 'material-ui/svg-icons/maps/place';
+import IconMoney from 'material-ui/svg-icons/editor/attach-money';
+import IconWallet from 'material-ui/svg-icons/action/account-balance-wallet';
+import IconSettings from 'material-ui/svg-icons/action/settings';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { UserCard } from '../containers';
 
@@ -63,7 +63,7 @@ class DashboardPage extends Component {
 
 		return (
 			<div className='flex flex-fill page' style={styles.container}>
-		    <LeftNav docked={false} open={navOpen}
+		    <Drawer docked={false} open={navOpen}
 		    	onRequestChange={this.onToggleDrawer}>
 		    	<UserCard onClick={this.onSelectUser}/>
 		      <Menu value={selectMenu} onItemTouchTap={this.onMenuSelect}>
@@ -74,7 +74,7 @@ class DashboardPage extends Component {
 		        <MenuItem primaryText='Wallet' leftIcon={<IconWallet/>} value='wallet'/>
 		        <MenuItem primaryText='Settings' leftIcon={<IconSettings/>} value='setting'/>
 		      </Menu>
-		    </LeftNav>
+		    </Drawer>
 			    {React.cloneElement(this.props.children||<div/>,
 			    	{onDrawerClick: this.onToggleDrawer, key: selectMenu, historyOrder: selectMenu==='historyorders'})}
 			</div>

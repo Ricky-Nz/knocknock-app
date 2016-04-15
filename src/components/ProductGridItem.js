@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import Paper from 'material-ui/lib/paper';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
+import Paper from 'material-ui/Paper';
+import { GridTile } from 'material-ui/GridList';
 
 let ProductGridItem = ({id, name_ch, name_en, iron_price, image_url}) => (
 	<Paper style={styles.container} zDepth={1}>

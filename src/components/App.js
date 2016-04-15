@@ -1,7 +1,7 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
-import { deepOrange500, blueGrey500 } from 'material-ui/lib/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { deepOrange500, blueGrey500 } from 'material-ui/styles/colors';
 import { MessageToast } from '../containers';
 
 const muiTheme = getMuiTheme({

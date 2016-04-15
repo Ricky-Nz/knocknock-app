@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import DropDownMenu from 'material-ui/lib/DropDownMenu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 class DropDownSelector extends Component {
 	constructor(props) {

@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import IconRefresh from 'material-ui/lib/svg-icons/navigation/refresh';
-import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import CircularProgress from 'material-ui/CircularProgress';
 import { OrderSortSelector, OrderStatusSelector, OrderList } from '../containers';
 
 class OrderManagePage extends Component {

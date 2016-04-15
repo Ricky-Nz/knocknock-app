@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import GridList from 'material-ui/lib/grid-list/grid-list';
+import { GridList } from 'material-ui/GridList';
 import ProductGridItem from './ProductGridItem';
 import { LoadingProgress } from '../widgets';
 

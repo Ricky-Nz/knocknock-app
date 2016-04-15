@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconRefresh from 'material-ui/lib/svg-icons/navigation/refresh';
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
-import IconPayment from 'material-ui/lib/svg-icons/action/payment';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import Subheader from 'material-ui/lib/Subheader';
-import RaisedButton from 'material-ui/lib/raised-button';
-import { blueGrey500 } from 'material-ui/lib/styles/colors';
-import Paper from 'material-ui/lib/paper';
-import TextField from 'material-ui/lib/text-field';
+import AppBar from 'material-ui/AppBar';
+import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconPayment from 'material-ui/svg-icons/action/payment';
+import CircularProgress from 'material-ui/CircularProgress';
+import Subheader from 'material-ui/Subheader';
+import RaisedButton from 'material-ui/RaisedButton';
+import { blueGrey500 } from 'material-ui/styles/colors';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
 import { LoadingProgress } from '../widgets';
 import { PaymentProcessingDialog } from '../containers';
 

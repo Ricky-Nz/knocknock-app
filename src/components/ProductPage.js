@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import { CategorySelector, ProductGrid } from '../containers';
 import { SearchMenu } from '../widgets';
 

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Snackbar from 'material-ui/lib/snackbar';
+import Snackbar from 'material-ui/Snackbar';
 
 class MessageToast extends Component {
 	constructor(props) {

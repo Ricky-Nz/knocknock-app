@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Dialog from 'material-ui/lib/dialog';
-import FlatButton from 'material-ui/lib/flat-button';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class PaymentProcessingDialog extends Component {
 	constructor(props) {

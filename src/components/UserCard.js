@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import Avatar from 'material-ui/lib/avatar';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import ListItem from 'material-ui/lib/lists/list-item';
-import IconAccountCircle from 'material-ui/lib/svg-icons/action/account-circle';
-import { deepOrange500 } from 'material-ui/lib/styles/colors';
+import Avatar from 'material-ui/Avatar';
+import CircularProgress from 'material-ui/CircularProgress';
+import { ListItem } from 'material-ui/List';
+import IconAccountCircle from 'material-ui/svg-icons/action/account-circle';
+import { deepOrange500 } from 'material-ui/styles/colors';
 
 class UserCard extends Component {
 	componentDidMount() {

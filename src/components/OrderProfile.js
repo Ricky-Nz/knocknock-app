@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import IconPlace from 'material-ui/lib/svg-icons/maps/place';
-import IconLocalPhone from 'material-ui/lib/svg-icons/maps/local-phone';
-import IconAccessTime from 'material-ui/lib/svg-icons/device/access-time';
+import IconPlace from 'material-ui/svg-icons/maps/place';
+import IconLocalPhone from 'material-ui/svg-icons/maps/local-phone';
+import IconAccessTime from 'material-ui/svg-icons/device/access-time';
 import { TimeDisplay, IconParagraph } from '../widgets';
 
 let OrderProfile = ({address, unit_number, postal_code, contact_no,

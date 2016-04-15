@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import ActionHome from 'material-ui/lib/svg-icons/action/home';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
+import ActionHome from 'material-ui/svg-icons/action/home';
 
 class LoginPage extends Component {
 	constructor(props) {

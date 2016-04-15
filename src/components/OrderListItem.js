@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import Paper from 'material-ui/lib/paper';
-import ListItem from 'material-ui/lib/lists/list-item';
-import Subheader from 'material-ui/lib/Subheader';
+import Paper from 'material-ui/Paper';
+import { ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 import { TimeDisplay } from '../widgets';
 
 function convertTypeDisplay(orderSortType) {

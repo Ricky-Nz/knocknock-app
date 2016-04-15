@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import IconArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
-import IconDone from 'material-ui/lib/svg-icons/action/done';
-import TextField from 'material-ui/lib/text-field';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import IconDone from 'material-ui/svg-icons/action/done';
+import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class AddressEditPage extends Component {
 	constructor(props) {

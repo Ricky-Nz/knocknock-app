@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/lib/text-field';
-import IconButton from 'material-ui/lib/icon-button';
-import IconSearch from 'material-ui/lib/svg-icons/action/search';
-import IconClose from 'material-ui/lib/svg-icons/navigation/close';
+import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import IconSearch from 'material-ui/svg-icons/action/search';
+import IconClose from 'material-ui/svg-icons/navigation/close';
 
 class SearchMenu extends Component {
 	constructor(props) {

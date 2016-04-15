@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Dialog from 'material-ui/lib/dialog';
+import Dialog from 'material-ui/Dialog';
 import { AddressList } from '../containers';
 
 let AddressSelectDialog = ({open, defaultAddress, onSelect, onClose}) => (

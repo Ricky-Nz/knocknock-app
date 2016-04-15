@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/svg-icons/navigation/menu';
-import IconEdit from 'material-ui/lib/svg-icons/editor/border-color';
-import IconDone from 'material-ui/lib/svg-icons/action/done';
-import TextField from 'material-ui/lib/text-field';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import Avatar from 'material-ui/lib/avatar';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconEdit from 'material-ui/svg-icons/editor/border-color';
+import IconDone from 'material-ui/svg-icons/action/done';
+import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
+import Avatar from 'material-ui/Avatar';
 import Dropzone from 'react-dropzone';
-import RaisedButton from 'material-ui/lib/raised-button';
+import RaisedButton from 'material-ui/RaisedButton';
 import { LoadingProgress } from '../widgets';
-import { red600 } from 'material-ui/lib/styles/colors';
+import { red600 } from 'material-ui/styles/colors';
 
 class ProfilePage extends Component {
 	constructor(props) {

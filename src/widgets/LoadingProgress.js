@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import CircularProgress from 'material-ui/CircularProgress';
 
 let LoadingProgress = (props) => (
 	<div className='flex flex-center flex-align-center' style={style}>

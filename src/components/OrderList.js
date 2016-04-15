@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import List from 'material-ui/lib/lists/list';
+import { List } from 'material-ui/List';
 import OrderListItem from './OrderListItem';
 import { LoadingProgress } from '../widgets';
 
