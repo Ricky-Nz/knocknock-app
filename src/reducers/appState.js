@@ -5,8 +5,8 @@ import {
 } from '../actions';
 
 const defaultConfig = {
-	activeOrderSortType: 'pickup_date',
-	historyOrderSortType: 'drop_off_date',
+	activeOrderSortType: 'created_on',
+	historyOrderSortType: 'created_on',
 	activeOrderFilter: 'ALL',
 	historyOrderFileter: 'ALL',
 	productFilter: 'ALL'

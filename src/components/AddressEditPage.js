@@ -11,36 +11,34 @@ class AddressEditPage extends Component {
 		super(props);
 		this.onBack = this.onBack.bind(this);
 		this.onSumbit = this.onSumbit.bind(this);
-		this.onAddressChange = this.onAddressChange.bind(this);
 		this.onUnitNumberChange = this.onUnitNumberChange.bind(this);
 		this.onPostalCodeChange = this.onPostalCodeChange.bind(this);
 		this.onContactNumberChange = this.onContactNumberChange.bind(this);
 
 		if (props.address) {
 			this.state = {
-				address: props.address.address,
 				contact_no: props.address.contact_no,
 				postal_code: props.address.postal_code,
 				unit_number: props.address.unit_number
 			};
 		} else {
 			this.state = {
-				address: '',
 				contact_no: '',
 				postal_code: '',
 				unit_number: ''
 			};
 		}
 	}
+	componentWillReceiveProps(nextProps) {
+		if (!nextProps.editing&&this.props.editing
+			&&nextProps.editSuccess&&!this.props.address) {
+			this.onBack();
+		}
+	}
 	onBack() {
 		this.context.router.goBack();
 	}
 	onSumbit() {
-		if (!this.state.address) {
-			this.props.toast('Address can not be empty');
-			return;
-		}
-
 		if (!this.state.postal_code) {
 			this.props.toast('Postal code can not be empty');
 			return;
@@ -53,9 +51,6 @@ class AddressEditPage extends Component {
 
 		this.props.createOrEditAddress(this.state);
 	}
-	onAddressChange(event) {
-		this.setState({address: event.target.value});
-	}
 	onUnitNumberChange(event) {
 		this.setState({unit_number: event.target.value});
 	}
@@ -66,26 +61,22 @@ class AddressEditPage extends Component {
 		this.setState({contact_no: event.target.value});
 	}
 	render() {
-		const { editing, address: addressObject } = this.props;
-		const { address, contact_no, postal_code, unit_number } = this.state;
+		const { editing, address } = this.props;
+		const { contact_no, postal_code, unit_number } = this.state;
 
 		return (
-			<div className='fillHeight page'>
-			  <AppBar title={addressObject?'Edit Address':'New Address'}
+			<div className='flex flex-fill page'>
+			  <AppBar title={address?'Edit Address':'New Address'}
 			  	iconElementRight={this.props.editing?<CircularProgress size={0.5} color='white'/>:
 			  		<IconButton onClick={this.onSumbit}><IconDone/></IconButton>}
 			    iconElementLeft={<IconButton onClick={this.onBack}><IconArrowBack/></IconButton>}/>
-				<div className='row'>
-					<div className='col-xs-10 col-xs-offset-1'>
-						<TextField fullWidth={true} value={address}
-								floatingLabelText='Address' onChange={this.onAddressChange}/>
-						<TextField fullWidth={true} value={unit_number}
-								floatingLabelText='Unit Number' onChange={this.onUnitNumberChange}/>
-						<TextField fullWidth={true} value={postal_code}
-								floatingLabelText='Postal Code' onChange={this.onPostalCodeChange}/>
-						<TextField fullWidth={true} value={contact_no}
-								floatingLabelText='Contact Number' onChange={this.onContactNumberChange}/>
-					</div>
+				<div className='padding margin-horizontal'>
+					<TextField fullWidth={true} type='number' value={postal_code}
+							floatingLabelText='Postal Code' onChange={this.onPostalCodeChange}/>
+					<TextField fullWidth={true} value={unit_number}
+							floatingLabelText='Unit Number' onChange={this.onUnitNumberChange}/>
+					<TextField fullWidth={true} type='number' value={contact_no}
+							floatingLabelText='Contact Number' onChange={this.onContactNumberChange}/>
 				</div>
 			</div>
 		);
@@ -98,6 +89,7 @@ AddressEditPage.contextTypes = {
 
 AddressEditPage.propTypes = {
 	editing: PropTypes.bool,
+	editSuccess: PropTypes.bool,
 	address: PropTypes.object,
 	createOrEditAddress: PropTypes.func.isRequired,
 	toast: PropTypes.func.isRequired

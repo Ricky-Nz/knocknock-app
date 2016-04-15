@@ -23,7 +23,7 @@ const mapStateToProps = createSelector(
 
 const mapActionToProps = (dispatch, {historyOrder}) => ({
 	onSelectItem: (value) => {
-		dispatch(historyOrder?changeHistoryOrderSort(value):changeActiveOrderSort());
+		dispatch(historyOrder?changeHistoryOrderSort(value):changeActiveOrderSort(value));
 	}
 });
 

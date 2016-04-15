@@ -5,19 +5,23 @@ import AddressEditPage from '../components/AddressEditPage';
 
 const updatingStateSelector = state => state.actionState.updatingAddress;
 
+const updatingResultSelector = state => state.actionState.updatingAddressSuccess;
+
 const addressesSelector = state => state.addresses;
 
 const addressIdSelector = (state, {params}) => params.addressId;
 
 const mapStateToProps = createSelector(
 	updatingStateSelector,
+	updatingResultSelector,
 	addressesSelector,
 	addressIdSelector,
-	(editing, addresses, addressId) => {
-		const index = addresses.findIndex(address => address.id == addressId);
+	(editing, editSuccess, addresses, addressId) => {
+		const index = addresses&&addresses.findIndex(address => address.id == addressId);
 		return {
 			editing,
-			address: addresses[index]
+			editSuccess,
+			address: addresses&&addresses[index]
 		};
 	}
 );

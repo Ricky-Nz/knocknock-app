@@ -16,7 +16,7 @@ export function editUserProfile({contactNo, email, firstName, lastName}) {
 			},
 			body: {
 				email,
-				contact_no: contactNo,
+				contact_no: '96452556',
 				first_name: firstName,
 				last_name: lastName
 			}

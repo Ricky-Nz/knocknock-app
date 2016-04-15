@@ -16,7 +16,7 @@ import { PaymentProcessingDialog } from '../containers';
 class WalletPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { amount: 50 };
 		this.onRefresh = this.onRefresh.bind(this);
 		this.onTopupChange = this.onTopupChange.bind(this);
 		this.onPay = this.onPay.bind(this);
@@ -48,10 +48,10 @@ class WalletPage extends Component {
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
 				{(this.props.loading||!this.props.user)?<LoadingProgress/>:
 					<div className='flex flex-fill'>
-						<Paper className='padding' zDepth={1}>
+						<div className='padding' zDepth={1}>
 							<Subheader>Knocknock Credits</Subheader>
 							<p style={styles.creditText}>{`S$${this.props.user.credit}`}</p>
-						</Paper>
+						</div>
 						<div style={styles.container}>
 							<TextField value={this.state.amount} onChange={this.onTopupChange}
 								hintText='enter top up amount' floatingLabelText='Top up' type='number'/>

@@ -21,7 +21,7 @@ function orderSort(a, b, orderSortType, historyOrder) {
   if (historyOrder) {
   	return ((x < y) ? 1 : ((x > y) ? -1 : 0));
   } else {
-  	return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  	return ((x < y) ? 1 : ((x > y) ? -1 : 0));
   }
 }
 

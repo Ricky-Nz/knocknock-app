@@ -39,7 +39,13 @@ class PaymentProcessingDialog extends Component {
 		        onClick={this.payFailed}/>,
 		      <FlatButton label='Success' primary={true}
 		        onClick={this.paySuccess}/>
-				]}/>
+				]}>
+				{toppingUp&&
+					<div className='flex flex-center flex-align-center'>
+						<CircularProgress size={0.5}/>
+					</div>
+				}
+			</Dialog>
 		);
 	}
 }

@@ -4,7 +4,8 @@ import {
 	ACTION_CREATE_ADDRESS, ACTION_EDIT_ADDRESS,
 	ACTION_GET_VOUCHERS, ACTION_RESET_PASSWORD, ACTION_GET_USER_PROFILE,
 	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR,
-	ACTION_GET_ORDER_DETAIL, ACTION_TOPUP, ACTION_LOGOUT
+	ACTION_GET_ORDER_DETAIL, ACTION_TOPUP, ACTION_LOGOUT,
+	ACTION_PAY_ORDER_BY_CREDIT, ACTION_PAY_ORDER_BY_PAYPAL
 } from '../actions';
 
 function statusProcess(state, statusKey, {running, error}) {
@@ -47,6 +48,9 @@ export default function (actionState = {}, action) {
 			return statusProcess(actionState, 'creatingOrder', action);
 		case ACTION_TOPUP:
 			return statusProcess(actionState, 'toppingUp', action);
+		case ACTION_PAY_ORDER_BY_CREDIT:
+		case ACTION_PAY_ORDER_BY_PAYPAL:
+			return statusProcess(actionState, 'payingOrder', action);
 		case ACTION_LOGOUT:
 			return {};
 		default:
