@@ -9,11 +9,14 @@ const loadingStateSelector = state => state.actionState.loadingOrder;
 
 const payingStateSelector = state => state.actionState.payingOrder;
 
+const payingResultSelector = state => state.actionState.payingOrderSuccess;
+
 const mapStateToProps = createSelector(
 	orderSelector,
 	loadingStateSelector,
 	payingStateSelector,
-	(order, loading, paying) => ({order, loading, paying})
+	payingResultSelector,
+	(order, loading, paying, paySuccess) => ({order, loading, paying, paySuccess})
 );
 
 const mapActionToProps = (dispatch) => ({

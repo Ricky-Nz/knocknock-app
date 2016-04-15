@@ -11,6 +11,7 @@ import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import OrderProfile from './OrderProfile';
 import CircularProgress from 'material-ui/CircularProgress';
 import Paper from 'material-ui/Paper';
+import { List } from 'material-ui/List';
 import { LoadingProgress } from '../widgets';
 import { yellowA100, blueGrey800 } from 'material-ui/styles/colors';
 
@@ -28,6 +29,11 @@ class OrderDetailPage extends Component {
 			this.props.load(this.props.params.orderId);
 		}
 	}
+	componentWillReceiveProps(nextProps) {
+		if (!nextProps.paying&&this.props.paying&&nextProps.paySuccess) {
+			this.props.load(this.props.params.orderId);	
+		}
+	}
 	onClosePage() {
 		this.context.router.goBack();
 	}
@@ -42,7 +48,7 @@ class OrderDetailPage extends Component {
   		this.props.order.to_pay_price);
   }
 	render() {
-		const { status, step, pickup_address, pickup_contact_no,
+		const { status, step, pickup_address, pickup_contact_no, qr_code_url,
 			pickup_date, pickup_postal_code, pickup_time, to_pay_price, paid, created_on } = this.props.order||{};
 		const { selectStep } = this.state;
 		const { loading, paying } = this.props;
@@ -54,33 +60,39 @@ class OrderDetailPage extends Component {
 			    iconElementRight={(loading||paying)?<CircularProgress size={0.5} color='white'/>:
 						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
 				{(this.props.loading||!this.props.order)?<LoadingProgress/>:
-					<div className='flex flex-fill'>
-						<div className='padding' style={paid?null:styles.requirePayment}>
-							<div className='flex flex-row flex-align-center flex-space-between'>
-								<p style={styles.statusText}>{status}</p>
-								<p style={styles.priceText}>{`S$${to_pay_price} ${paid?'Paid':'Unpaid'}`}</p>
-							</div>
-							{!paid&&
-								<div className='padding-top'>
-									<p style={styles.paymentText}>Make Payment</p>
-									<div className='flex flex-row'>
-										<RaisedButton style={styles.leftButton} className='flex-fill' disabled={paying}
-											onClick={this.onPayByCredit} label='by Credit' labelPosition='after' icon={<IconAtm/>}/>
-										<RaisedButton style={styles.rightButton} className='flex-fill' disabled={paying}
-											onClick={this.onPayByPaypal} label='by Paypal' labelPosition='after' icon={<IconPayment/>}/>
-									</div>
+					<div className='flex flex-fill position-relative'>
+						<List className='scroll' style={styles.scrollBody}>
+							<div className='padding' style={paid?null:styles.requirePayment}>
+								<div className='flex flex-row flex-align-center flex-space-between'>
+									<p style={styles.statusText}>{status}</p>
+									<p style={styles.priceText}>{`S$${to_pay_price} ${paid?'Paid':'Unpaid'}`}</p>
 								</div>
-							}
-						</div>
-		        <div className='padding'>
-							<OrderProfile address={pickup_address} postal_code={pickup_postal_code}
-		        		contact_no={pickup_contact_no} pickupTime={pickup_time} pickupDate={pickup_date}/>
-			        <Stepper orientation='vertical' activeStep={selectStep>=0?selectStep:step}>
-			          <Step><StepLabel>Pending Worker</StepLabel></Step>
-			          <Step><StepLabel>Laundry in progress</StepLabel></Step>
-			          <Step><StepLabel>Laundry Complete</StepLabel></Step>
-			        </Stepper>
-		        </div>
+								{!paid&&
+									<div className='padding-top'>
+										<p style={styles.paymentText}>Make Payment</p>
+										<div className='flex flex-row'>
+											<RaisedButton style={styles.leftButton} className='flex-fill' disabled={paying}
+												onClick={this.onPayByCredit} label='by Credit' labelPosition='after' icon={<IconAtm/>}/>
+											<RaisedButton style={styles.rightButton} className='flex-fill' disabled={paying}
+												onClick={this.onPayByPaypal} label='by Paypal' labelPosition='after' icon={<IconPayment/>}/>
+										</div>
+									</div>
+								}
+							</div>
+			        <div className='padding'>
+								<OrderProfile address={pickup_address} postal_code={pickup_postal_code}
+			        		contact_no={pickup_contact_no} pickupTime={pickup_time} pickupDate={pickup_date}/>
+				        <Stepper orientation='vertical' activeStep={selectStep>=0?selectStep:step}>
+				          <Step><StepLabel>Pending Worker</StepLabel></Step>
+				          <Step><StepLabel>Laundry in progress</StepLabel></Step>
+				          <Step><StepLabel>Laundry Complete</StepLabel></Step>
+				        </Stepper>
+				        <div className='flex flex-center flex-align-center'>
+				        	<img style={styles.qrCode} src={qr_code_url}/>
+				        	<br/><br/><br/>
+				        </div>
+			        </div>
+						</List>
 					</div>
 				}
 			</div>
@@ -96,12 +108,16 @@ OrderDetailPage.propTypes = {
 	order: PropTypes.object,
 	loading: PropTypes.bool,
 	paying: PropTypes.bool,
+	paySuccess: PropTypes.bool,
 	load: PropTypes.func.isRequired,
 	payOrderByCredit: PropTypes.func.isRequired,
 	payOrderByPaypal: PropTypes.func.isRequired
 };
 
 const styles = {
+	scrollBody: {
+		paddingTop: 0
+	},
 	statusText: {
 		color: blueGrey800,
 		fontSize: '1.5em'
@@ -123,6 +139,10 @@ const styles = {
 	},
 	rightButton: {
 		marginLeft: 8
+	},
+	qrCode: {
+		width: 200,
+		height: 200
 	}
 };
 

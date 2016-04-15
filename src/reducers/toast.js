@@ -4,7 +4,8 @@ import { ACTION_TOAST_MESSAGE,
 	ACTION_CREATE_ADDRESS, ACTION_EDIT_ADDRESS,
 	ACTION_GET_VOUCHERS, ACTION_RESET_PASSWORD, ACTION_GET_USER_PROFILE,
 	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR,
-	ACTION_GET_ORDER_DETAIL, ACTION_TOPUP, ACTION_LOGOUT
+	ACTION_GET_ORDER_DETAIL, ACTION_TOPUP, ACTION_LOGOUT,
+	ACTION_PAY_ORDER_BY_CREDIT
 } from '../actions';
 
 export default function (toast = {}, {type, running, error, data}) {
@@ -29,11 +30,14 @@ export default function (toast = {}, {type, running, error, data}) {
 		case ACTION_EDIT_USER_PROFILE:
 		case ACTION_CREATE_ORDER:
 		case ACTION_TOPUP:
+		case ACTION_PAY_ORDER_BY_CREDIT:
 			if (!running) {
 				if (error) {
 					return {message: error.message||'Request failed'};
 				} else {
 					switch(type) {
+						case ACTION_PAY_ORDER_BY_CREDIT:
+							return {message: 'Payment success'};
 						case ACTION_REGISTER:
 							return {message: 'Register success, please login'};
 						case ACTION_RESET_PASSWORD:

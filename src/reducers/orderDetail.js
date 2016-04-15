@@ -1,4 +1,4 @@
-import { ACTION_GET_ORDER_DETAIL, ACTION_PAY_ORDER_BY_CREDIT, ACTION_LOGOUT } from '../actions';
+import { ACTION_GET_ORDER_DETAIL, ACTION_LOGOUT } from '../actions';
 import { convertDetailOrder } from './dataConvertor';
 
 export default function (order = null, {type, running, error, data}) {
@@ -6,12 +6,6 @@ export default function (order = null, {type, running, error, data}) {
 		case ACTION_GET_ORDER_DETAIL:
 			if (!running && !error && data) {
 				return convertDetailOrder(data);
-			} else {
-				return order;
-			}
-		case ACTION_PAY_ORDER_BY_CREDIT:
-			if (!running && !error && data.status && data.info) {
-				return convertDetailOrder(data.info);
 			} else {
 				return order;
 			}
