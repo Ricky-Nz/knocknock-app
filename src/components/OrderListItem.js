@@ -5,6 +5,7 @@ import Subheader from 'material-ui/Subheader';
 import { TimeDisplay } from '../widgets';
 import { yellowA100, blueGrey800 } from 'material-ui/styles/colors';
 import IconPayment from 'material-ui/svg-icons/action/payment';
+import IconButton from 'material-ui/IconButton';
 
 function convertTypeDisplay(sortBy) {
 	switch(sortBy) {
@@ -18,12 +19,13 @@ let OrderListItem = ({id, paid, sortBy, pickup_address, status, onClick, ...prop
 	<Paper style={styles.container} zDepth={1}>
 	  <ListItem style={paid?null:styles.requirePayment} onClick={onClick}
 	  	primaryText={<p style={styles.primaryTest}>{`No.${id} (${status})`}</p>}
+	  	rightIconButton={paid?null:<IconButton><IconPayment/></IconButton>}
 	    secondaryText={
 	    	<div>
 	    		<p>{convertTypeDisplay(sortBy)}: <TimeDisplay>{props[sortBy]}</TimeDisplay></p>
 	      	<p>Address: {pickup_address}</p>
 	      </div>
-	    } secondaryTextLines={2} rightIcon={paid?null:<IconPayment/>}/>
+	    } secondaryTextLines={2}/>
   </Paper>
 );
 

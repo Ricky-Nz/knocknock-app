@@ -1,22 +1,15 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { topUp } from '../actions';
 import PaymentProcessingDialog from '../components/PaymentProcessingDialog';
 
-const toppingUpStateSelector = state => state.actionState.toppingUp;
+const statusSelector = state => state.actionState.paying;
 
-const topUpInfoSelector = state => state.topUp;
+const paymentResultSelector = state => state.payment;
 
 const mapStateToProps = createSelector(
-	toppingUpStateSelector,
-	topUpInfoSelector,
-	(toppingUp, topUpInfo) => ({toppingUp, topUpInfo})
+	statusSelector,
+	paymentResultSelector,
+	(paying, payment) => ({paying, payment})
 );
 
-const mapActionToProps = (dispatch) => ({
-	topUp: (amount) => {
-		dispatch(topUp(amount));
-	}
-});
-
-export default connect(mapStateToProps, mapActionToProps)(PaymentProcessingDialog);
+export default connect(mapStateToProps)(PaymentProcessingDialog);

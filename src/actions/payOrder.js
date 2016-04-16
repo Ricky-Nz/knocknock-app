@@ -19,7 +19,6 @@ export function payOrderByCredit(orderId) {
 	};
 }
 
-
 export function payOrderByPaypal(orderId, amount) {
 	return (dispatch, getState) => {
 		const { session } = getState();

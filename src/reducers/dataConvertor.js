@@ -33,6 +33,7 @@ function convertOrderItem({
 		item_id,
 		quantity,
 		price,
+		laundry_type,
 		item
 	}) {
 	return {
@@ -40,6 +41,7 @@ function convertOrderItem({
 		item_id,
 		quantity,
 		price,
+		laundry_type,
 		item: item&&convertProduct(item)
 	};
 }
@@ -93,6 +95,8 @@ export function convertProduct({
 		sub_category_id,
 		name_en,
 		name_ch,
+		wash_iron_price,
+		dry_clean_price,
 		iron_price,
 		image_url,
 		disabled
@@ -103,6 +107,8 @@ export function convertProduct({
 		name_en,
 		name_ch,
 		iron_price,
+		wash_iron_price,
+		dry_clean_price,
 		image_url,
 		disabled
 	};

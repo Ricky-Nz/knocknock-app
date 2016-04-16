@@ -50,6 +50,7 @@ export default function (toast = {}, {type, running, arg, error, data}) {
 							return {message: 'Update success'};
 						case ACTION_CREATE_ORDER:
 							return {message: 'New order created'};
+						case ACTION_GET_ORDER_DETAIL:
 						case ACTION_GET_ORDERS:
 							if (arg) {
 								return {message: 'Refresh success'};

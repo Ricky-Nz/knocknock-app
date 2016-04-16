@@ -14,10 +14,10 @@ let OrderProfile = ({address, unit_number, postal_code, contact_no,
 	    <ListItem primaryText={contact_no}
 	      leftIcon={<IconLocalPhone/>}/>
     }
-    <ListItem primaryText={<p>Pickup time: <TimeDisplay format='LT'>{pickupTime}</TimeDisplay>, <TimeDisplay format='MMMM Do YYYY'>{pickupDate}</TimeDisplay></p>}
+    <ListItem primaryText={<p>Pickup time: {pickupTime}, <TimeDisplay format='MMMM Do YYYY'>{pickupDate}</TimeDisplay></p>}
       leftIcon={<IconAccessTime/>}/>
     {dropOffDate&&
-      <ListItem primaryText={`Drop off time: <TimeDisplay format='LT'>{dropOffTime}</TimeDisplay>}, <TimeDisplay format='MMMM Do YYYY'>{dropOffDate}</TimeDisplay>`}
+      <ListItem primaryText={<p>Drop off time: {dropOffTime}, <TimeDisplay format='MMMM Do YYYY'>{dropOffDate}</TimeDisplay></p>}
         leftIcon={<IconAccessTime/>}/>
     }
 	</div>

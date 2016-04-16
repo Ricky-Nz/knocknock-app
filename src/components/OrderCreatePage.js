@@ -181,9 +181,9 @@ class CreateOrderPage extends Component {
         <div className='flex flex-fill'>
           <Stepper horizontal={true} activeStep={this.state.activeStep}
             onStepHeaderTouch={creating?null:this.onSelectStep}>
-            <Step><StepLabel>Select Address</StepLabel></Step>
-            <Step><StepLabel>Select Date</StepLabel></Step>
-            <Step><StepLabel>Preview&Submit</StepLabel></Step>
+            <Step><StepLabel>Pick Address</StepLabel></Step>
+            <Step><StepLabel>Pick Date</StepLabel></Step>
+            <Step><StepLabel>Submit</StepLabel></Step>
           </Stepper>
           <div className='flex flex-fill'>
             {this.renderStepContent(this.state, creating)}

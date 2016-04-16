@@ -37,7 +37,7 @@ class WalletPage extends Component {
 			return;
 		}
 
-		this.setState({payAmount: parseInt(this.state.amount)});
+		this.props.topUp(parseInt(this.state.amount));
 	}
 	render() {
 		return (
@@ -58,7 +58,7 @@ class WalletPage extends Component {
 							<div className='flex flex-row padding-top'>
 								<RaisedButton onClick={this.onPay} label='Pay by Paypal' labelPosition='after' icon={<IconPayment/>}/>
 							</div>
-							<PaymentProcessingDialog amount={this.state.payAmount} onSuccess={this.onRefresh}/>
+							<PaymentProcessingDialog onSuccess={this.onRefresh}/>
 						</div>
 					</div>
 				}
@@ -75,6 +75,7 @@ WalletPage.propTypes = {
 	onDrawerClick: PropTypes.func.isRequired,
 	loadUser: PropTypes.func.isRequired,
 	toast: PropTypes.func.isRequired,
+	topUp: PropTypes.func.isRequired,
 	loading: PropTypes.bool,
 	user: PropTypes.object
 };

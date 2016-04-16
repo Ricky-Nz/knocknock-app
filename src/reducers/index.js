@@ -10,8 +10,8 @@ import addresses from './addresses';
 import activeOrders from './activeOrders';
 import historyOrders from './historyOrders';
 import orderDetail from './orderDetail';
-import topUp from './topUp';
 import settings from './settings';
+import payment from './payment';
 
 export default {
 	toast,
@@ -26,6 +26,6 @@ export default {
 	activeOrders,
 	historyOrders,
 	orderDetail,
-	topUp,
-	settings
+	settings,
+	payment
 };

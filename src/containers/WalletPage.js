@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getUserProfile, toastMessage } from '../actions';
+import { getUserProfile, toastMessage, topUp } from '../actions';
 import WalletPage from '../components/WalletPage';
 
 const loadingStateSelector = state => state.actionState.updatingUserProfile;
@@ -19,6 +19,9 @@ const mapActionToProps = (dispatch) => ({
 	},
 	toast: (message) => {
 		dispatch(toastMessage(message));
+	},
+	topUp: (amount) => {
+		dispatch(topUp(amount));
 	}
 });
 

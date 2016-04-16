@@ -47,10 +47,10 @@ export default function (actionState = {}, action) {
 		case ACTION_CREATE_ORDER:
 			return statusProcess(actionState, 'creatingOrder', action);
 		case ACTION_TOPUP:
-			return statusProcess(actionState, 'toppingUp', action);
-		case ACTION_PAY_ORDER_BY_CREDIT:
 		case ACTION_PAY_ORDER_BY_PAYPAL:
-			return statusProcess(actionState, 'payingOrder', action);
+			return statusProcess(actionState, 'paying', action);
+		case ACTION_PAY_ORDER_BY_CREDIT:
+			return statusProcess(actionState, 'creditPaying', action);
 		case ACTION_LOGOUT:
 			return {};
 		default:

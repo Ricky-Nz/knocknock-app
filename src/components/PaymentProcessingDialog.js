@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import CircularProgress from 'material-ui/CircularProgress';
+import { LoadingProgress } from '../widgets';
 
 class PaymentProcessingDialog extends Component {
 	constructor(props) {
@@ -11,11 +11,14 @@ class PaymentProcessingDialog extends Component {
 		this.payFailed = this.payFailed.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		if (!nextProps.toppingUp&&this.props.toppingUp&&nextProps.topUpInfo) {
-			window.open(nextProps.topUpInfo.redirectUrl);
-		} else if (nextProps.amount>0&&nextProps.amount!==this.props.amount) {
-			this.props.topUp(nextProps.amount);
+		if (nextProps.paying&&!this.props.paying) {
 			this.setState({open: true});
+		} else if (!nextProps.paying&&this.props.paying&&nextProps.payment) {
+			if (nextProps.payment.redirectUrl) {
+				window.open(nextProps.payment.redirectUrl);
+			} else if (nextProps.payment.expressInfo) {
+				window.open(`https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=${nextProps.payment.expressInfo}`);
+			}
 		}
 	}
 	paySuccess() {
@@ -29,32 +32,26 @@ class PaymentProcessingDialog extends Component {
 		}
 	}
 	render() {
-		const {toppingUp, onFailed, onSuccess} = this.props;
+		const {paying, onFailed, onSuccess} = this.props;
 
 		return (
 			<Dialog modal={true} open={this.state.open}
-				title={toppingUp?'Processing':'Payment complete?'}
-				actions={toppingUp?null:[
+				title={paying?'Processing':'Payment complete?'}
+				actions={paying?null:[
 		      <FlatButton label='Failed' primary={true}
 		        onClick={this.payFailed}/>,
 		      <FlatButton label='Success' primary={true}
 		        onClick={this.paySuccess}/>
 				]}>
-				{toppingUp&&
-					<div className='flex flex-center flex-align-center'>
-						<CircularProgress size={0.5}/>
-					</div>
-				}
+				{paying&&<LoadingProgress/>}
 			</Dialog>
 		);
 	}
 }
 
 PaymentProcessingDialog.propTypes = {
-	amount: PropTypes.number,
-	toppingUp: PropTypes.bool,
-	topUpInfo: PropTypes.object,
-	topUp: PropTypes.func.isRequired,
+	paying: PropTypes.bool,
+	payment: PropTypes.object,
 	onSuccess: PropTypes.func.isRequired,
 	onFailed: PropTypes.func
 };
