@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
+// import createLogger from 'redux-logger';
 import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { OrderDetailPage, AddressEditPage, AddressManagePage,
@@ -26,7 +26,7 @@ const store = createStore(
 		...reducers,
 		routing: routerReducer
 	}),
-	applyMiddleware(thunk, createLogger())
+	applyMiddleware(thunk)
 );
 
 const history = syncHistoryWithStore(hashHistory, store);
