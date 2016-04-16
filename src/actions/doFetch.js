@@ -10,7 +10,7 @@ export default function ({method, host, path, headers, params, form, body}) {
 			.send(form||body||{})
 			.end((err, res) => {
 				if (err || !res.ok) {
-					reject({message: (res.body&&res.body.error)||(err&&err.message)||'Request failed'});
+					reject({message: (res.body&&res.body.error&&JSON.stringify(res.body.error))||(err&&err.message)||'Request failed'});
 				} else {
 					resolve(res.body);
 				}

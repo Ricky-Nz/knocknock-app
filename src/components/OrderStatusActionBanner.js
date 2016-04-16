@@ -30,18 +30,20 @@ class OrderStatusActionBanner extends Component {
   }
 	render() {
 		const { id, status, to_pay_price, paid, creditPaying } = this.props;
+		const hasPrice = to_pay_price > 0;
+		
 		return (
 			<div className='padding'
-				style={paid?styles.paidBanner:(to_pay_price?styles.requirePayBanner:styles.defaultBanner)}>
+				style={paid?styles.paidBanner:(hasPrice?styles.requirePayBanner:styles.defaultBanner)}>
 				<div className='flex flex-row flex-align-center flex-space-between'>
 					<p>STATUS</p>
-					<p>Total Price</p>
+					{hasPrice&&<p>Total Price</p>}
 				</div>
 				<div className='flex flex-row flex-align-center flex-space-between'>
 					<p style={styles.primaryText}>{status}</p>
-					{to_pay_price&&<p style={styles.primaryText}>{`S$${to_pay_price} ${paid?'Paid':'Unpaid'}`}</p>}
+					{hasPrice&&<p style={styles.primaryText}>{`S$${to_pay_price} ${paid?'Paid':'Unpaid'}`}</p>}
 				</div>
-				{!paid&&to_pay_price&&
+				{!paid&&hasPrice&&
 					<div className='padding-top'>
 						<p style={styles.promptText}>Make Payment</p>
 						{creditPaying?<LoadingProgress size={0.5} label='processing...'/>:

@@ -1,21 +1,30 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { login } from '../actions';
+import { login, forgotPassword, toastMessage } from '../actions';
 import LoginPage from '../components/LoginPage';
 
 const logingInStateSelector = state => state.actionState.loggingin;
 
 const logingInResultSelector = state => state.actionState.logginginSuccess;
 
+const forgotingStateSelector = state => state.actionState.forgotingPassword;
+
 const mapStateToProps = createSelector(
 	logingInStateSelector,
 	logingInResultSelector,
-	(loggingin, loginSuccess) => ({loggingin, loginSuccess})
+	forgotingStateSelector,
+	(loggingin, loginSuccess, forgoting) => ({loggingin, loginSuccess, forgoting})
 );
 
 const mapActionToProps = (dispatch) => ({
-	onLogin: ({username, password}) => {
+	login: ({username, password}) => {
 		dispatch(login({username, password}));
+	},
+	forgotPassword: (email) => {
+		dispatch(forgotPassword(email));
+	},
+	toast: (message) => {
+		dispatch(toastMessage(message));
 	}
 });
 

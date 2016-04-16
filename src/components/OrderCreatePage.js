@@ -23,25 +23,16 @@ class CreateOrderPage extends Component {
     const minDate = moment().add(1, 'days').toDate();
     const maxDate = moment().add(15, 'days').toDate();
 
-    if (props.location.query.express) {
-      this.state = {
-        activeStep: 2,
-        address: props.defaultAddress,
-        note: props.defaultNote,
-        pickupTime: props.defaultPickupTime,
-        pickupDate: minDate,
-        minPickDate: minDate,
-        maxPickDate: maxDate
-      };
-    } else {
-      this.state = {
-        activeStep: 0,
-        note: '',
-        pickupDate: minDate,
-        minPickDate: minDate,
-        maxPickDate: maxDate
-      };
-    }
+    this.state = {
+      activeStep: props.location.query.express?2:0,
+      address: props.defaultAddress,
+      note: props.defaultNote,
+      pickupTime: props.defaultPickupTime,
+      pickupDate: minDate,
+      minPickDate: minDate,
+      maxPickDate: maxDate
+    };
+
 		this.onClosePage = this.onClosePage.bind(this);
 		this.onSelectStep = this.onSelectStep.bind(this);
 		this.onContinue = this.onContinue.bind(this);

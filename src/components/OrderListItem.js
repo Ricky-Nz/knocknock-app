@@ -15,11 +15,11 @@ function convertTypeDisplay(sortBy) {
 	}
 }
 
-let OrderListItem = ({id, paid, sortBy, pickup_address, status, onClick, ...props}) => (
+let OrderListItem = ({id, paid, to_pay_price, sortBy, pickup_address, status, onClick, ...props}) => (
 	<Paper style={styles.container} zDepth={1}>
-	  <ListItem style={paid?null:styles.requirePayment} onClick={onClick}
+	  <ListItem style={(paid||!(to_pay_price > 0))?null:styles.requirePayment} onClick={onClick}
 	  	primaryText={<p style={styles.primaryTest}>{`No.${id} (${status})`}</p>}
-	  	rightIconButton={paid?null:<IconButton><IconPayment/></IconButton>}
+	  	rightIconButton={(paid||!(to_pay_price > 0))?null:<IconButton><IconPayment/></IconButton>}
 	    secondaryText={
 	    	<div>
 	    		<p>{convertTypeDisplay(sortBy)}: <TimeDisplay>{props[sortBy]}</TimeDisplay></p>

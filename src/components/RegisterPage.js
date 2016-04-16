@@ -6,17 +6,19 @@ import Checkbox from 'material-ui/Checkbox';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import IconPersonAdd from 'material-ui/svg-icons/social/person-add';
 
 class RegisterPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showPassword: false,
+			email: '',
 			phoneNumber: '',
 			password: '',
 			repeatPassword: ''
 		};
+		this.onEmailChange = this.onEmailChange.bind(this);
 		this.onPhoneChange = this.onPhoneChange.bind(this);
 		this.onPasswordChange = this.onPasswordChange.bind(this);
 		this.onRepeatPasswordChange = this.onRepeatPasswordChange.bind(this);
@@ -28,6 +30,9 @@ class RegisterPage extends Component {
 			this.context.router.goBack();
 		}
 	}
+	onEmailChange(event) {
+		this.setState({email: event.target.value});
+	}
 	onPhoneChange(event) {
 		this.setState({phoneNumber: event.target.value});
 	}
@@ -37,19 +42,22 @@ class RegisterPage extends Component {
 	onRepeatPasswordChange(event) {
 		this.setState({repeatPassword: event.target.value});
 	}
-	onContactNoChange(event) {
-		this.setState({contactNo: event.target.value});
-	}
 	onShowPasswordChange() {
 		this.setState({showPassword: !this.state.showPassword});
 	}
 	onRegisterClicked() {
-		let { phoneNumber, password, repeatPassword } = this.state;
+		let { email, phoneNumber, password, repeatPassword } = this.state;
+
+		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(email)) {
+			this.props.toast('Please enter a valid email address');
+			return;
+    }
 
 		phoneNumber = phoneNumber&&phoneNumber.replace(/ /g,'');
 
 		if (!phoneNumber || phoneNumber.length !== 8 || isNaN(phoneNumber)) {
-			this.props.toast('Please enter a valid phone number as your login username');
+			this.props.toast('Please enter a valid phone number');
 			return;
 		}
 
@@ -67,26 +75,29 @@ class RegisterPage extends Component {
 	}
 	render() {
 		const { registering } = this.props;
-		const { phoneNumber, password, repeatPassword, showPassword } = this.state;
+		const { email, phoneNumber, password, repeatPassword, showPassword } = this.state;
 
 		return (
 			<div className='flex flex-fill page'>
-			  <AppBar title='User Register'
+			  <AppBar title='Create New Account'
 			    iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBack/></IconButton>}
 					iconElementRight={registering?<CircularProgress size={0.5} color='white'/>:null}/>
-				<div className='padding margin'>
-					<TextField fullWidth={true} type='number' value={phoneNumber} disabled={registering}
-						floatingLabelText='Phone' onChange={this.onPhoneChange} disabled={registering}/>
-					<TextField type={showPassword?'text':'password'} fullWidth={true} value={password} disabled={registering}
-						floatingLabelText='Password' onChange={this.onPasswordChange} disabled={registering}/>
-					<TextField type={showPassword?'text':'password'} fullWidth={true} value={repeatPassword} disabled={registering}
-						floatingLabelText='Repeat password' onChange={this.onRepeatPasswordChange} disabled={registering}/>
-					<div>
-						<Checkbox style={styles.checkbox} checked={showPassword} disabled={registering}
-							label='Show password' onCheck={this.onShowPasswordChange}/>
+				<div className='flex flex-fill padding margin-horizontal'>
+					<TextField fullWidth={true} value={email}
+						hintText='Email' onChange={this.onEmailChange} disabled={registering}/>
+					<TextField fullWidth={true} type='number' value={phoneNumber}
+						hintText='Phone' onChange={this.onPhoneChange} disabled={registering}/>
+					<TextField type={showPassword?'text':'password'} fullWidth={true} value={password}
+						hintText='Password' onChange={this.onPasswordChange} disabled={registering}/>
+					<TextField type={showPassword?'text':'password'} fullWidth={true} value={repeatPassword}
+						hintText='Repeat password' onChange={this.onRepeatPasswordChange} disabled={registering}/>
+					<Checkbox style={styles.checkbox} checked={showPassword} disabled={registering}
+						label='Show password' onCheck={this.onShowPasswordChange}/>
+			    <RaisedButton style={styles.button} label='Create' fullWidth={true} primary={true}
+						icon={<IconPersonAdd/>} onClick={this.onRegisterClicked} registering={registering}/>
+					<div className='flex flex-fill flex-align-center flex-end padding-bottom'>
+						<p style={styles.terms}>By signing up, I aggree to Knocknock's Terms of Service, Privacy Prolicy, Guest Refund Policy, and Host Guarantee Terms.</p>
 					</div>
-			    <RaisedButton style={styles.button} label='Submit' fullWidth={true} primary={true}
-						icon={<ActionHome/>} onClick={this.onRegisterClicked} registering={registering}/>
 				</div>
 			</div>
 		);
@@ -106,10 +117,10 @@ RegisterPage.propTypes = {
 
 const styles = {
 	checkbox: {
-		padding: '10px 0px'
+		margin: '4 0 24'
 	},
-	button: {
-		marginTop: 20
+	terms: {
+		textAlign: 'center'
 	}
 };
 

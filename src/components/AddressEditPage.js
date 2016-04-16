@@ -11,18 +11,21 @@ class AddressEditPage extends Component {
 		super(props);
 		this.onBack = this.onBack.bind(this);
 		this.onSumbit = this.onSumbit.bind(this);
+		this.onAddressChange = this.onAddressChange.bind(this);
 		this.onUnitNumberChange = this.onUnitNumberChange.bind(this);
 		this.onPostalCodeChange = this.onPostalCodeChange.bind(this);
 		this.onContactNumberChange = this.onContactNumberChange.bind(this);
 
 		if (props.address) {
 			this.state = {
-				contact_no: props.address.contact_no,
-				postal_code: props.address.postal_code,
-				unit_number: props.address.unit_number
+				address: props.address.address||'',
+				contact_no: props.address.contact_no||'',
+				postal_code: props.address.postal_code||'',
+				unit_number: props.address.unit_number||''
 			};
 		} else {
 			this.state = {
+				address: '',
 				contact_no: '',
 				postal_code: '',
 				unit_number: ''
@@ -44,12 +47,20 @@ class AddressEditPage extends Component {
 			return;
 		}
 
+		if (!this.state.address) {
+			this.props.toast('Address can not be empty');
+			return;
+		}
+
 		if (!this.state.contact_no) {
 			this.props.toast('Contact number can not be empty');
 			return;
 		}
 
 		this.props.createOrEditAddress(this.state);
+	}
+	onAddressChange(event) {
+		this.setState({address: event.target.value});
 	}
 	onUnitNumberChange(event) {
 		this.setState({unit_number: event.target.value});
@@ -62,7 +73,7 @@ class AddressEditPage extends Component {
 	}
 	render() {
 		const { editing, address } = this.props;
-		const { contact_no, postal_code, unit_number } = this.state;
+		const { address: addressText, contact_no, postal_code, unit_number } = this.state;
 
 		return (
 			<div className='flex flex-fill page'>
@@ -73,6 +84,8 @@ class AddressEditPage extends Component {
 				<div className='padding margin-horizontal'>
 					<TextField fullWidth={true} type='number' value={postal_code}
 							floatingLabelText='Postal Code' onChange={this.onPostalCodeChange}/>
+					<TextField fullWidth={true} value={addressText}
+							floatingLabelText='Address' onChange={this.onAddressChange}/>
 					<TextField fullWidth={true} value={unit_number}
 							floatingLabelText='Unit Number' onChange={this.onUnitNumberChange}/>
 					<TextField fullWidth={true} type='number' value={contact_no}

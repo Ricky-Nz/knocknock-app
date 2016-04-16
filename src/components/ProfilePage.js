@@ -11,6 +11,7 @@ import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import { LoadingProgress } from '../widgets';
 import { red600 } from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
 
 class ProfilePage extends Component {
 	constructor(props) {
@@ -18,7 +19,8 @@ class ProfilePage extends Component {
 		this.state = this.onUserChange(props.user);
 		this.onFirstNameChange = this.onFirstNameChange.bind(this);
 		this.onLastNameChange = this.onLastNameChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+		this.onResetPassword = this.onResetPassword.bind(this);
+		this.onUpdateProfile = this.onUpdateProfile.bind(this);
 		this.onLogout = this.onLogout.bind(this);
 		this.onSelectFile = this.onSelectFile.bind(this);
 	}
@@ -48,7 +50,7 @@ class ProfilePage extends Component {
 	onLastNameChange(event) {
 		this.setState({lastName: event.target.value});
 	}
-	onSubmit() {
+	onUpdateProfile() {
 		if (this.state.seletFile) {
 			this.props.uploadAvatar(this.state.seletFile);
 		}
@@ -63,6 +65,9 @@ class ProfilePage extends Component {
 				lastName: this.state.lastName
 			});
 		}
+	}
+	onResetPassword() {
+		this.context.router.push('/resetpassword');
 	}
 	onLogout() {
 		this.props.logout();
@@ -85,7 +90,8 @@ class ProfilePage extends Component {
 			<div className='flex flex-fill'>
 				<AppBar title='My Profile'
 					iconElementLeft={<IconButton onClick={onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={(loading||updating)?<CircularProgress size={0.5} color='white'/>:<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>
+					iconElementRight={(loading||updating)?<CircularProgress size={0.5} color='white'/>
+						:<IconButton onClick={this.onUpdateProfile}><IconDone/></IconButton>}/>
 				{(loading&&!user)?<LoadingProgress/>:
 					<div className='padding'>
 						<div className='flex flex-center flex-align-center padding'>
@@ -101,8 +107,11 @@ class ProfilePage extends Component {
 							floatingLabelText='Last Name' onChange={this.onLastNameChange}/>
 						<TextField fullWidth={true} value={email} disabled={true}
 							floatingLabelText='Email'/>
-						<TextField fullWidth={true} value={contactNo} disabled={true}
+						<TextField fullWidth={true} value={contactNo}
 							floatingLabelText='Contact Number'/>
+						<div className='flex flex-row flex-end'>
+							<FlatButton label='Reset password' onClick={this.onResetPassword}/>
+						</div>
 						<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
 							backgroundColor={red600} labelColor='white' onClick={this.onLogout}/>
 					</div>
@@ -129,7 +138,7 @@ ProfilePage.contextTypes = {
 
 const styles = {
 	logoutButton: {
-		marginTop: 50
+		marginTop: 60
 	},
 	dropZone: {
 		height: 120,

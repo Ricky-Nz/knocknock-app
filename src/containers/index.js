@@ -7,6 +7,7 @@ export { default as RegisterPage } from './RegisterPage';
 export { default as WalletPage } from './WalletPage';
 export { default as ProfilePage } from './ProfilePage';
 export { default as SettingPage } from './SettingPage';
+export { default as ResetPasswordPage } from './ResetPasswordPage';
 
 export { default as MessageToast } from './MessageToast';
 export { default as UserCard } from './UserCard';
