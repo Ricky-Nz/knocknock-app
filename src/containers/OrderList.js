@@ -5,38 +5,34 @@ import OrderList from '../components/OrderList';
 
 const loadingStateSelector = (state) => state.actionState.loadingOrders;
 
-const orderSortSelector = (state, {historyOrder}) =>
-	historyOrder?state.appState.historyOrderSortType:state.appState.activeOrderSortType;
+const statusFileterSelector = (state, {statusFilter}) => statusFilter; 
 
-const orderFilterSelector = (state, {historyOrder}) =>
-	historyOrder?state.appState.historyOrderFileter:state.appState.activeOrderFilter;
+const sortBySelector = (state, {sortBy}) => sortBy;
+
+const sortOrderSelector = (state, {sortOrder}) => sortOrder;
 
 const dataSelector = (state, {historyOrder}) => historyOrder?state.historyOrders:state.activeOrders;
 
-const isHistorySelector = (state, {historyOrder}) => historyOrder;
-
-function orderSort(a, b, orderSortType, historyOrder) {
-  const x = a[orderSortType];
-  const y = b[orderSortType];
-  if (historyOrder) {
-  	return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-  } else {
-  	return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-  }
-}
-
 const mapStateToProps = createSelector(
 	loadingStateSelector,
-	orderSortSelector,
-	orderFilterSelector,
+	statusFileterSelector,
+	sortBySelector,
+	sortOrderSelector,
 	dataSelector,
-	isHistorySelector,
-	(loading, orderSortType, filter, orders, historyOrder) => ({
+	(loading, statusFilter, sortBy, sortOrder, orders) => ({
 		loading,
-		orderSortType,
+		sortBy,
 		orders: orders&&
-			orders.filter(order => filter==='ALL'?true:(filter===order.status))
-				.sort((a, b) => orderSort(a, b, orderSortType, historyOrder))
+			orders.filter(order => statusFilter==='ALL'?true:(statusFilter===order.status))
+				.sort((a, b) => {
+				  const x = a[sortBy];
+				  const y = b[sortBy];
+				  if (sortOrder) {
+				  	return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+				  } else {
+				  	return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+				  }
+				})
 	})
 );
 

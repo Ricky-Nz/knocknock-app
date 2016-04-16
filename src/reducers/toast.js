@@ -8,7 +8,7 @@ import { ACTION_TOAST_MESSAGE,
 	ACTION_PAY_ORDER_BY_CREDIT
 } from '../actions';
 
-export default function (toast = {}, {type, running, error, data}) {
+export default function (toast = {}, {type, running, arg, error, data}) {
 	switch(type) {
 		case ACTION_TOAST_MESSAGE:
 			return {message: data};
@@ -50,6 +50,10 @@ export default function (toast = {}, {type, running, error, data}) {
 							return {message: 'Update success'};
 						case ACTION_CREATE_ORDER:
 							return {message: 'New order created'};
+						case ACTION_GET_ORDERS:
+							if (arg) {
+								return {message: 'Refresh success'};
+							}
 					}
 				}
 			}

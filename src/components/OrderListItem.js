@@ -6,21 +6,21 @@ import { TimeDisplay } from '../widgets';
 import { yellowA100, blueGrey800 } from 'material-ui/styles/colors';
 import IconPayment from 'material-ui/svg-icons/action/payment';
 
-function convertTypeDisplay(orderSortType) {
-	switch(orderSortType) {
+function convertTypeDisplay(sortBy) {
+	switch(sortBy) {
 		case 'pickup_date': return 'Pickup date';
 		case 'drop_off_date': return 'Drop off date';
 		case 'created_on': return 'Create date';
 	}
 }
 
-let OrderListItem = ({id, paid, orderSortType, pickup_address, status, onClick, ...props}) => (
+let OrderListItem = ({id, paid, sortBy, pickup_address, status, onClick, ...props}) => (
 	<Paper style={styles.container} zDepth={1}>
 	  <ListItem style={paid?null:styles.requirePayment} onClick={onClick}
 	  	primaryText={<p style={styles.primaryTest}>{`No.${id} (${status})`}</p>}
 	    secondaryText={
 	    	<div>
-	    		<p>{convertTypeDisplay(orderSortType)}: <TimeDisplay>{props[orderSortType]}</TimeDisplay></p>
+	    		<p>{convertTypeDisplay(sortBy)}: <TimeDisplay>{props[sortBy]}</TimeDisplay></p>
 	      	<p>Address: {pickup_address}</p>
 	      </div>
 	    } secondaryTextLines={2} rightIcon={paid?null:<IconPayment/>}/>
@@ -28,7 +28,7 @@ let OrderListItem = ({id, paid, orderSortType, pickup_address, status, onClick, 
 );
 
 OrderListItem.propTypes = {
-	orderSortType: PropTypes.string.isRequired
+	sortBy: PropTypes.string.isRequired
 };
 
 const styles = {

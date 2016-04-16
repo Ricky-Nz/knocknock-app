@@ -1,6 +1,6 @@
 import doFetch from './doFetch';
 
-export default function ({dispatch, actionName, ...args}) {
+export default function ({dispatch, actionName, arg, ...args}) {
 	dispatch({
 		type: actionName,
 		running: true
@@ -11,6 +11,7 @@ export default function ({dispatch, actionName, ...args}) {
 			dispatch({
 				type: actionName,
 				running: false,
+				arg,
 				data
 			});
 		}, error => {

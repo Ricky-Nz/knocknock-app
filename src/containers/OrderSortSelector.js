@@ -12,9 +12,10 @@ const mapStateToProps = createSelector(
 		selectedKey: orderSortType,
 		displayPrefix: 'Sort by:',
 		items: [
-			{ id: 'pickup_date', name: 'Pickup date' },
-			{ id: 'drop_off_date', name: 'Drop off date' },
-			{ id: 'created_on', name: 'Create date' }
+			{ id: 'created_on$new2old', name: 'Create date, from new to old' },
+			{ id: 'created_on$old2new', name: 'Create date, from old to new' },
+			{ id: 'pickup_date$new2old', name: 'Pickup date, from new to old' },
+			{ id: 'pickup_date$old2new', name: 'Pickup date, from old to new' }
 		],
 		itemKeyName: 'id',
 		itemPrimaryName: 'name'

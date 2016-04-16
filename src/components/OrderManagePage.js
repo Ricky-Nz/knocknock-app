@@ -12,34 +12,35 @@ class OrderManagePage extends Component {
 	constructor(props) {
 		super(props);
 		this.onNewOrder = this.onNewOrder.bind(this);
-		this.onRefresh = this.onRefresh.bind(this);
 		this.onOrderClicked = this.onOrderClicked.bind(this);
 	}
 	onNewOrder() {
 		this.context.router.push('order');
 	}
-	onRefresh() {
-		this.props.loadOrders();
-	}
 	onOrderClicked(order) {
 		this.context.router.push(`order/${order.id}`);
 	}
 	render() {
-		const { historyOrder, loading } = this.props;
+		const { historyOrder, statusFilter, sortBy, sortOrder, loading } = this.props;
 
 		return (
 			<div className='flex flex-fill'>
 				<AppBar title={historyOrder?'History Orders':'Active Orders'}
 					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
 					iconElementRight={loading?<CircularProgress size={0.5} color='white'/>:
-						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				<div className='flex flex-row'>
-					<OrderStatusSelector historyOrder={historyOrder} className='flex-fill'/>
-					<OrderSortSelector historyOrder={historyOrder} className='flex-fill'/>
-				</div>
+						<IconButton onClick={this.props.loadOrders}><IconRefresh/></IconButton>}/>
 				<div className='flex flex-fill position-relative'>
-					<OrderList historyOrder={historyOrder}
-						onItemClicked={this.onOrderClicked}/>
+					<div className='flex flex-fill scroll'>
+						{!historyOrder&&
+							<div>
+								<OrderStatusSelector historyOrder={historyOrder}/>
+								<OrderSortSelector historyOrder={historyOrder}/>
+							</div>
+						}
+						<OrderList statusFilter={historyOrder?'ALL':statusFilter}
+							sortBy={historyOrder?'created_on':sortBy} sortOrder={historyOrder?true:sortOrder}
+							onItemClicked={this.onOrderClicked}/>
+					</div>
 			    {!historyOrder&&
 			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
 			      	<ContentAdd/>
@@ -58,6 +59,9 @@ OrderManagePage.contextTypes = {
 OrderManagePage.propTypes = {
 	historyOrder: PropTypes.bool,
 	loading: PropTypes.bool,
+	statusFilter: PropTypes.string,
+	sortBy: PropTypes.string,
+	sortOrder: PropTypes.bool,
 	loadOrders: PropTypes.func.isRequired,
 	onDrawerClick: PropTypes.func.isRequired
 };
