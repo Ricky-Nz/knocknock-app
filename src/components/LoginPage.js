@@ -71,7 +71,7 @@ class LoginPage extends Component {
 				<div className='flex flex-center flex-align-center'>
 					<p style={styles.title}>Knocknock</p>
 				</div>
-				<div className='flex flex-fill padding-horizontal margin'>
+				<div className='flex flex-fill padding-horizontal margin-horizontal'>
 					<EditText ref='username' fullWidth={true} disabled={loggingin}
 						floatingLabelText='Email' errorText='please enter a valid email address'
 						verify={/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}/>
@@ -79,8 +79,9 @@ class LoginPage extends Component {
 						disabled={loggingin} floatingLabelText='Password'
 						errorText='password can not be empty' verify={/([^\s])/}/>
 					<br/>
-			    <Checkbox style={styles.checkbox} checked={showPassword} disabled={loggingin}
+			    <Checkbox checked={showPassword} disabled={loggingin}
 						label='Show password' onCheck={this.onShowPasswordChange}/>
+					<br/>
 			    <RaisedButton label='Log in' primary={true} fillWidth={true}
 						icon={<IconCheck/>} onClick={this.onLoginClicked} disabled={loggingin}/>
 					<br/>
@@ -97,7 +98,7 @@ class LoginPage extends Component {
 			      <FlatButton label='OK' primary={true} onClick={this.onForgotPassword}/>,
 		    	]} modal={false} open={dialogShow}
           onRequestClose={this.toggleDialog}>
-          {forgoting?<LoadingProgress/>:`Send a new password to ${this.refs.username&&this.refs.username.getValidValue()}?`}
+          {forgoting?<LoadingProgress/>:`Send a new password to?`}
         </Dialog>
 			</div>
 		);
@@ -120,9 +121,6 @@ LoginPage.propTypes = {
 const styles = {
 	progressContainer: {
 		paddingTop: 40
-	},
-	checkbox: {
-		margin: '4 0 12'
 	},
 	title: {
 		marginTop: 56,
