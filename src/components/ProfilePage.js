@@ -11,6 +11,7 @@ import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import { ActionBar, LoadingProgress } from '../widgets';
 import { red600 } from 'material-ui/styles/colors';
+import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 class ProfilePage extends Component {
@@ -23,6 +24,7 @@ class ProfilePage extends Component {
 		this.onUpdateProfile = this.onUpdateProfile.bind(this);
 		this.onLogout = this.onLogout.bind(this);
 		this.onSelectFile = this.onSelectFile.bind(this);
+		this.onToggleDialog = this.onToggleDialog.bind(this);
 	}
 	componentDidMount() {
 		!this.props.user&&this.props.loadUser();
@@ -33,15 +35,12 @@ class ProfilePage extends Component {
 		}
 	}
 	onUserChange(user) {
-		if (!user) {
-			return {};
-		}
-
 		return {
-			firstName: user.firstName,
-			lastName: user.lastName,
-			email: user.email,
-			contactNo: user.contactNo
+			firstName: (user&&user.firstName)||'',
+			lastName: (user&&user.lastName)||'',
+			email: (user&&user.email)||'',
+			contactNo: (user&&user.contactNo)||'',
+			showDialog: false
 		};
 	}
 	onFirstNameChange(event) {
@@ -77,43 +76,51 @@ class ProfilePage extends Component {
 		if (files&&files[0]) {
 			if (files[0].type.startsWith('image')) {
 				this.setState({seletFile: files[0]});
-			} else {
-
 			}
 		}
   }
+  onToggleDialog() {
+  	this.setState({showDialog: !this.state.showDialog});
+  }
 	render() {
-		const { firstName, lastName, email, contactNo, seletFile } = this.state;
+		const { showDialog, firstName, lastName, email, contactNo, seletFile } = this.state;
 		const { loading, updating, user, onDrawerClick } = this.props;
 
 		return (
 			<div className='flex flex-fill'>
 				<ActionBar title='My Profile' leftMenu={true} onLeftMenuClicked={onDrawerClick}
 					rightIcon={<IconDone/>} onRightMenuClicked={this.onUpdateProfile} running={loading||updating}/>
-				{(loading&&!user)?<LoadingProgress/>:
-					<div className='flex flex-fill scroll padding'>
-						<div className='flex flex-center flex-align-center padding'>
-							<div className='position-relative'>
-								<Avatar src={seletFile?seletFile.preview:(user&&user.avatarMd)} size={120}/>
-								<IconEdit style={styles.avatarEditIcon}/>
-		            <Dropzone style={styles.dropZone} multiple={false} accept='image/*' onDrop={this.onSelectFile}/>
+				<div className='flex flex-fill position-relative'>
+					{(loading&&!user)?<LoadingProgress/>:
+						<div className='flex flex-fill scroll padding'>
+							<div>
+								<div style={styles.avatarContainer} className='position-relative'>
+									<Avatar src={seletFile?seletFile.preview:(user&&user.avatarMd)} size={120}/>
+									<IconEdit style={styles.avatarEditIcon}/>
+			            <Dropzone style={styles.dropZone} multiple={false} accept='image/*' onDrop={this.onSelectFile}/>
+								</div>
 							</div>
+							<TextField fullWidth={true} value={firstName}
+								floatingLabelText='Fisrt Name' onChange={this.onFirstNameChange}/>
+							<TextField fullWidth={true} value={lastName}
+								floatingLabelText='Last Name' onChange={this.onLastNameChange}/>
+							<TextField fullWidth={true} value={email} disabled={true}
+								floatingLabelText='Email'/>
+							<TextField fullWidth={true} value={contactNo}
+								floatingLabelText='Contact Number'/>
+							<div className='flex flex-row flex-end'>
+								<FlatButton label='Reset password' onClick={this.onResetPassword}/>
+							</div>
+							<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
+								backgroundColor={red600} labelColor='white' onClick={this.onToggleDialog}/>
 						</div>
-						<TextField fullWidth={true} value={firstName}
-							floatingLabelText='Fisrt Name' onChange={this.onFirstNameChange}/>
-						<TextField fullWidth={true} value={lastName}
-							floatingLabelText='Last Name' onChange={this.onLastNameChange}/>
-						<TextField fullWidth={true} value={email} disabled={true}
-							floatingLabelText='Email'/>
-						<TextField fullWidth={true} value={contactNo}
-							floatingLabelText='Contact Number'/>
-						<div className='flex flex-row flex-end'>
-							<FlatButton label='Reset password' onClick={this.onResetPassword}/>
-						</div>
-						<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
-							backgroundColor={red600} labelColor='white' onClick={this.onLogout}/>
-					</div>
-				}
+					}
+				</div>
+        <Dialog title='Log out?' actions={[
+	        	<FlatButton label='Cancel' onClick={this.onToggleDialog}/>,
+	      		<FlatButton label='Log out' primary={true} onClick={this.onLogout}/>
+        	]} modal={false}
+          open={showDialog} onRequestClose={this.onToggleDialog}/>
 			</div>
 		);
 	}
@@ -136,7 +143,7 @@ ProfilePage.contextTypes = {
 
 const styles = {
 	logoutButton: {
-		marginTop: 60
+		marginTop: 40
 	},
 	dropZone: {
 		height: 120,
@@ -149,6 +156,11 @@ const styles = {
 		position: 'absolute',
 		bottom: 0,
 		right: 0
+	},
+	avatarContainer: {
+		height: 120,
+		width: 120,
+		margin: 'auto'
 	}
 };
 

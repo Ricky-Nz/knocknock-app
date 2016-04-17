@@ -9,13 +9,10 @@ class ProductGrid extends Component {
 	}
 	render() {
 		let { loading, searchText, products } = this.props;
-		
-		if (loading) {
-			return <LoadingProgress/>;
-		}
 
 		return (
-	    <GridList style={styles.gridList}>
+			loading?<LoadingProgress/>:
+	    <GridList padding={2} cols={2} style={styles.gridList}>
 	    	{products&&
 	    		products
 	    			.filter(item =>

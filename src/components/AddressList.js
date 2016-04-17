@@ -29,7 +29,7 @@ class AddressList extends Component {
 
 						if (paper) {
 							return (
-								<Paper key={index} className='margin' zDepth={1}>
+								<Paper key={index} className='half-margin' zDepth={1}>
 									<AddressListItem {...address} onClick={() => onItemClicked(address)}
 										rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
 								</Paper>

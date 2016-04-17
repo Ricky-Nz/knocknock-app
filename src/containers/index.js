@@ -8,6 +8,8 @@ export { default as WalletPage } from './WalletPage';
 export { default as ProfilePage } from './ProfilePage';
 export { default as SettingPage } from './SettingPage';
 export { default as ResetPasswordPage } from './ResetPasswordPage';
+export { default as VoucherList } from './VoucherList';
+export { default as VoucherManagePage } from './VoucherManagePage';
 
 export { default as MessageToast } from './MessageToast';
 export { default as UserCard } from './UserCard';

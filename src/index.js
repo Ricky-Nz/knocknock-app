@@ -10,7 +10,8 @@ import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { OrderDetailPage, AddressEditPage, AddressManagePage,
 	LoginPage, OrderCreatePage, OrderManagePage, WalletPage,
-	ProfilePage, RegisterPage, SettingPage, ResetPasswordPage } from './containers';
+	ProfilePage, RegisterPage, SettingPage, ResetPasswordPage,
+	VoucherManagePage } from './containers';
 import App from './components/App';
 import HomePage from './components/HomePage';
 import ProductPage from './components/ProductPage';
@@ -53,6 +54,7 @@ ReactDOM.render(
 					<Route path='profile' component={ProfilePage}/>
 					<Route path='wallet' component={WalletPage}/>
 					<Route path='setting' component={SettingPage}/>
+					<Route path='voucher' component={VoucherManagePage}/>
 				</Route>
 				<Route path='address' component={AddressEditPage} onEnter={checkSession}/>
 				<Route path='address/:addressId' component={AddressEditPage} onEnter={checkSession}/>

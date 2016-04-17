@@ -7,22 +7,14 @@ import { yellowA100, blueGrey800 } from 'material-ui/styles/colors';
 import IconPayment from 'material-ui/svg-icons/action/payment';
 import IconButton from 'material-ui/IconButton';
 
-function convertTypeDisplay(sortBy) {
-	switch(sortBy) {
-		case 'pickup_date': return 'Pickup date';
-		case 'drop_off_date': return 'Drop off date';
-		case 'created_on': return 'Create date';
-	}
-}
-
-let OrderListItem = ({id, paid, to_pay_price, sortBy, pickup_address, status, onClick, ...props}) => (
-	<Paper style={styles.container} zDepth={1}>
+let OrderListItem = ({id, paid, to_pay_price, pickup_address, status, created_on, onClick}) => (
+	<Paper className='half-margin' zDepth={1}>
 	  <ListItem style={(paid||!(to_pay_price > 0))?null:styles.requirePayment} onClick={onClick}
 	  	primaryText={<p style={styles.primaryTest}>{`No.${id} (${status})`}</p>}
 	  	rightIconButton={(paid||!(to_pay_price > 0))?null:<IconButton><IconPayment/></IconButton>}
 	    secondaryText={
 	    	<div>
-	    		<p>{convertTypeDisplay(sortBy)}: <TimeDisplay>{props[sortBy]}</TimeDisplay></p>
+	    		<p>Create date: <TimeDisplay>{created_on}</TimeDisplay></p>
 	      	<p>Address: {pickup_address}</p>
 	      </div>
 	    } secondaryTextLines={2}/>
@@ -34,9 +26,6 @@ OrderListItem.propTypes = {
 };
 
 const styles = {
-	container: {
-		margin: '10px 10px'
-	},
 	primaryTest: {
 		color: blueGrey800
 	},

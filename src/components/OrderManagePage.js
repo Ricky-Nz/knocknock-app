@@ -3,7 +3,7 @@ import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
-import { OrderSortSelector, OrderStatusSelector, OrderList } from '../containers';
+import { OrderList } from '../containers';
 import { ActionBar } from '../widgets';
 
 class OrderManagePage extends Component {
@@ -19,26 +19,18 @@ class OrderManagePage extends Component {
 		this.context.router.push(`order/${order.id}`);
 	}
 	render() {
-		const { historyOrder, statusFilter, sortBy, sortOrder, loading } = this.props;
+		const isActive = this.props.location.pathname==='/home';
 
 		return (
 			<div className='flex flex-fill'>
-				<ActionBar title={historyOrder?'History Orders':'Active Orders'} running={loading}
+				<ActionBar title={isActive?'Active Orders':'History Orders'} running={this.props.loading}
 					leftMenu={true} onLeftMenuClicked={this.props.onDrawerClick}
 					rightIcon={<IconRefresh/>} onRightMenuClicked={this.props.loadOrders}/>
 				<div className='flex flex-fill position-relative'>
 					<div className='flex flex-fill scroll'>
-						{!historyOrder&&
-							<div>
-								<OrderStatusSelector historyOrder={historyOrder}/>
-								<OrderSortSelector historyOrder={historyOrder}/>
-							</div>
-						}
-						<OrderList statusFilter={historyOrder?'ALL':statusFilter}
-							sortBy={historyOrder?'created_on':sortBy} sortOrder={historyOrder?true:sortOrder}
-							onItemClicked={this.onOrderClicked}/>
+						<OrderList onItemClicked={this.onOrderClicked} isActive={isActive}/>
 					</div>
-			    {!historyOrder&&
+			    {isActive&&
 			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
 			      	<ContentAdd/>
 			    	</FloatingActionButton>
@@ -54,11 +46,7 @@ OrderManagePage.contextTypes = {
 };
 
 OrderManagePage.propTypes = {
-	historyOrder: PropTypes.bool,
 	loading: PropTypes.bool,
-	statusFilter: PropTypes.string,
-	sortBy: PropTypes.string,
-	sortOrder: PropTypes.bool,
 	loadOrders: PropTypes.func.isRequired,
 	onDrawerClick: PropTypes.func.isRequired
 };

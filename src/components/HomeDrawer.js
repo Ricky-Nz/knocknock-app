@@ -9,6 +9,7 @@ import IconPlace from 'material-ui/svg-icons/maps/place';
 import IconMoney from 'material-ui/svg-icons/editor/attach-money';
 import IconWallet from 'material-ui/svg-icons/action/account-balance-wallet';
 import IconSettings from 'material-ui/svg-icons/action/settings';
+import IconGift from 'material-ui/svg-icons/action/card-giftcard';
 import { UserCard, QuickOrderButton } from '../containers';
 
 class HomeDrawer extends Component {
@@ -36,9 +37,10 @@ class HomeDrawer extends Component {
 			  <Menu value={this.props.path} onItemTouchTap={this.onMenuSelect}>
 			    <MenuItem primaryText='Active Orders' leftIcon={<IconLocalShipping/>} value='/home'/>
 			    <MenuItem primaryText='History Orders' leftIcon={<IconHistory/>} value='/home/history'/>
-			    <MenuItem primaryText='Addresses' leftIcon={<IconPlace/>} value='/home/addresses'/>
+			    <MenuItem primaryText='Address' leftIcon={<IconPlace/>} value='/home/addresses'/>
 			    <MenuItem primaryText='Pricing' leftIcon={<IconMoney/>} value='/home/pricing'/>
 			    <MenuItem primaryText='Wallet' leftIcon={<IconWallet/>} value='/home/wallet'/>
+			    <MenuItem primaryText='Voucher' leftIcon={<IconGift/>} value='/home/voucher'/>
 			    <MenuItem primaryText='Settings' leftIcon={<IconSettings/>} value='/home/setting'/>
 			  </Menu>
 			  <br/><br/><br/>

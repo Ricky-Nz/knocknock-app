@@ -12,7 +12,7 @@ const mapStateToProps = createSelector(
 
 const mapActionToProps = (dispatch) => ({
 	loadUserAddresses: () => {
-		dispatch(getUserAddresses());
+		dispatch(getUserAddresses(true));
 	}
 });
 

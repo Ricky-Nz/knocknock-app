@@ -5,9 +5,12 @@ export default function (orders = null, {type, running, error, data}) {
 	switch(type) {
 		case ACTION_GET_ORDERS:
 			if (!running && !error && data) {
-				return data.filter(({order_status}) =>
-					['Deleted', 'Laundry Complete'].indexOf(order_status.status) >= 0)
-						.map(item => convertCompactOrder(item));
+				return data
+					.filter(({order_status}) => {
+						return ['Deleted'].indexOf(order_status.status) >= 0;
+					})
+					.map(item => convertCompactOrder(item))
+					.sort((a, b) => !a['created_on'].localeCompare(b['created_on']));
 			} else {
 				return orders;
 			}

@@ -46,12 +46,12 @@ export function createAddress({address, postal_code, contact_no, unit_number}) {
 				headers: {
 					'Authorization': `${session.tokenType} ${session.token}`
 				},
-				form: {
+				body: {
 					address,
 					postal_code,
 					unit_number,
 					contact_no,
-					name: 'home',
+					name: `${address}, ${unit_number}`,
 					apartment_type: 'hdb'
 				}
 			});

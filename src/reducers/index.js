@@ -12,6 +12,7 @@ import historyOrders from './historyOrders';
 import orderDetail from './orderDetail';
 import settings from './settings';
 import payment from './payment';
+import vouchers from './vouchers';
 
 export default {
 	toast,
@@ -27,5 +28,6 @@ export default {
 	historyOrders,
 	orderDetail,
 	settings,
-	payment
+	payment,
+	vouchers
 };
