@@ -5,3 +5,4 @@ export { default as SearchMenu } from './SearchMenu';
 export { default as DropDownSelector } from './DropDownSelector';
 export { default as MessageToast } from './MessageToast';
 export { default as ActionBar } from './ActionBar';
+export { default as EditText } from './EditText';

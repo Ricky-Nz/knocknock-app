@@ -6,7 +6,7 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import Dialog from 'material-ui/Dialog';
-import { LoadingProgress } from '../widgets';
+import { LoadingProgress, EditText } from '../widgets';
 
 function isValidEmail(email) {
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -18,12 +18,8 @@ class LoginPage extends Component {
 		super(props);
 		this.state = {
 			showPassword: false,
-			dialogShow: false,
-			username: 'mengyingz@gmail.com',
-			password: '123456'
+			dialogShow: false
 		};
-		this.onUsernameChange = this.onUsernameChange.bind(this);
-		this.onPasswordChange = this.onPasswordChange.bind(this);
 		this.onLoginClicked = this.onLoginClicked.bind(this);
 		this.onRegisterClicked = this.onRegisterClicked.bind(this);
 		this.onShowPasswordChange = this.onShowPasswordChange.bind(this);
@@ -37,27 +33,17 @@ class LoginPage extends Component {
 			this.setState({dialogShow: false});
 		}
 	}
-	onUsernameChange(event) {
-		this.setState({username: event.target.value});
-	}
-	onPasswordChange(event) {
-		this.setState({password: event.target.value});
-	}
 	onRegisterClicked() {
 		this.context.router.push('register');
 	}
 	onLoginClicked() {
-		if (!this.state.username) {
-			this.setState({toast: true, message: 'User nmae can not be empty'});
+		const username = this.refs.username.getValidValue();
+		const password = this.refs.password.getValidValue();
+		if (!username || !password) {
 			return;
 		}
 
-		if (!this.state.password) {
-			this.setState({toast: true, message: 'Login password can not be empty'});
-			return;
-		}
-
-		this.props.login(this.state);
+		this.props.login({username, password});
 	}
 	onShowPasswordChange() {
 		this.setState({showPassword: !this.state.showPassword});
@@ -67,10 +53,9 @@ class LoginPage extends Component {
 	}
 	onForgotPassword() {
 		if (this.state.dialogShow) {
-			this.props.forgotPassword(this.state.username);
+			this.props.forgotPassword(this.refs.username.getValidValue());
 		} else {
-			if (!isValidEmail(this.state.username)) {
-				this.toast('Please neter a valid login email');
+			if (!this.refs.username.getValidValue()) {
 				return;
 			}
 
@@ -79,18 +64,21 @@ class LoginPage extends Component {
 	}
 	render() {
 		const { loggingin, forgoting } = this.props;
-		const { username, password, showPassword, dialogShow } = this.state;
+		const { showPassword, dialogShow } = this.state;
 
 		return (
 			<div className='flex flex-fill page'>
 				<div className='flex flex-center flex-align-center'>
 					<p style={styles.title}>Knocknock</p>
 				</div>
-				<div className='flex flex-fill padding margin'>
-					<TextField fullWidth={true} value={username} disabled={loggingin}
-						floatingLabelText='Email' onChange={this.onUsernameChange}/>
-					<TextField type={showPassword?'text':'password'} fullWidth={true} value={password} disabled={loggingin}
-						floatingLabelText='Password' onChange={this.onPasswordChange}/>
+				<div className='flex flex-fill padding-horizontal margin'>
+					<EditText ref='username' fullWidth={true} disabled={loggingin}
+						floatingLabelText='Email' errorText='please enter a valid email address'
+						verify={/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}/>
+					<EditText ref='password' type={showPassword?'text':'password'} fullWidth={true}
+						disabled={loggingin} floatingLabelText='Password'
+						errorText='password can not be empty' verify={/([^\s])/}/>
+					<br/>
 			    <Checkbox style={styles.checkbox} checked={showPassword} disabled={loggingin}
 						label='Show password' onCheck={this.onShowPasswordChange}/>
 			    <RaisedButton label='Log in' primary={true} fillWidth={true}
@@ -109,7 +97,7 @@ class LoginPage extends Component {
 			      <FlatButton label='OK' primary={true} onClick={this.onForgotPassword}/>,
 		    	]} modal={false} open={dialogShow}
           onRequestClose={this.toggleDialog}>
-          {forgoting?<LoadingProgress/>:`Send a new password to ${username}?`}
+          {forgoting?<LoadingProgress/>:`Send a new password to ${this.refs.username&&this.refs.username.getValidValue()}?`}
         </Dialog>
 			</div>
 		);
@@ -137,7 +125,7 @@ const styles = {
 		margin: '4 0 12'
 	},
 	title: {
-		marginTop: 72,
+		marginTop: 56,
 		fontSize: '3em',
 		color: deepOrange500,
 		textAlign: 'center'
