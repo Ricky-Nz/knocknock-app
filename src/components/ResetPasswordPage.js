@@ -2,9 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import Checkbox from 'material-ui/Checkbox';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import IconDone from 'material-ui/svg-icons/action/done';
 
 class ResetPasswordPage extends Component {
@@ -50,9 +47,9 @@ class ResetPasswordPage extends Component {
 
 		return (
 			<div className='flex flex-fill page'>
-			  <AppBar title='Reset password'
-			    iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBack/></IconButton>}
-					iconElementRight={resetting?<CircularProgress size={0.5} color='white'/>:<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>
+				<ActionBar title='Reset password' running={resetting}
+					onLeftMenuClicked={this.context.router.goBack} running={loading||paying}
+					rightIcon={<IconDone/>} onRightMenuClicked={this.onSubmit}/>
 				<div className='flex flex-fill padding margin-horizontal'>
 					<TextField type={showPassword?'text':'password'} fullWidth={true} value={password}
 						hintText='new password' onChange={this.onPasswordChange} disabled={resetting}/>

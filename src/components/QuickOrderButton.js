@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import { ListItem } from 'material-ui/List';
+import IconSend from 'material-ui/svg-icons/content/send';
 
 class QuickOrderButton extends Component {
 	constructor(props) {
@@ -7,12 +8,13 @@ class QuickOrderButton extends Component {
 		this.onQuickOrder = this.onQuickOrder.bind(this);
 	}
 	onQuickOrder() {
-		const { address, pickupTime, toast } = this.props;
+		const { address, pickupTime, toast, onClick } = this.props;
 		if (!address || !pickupTime) {
 			toast('Please set the default pickup address and pickup time in Settings tab');
 			return;
 		}
 
+		onClick&&onClick();
 		this.context.router.push({
 		  pathname: 'order',
 		  query: { express: true }
@@ -20,7 +22,7 @@ class QuickOrderButton extends Component {
 	}
 	render() {
 		return (
-			<RaisedButton label='Quick Order' fullWidth={true} primary={true}
+			<ListItem primaryText='Quick Order' leftIcon={<IconSend/>}
 				onClick={this.onQuickOrder}/>
 		);
 	}

@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
-// import createLogger from 'redux-logger';
+import createLogger from 'redux-logger';
 import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { OrderDetailPage, AddressEditPage, AddressManagePage,
 	LoginPage, OrderCreatePage, OrderManagePage, WalletPage,
 	ProfilePage, RegisterPage, SettingPage, ResetPasswordPage } from './containers';
 import App from './components/App';
-import DashboardPage from './components/DashboardPage';
+import HomePage from './components/HomePage';
 import ProductPage from './components/ProductPage';
 
 // Needed for onTouchTap
@@ -26,7 +26,7 @@ const store = createStore(
 		...reducers,
 		routing: routerReducer
 	}),
-	applyMiddleware(thunk)
+	applyMiddleware(thunk, createLogger())
 );
 
 const history = syncHistoryWithStore(hashHistory, store);
@@ -44,11 +44,10 @@ ReactDOM.render(
 				<IndexRoute component={LoginPage}/>
 				<Route path='login' component={LoginPage}/>
 				<Route path='register' component={RegisterPage}/>
-				<Route path='dashboard' component={DashboardPage}
+				<Route path='home' component={HomePage}
 					onEnter={checkSession}>
 					<IndexRoute component={OrderManagePage}/>
-					<Route path='activeorders' component={OrderManagePage}/>
-					<Route path='historyorders' component={OrderManagePage}/>
+					<Route path='history' component={OrderManagePage}/>
 					<Route path='addresses' component={AddressManagePage}/>
 					<Route path='pricing' component={ProductPage}/>
 					<Route path='profile' component={ProfilePage}/>

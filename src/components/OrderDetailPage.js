@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import OrderProfile from './OrderProfile';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -12,6 +9,7 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import OrderItemList from './OrderItemList';
 import { OrderStatusActionBanner } from '../containers';
+import { ActionBar } from '../widgets';
 
 class OrderDetailPage extends Component {
 	constructor(props) {
@@ -35,11 +33,10 @@ class OrderDetailPage extends Component {
 
 		return (
 			<div className='flex flex-fill page'>
-			  <AppBar title={(!id&&loading)?'Loading...':`Order No.${id}`}
-			    iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBack/></IconButton>}
-			    iconElementRight={(loading||paying)?<CircularProgress size={0.5} color='white'/>:
-						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				{(!this.props.order||(this.props.loading&&id!=this.props.params.orderId))?<LoadingProgress/>:
+				<ActionBar title={(!id&&loading)?'Loading...':`Order No.${id}`} running={this.props.loading}
+					onLeftMenuClicked={this.context.router.goBack} running={loading||paying}
+					rightIcon={<IconRefresh/>} onRightMenuClicked={this.onRefresh}/>
+				{(!this.props.order||(loading&&id!=this.props.params.orderId))?<LoadingProgress/>:
 					<div className='flex flex-fill position-relative'>
 						<div className='scroll'>
 							<OrderStatusActionBanner id={id} status={status}

@@ -32,7 +32,7 @@ class LoginPage extends Component {
 	}
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.loggingin&&this.props.loggingin&&nextProps.loginSuccess) {
-			this.context.router.replace('/dashboard');
+			this.context.router.replace('/home');
 		} else if (!nextProps.forgoting&&this.props.forgoting&&this.state.dialogShow) {
 			this.setState({dialogShow: false});
 		}

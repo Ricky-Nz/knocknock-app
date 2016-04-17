@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import CircularProgress from 'material-ui/CircularProgress';
 import Checkbox from 'material-ui/Checkbox';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import IconPersonAdd from 'material-ui/svg-icons/social/person-add';
+import { ActionBar } from '../widgets';
 
 class RegisterPage extends Component {
 	constructor(props) {
@@ -79,9 +76,8 @@ class RegisterPage extends Component {
 
 		return (
 			<div className='flex flex-fill page'>
-			  <AppBar title='Create New Account'
-			    iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBack/></IconButton>}
-					iconElementRight={registering?<CircularProgress size={0.5} color='white'/>:null}/>
+				<ActionBar title='Create New Account' running={registering}
+					onLeftMenuClicked={this.context.router.goBack}/>
 				<div className='flex flex-fill padding margin-horizontal'>
 					<TextField fullWidth={true} value={email}
 						hintText='Email' onChange={this.onEmailChange} disabled={registering}/>

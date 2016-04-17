@@ -3,7 +3,7 @@ import doFetch from './doFetch';
 
 export const ACTION_CREATE_ADDRESS = 'ACTION_CREATE_ADDRESS';
 
-export function createAddress({postal_code, contact_no, unit_number}) {
+export function createAddress({address, postal_code, contact_no, unit_number}) {
 	return (dispatch, getState) => {
 		// doFetch({
 		// 	method: 'GET',
@@ -47,7 +47,7 @@ export function createAddress({postal_code, contact_no, unit_number}) {
 					'Authorization': `${session.tokenType} ${session.token}`
 				},
 				form: {
-					address: '',
+					address,
 					postal_code,
 					unit_number,
 					contact_no,

@@ -1,32 +1,25 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/AppBar';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconPayment from 'material-ui/svg-icons/action/payment';
-import CircularProgress from 'material-ui/CircularProgress';
 import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import { blueGrey500 } from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import { LoadingProgress } from '../widgets';
+import { ActionBar, LoadingProgress } from '../widgets';
 import { PaymentProcessingDialog } from '../containers';
 
 class WalletPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { amount: 50 };
-		this.onRefresh = this.onRefresh.bind(this);
 		this.onTopupChange = this.onTopupChange.bind(this);
 		this.onPay = this.onPay.bind(this);
 		this.onPayReturnSuccess = this.onPay.bind(this);
+		this.onRefresh = this.onRefresh.bind(this);
 	}
 	componentDidMount() {
 		!this.props.user&&this.props.loadUser();
-	}
-	onRefresh() {
-		this.props.loadUser();	
 	}
 	onTopupChange(event) {
 		this.setState({amount: event.target.value});
@@ -39,29 +32,34 @@ class WalletPage extends Component {
 
 		this.props.topUp(parseInt(this.state.amount));
 	}
+	onRefresh() {
+		this.props.loadUser(true);
+	}
 	render() {
+		const { onDrawerClick, user, loading } = this.props;
+
 		return (
 			<div className='fillHeight page'>
-				<AppBar title='My Wallet'
-					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={this.props.loading?<CircularProgress size={0.5} color='white'/>:
-						<IconButton onClick={this.onRefresh}><IconRefresh/></IconButton>}/>
-				{(this.props.loading||!this.props.user)?<LoadingProgress/>:
-					<div className='flex flex-fill'>
-						<div className='padding' zDepth={1}>
-							<Subheader>Knocknock Credits</Subheader>
-							<p style={styles.creditText}>{`S$${this.props.user.credit}`}</p>
-						</div>
-						<div style={styles.container}>
-							<TextField value={this.state.amount} onChange={this.onTopupChange}
-								hintText='enter top up amount' floatingLabelText='Top up' type='number'/>
-							<div className='flex flex-row padding-top'>
-								<RaisedButton onClick={this.onPay} label='Pay by Paypal' labelPosition='after' icon={<IconPayment/>}/>
+				<ActionBar title='My Wallet' leftMenu={true} onLeftMenuClicked={onDrawerClick}
+					rightIcon={<IconRefresh/>} onRightMenuClicked={this.onRefresh} running={loading}/>
+				<div className='flex flex-fill position-relative'>
+					{(loading||!user)?<LoadingProgress/>:
+						<div className='padding scroll'>
+							<div zDepth={1}>
+								<Subheader>Knocknock Credits</Subheader>
+								<p style={styles.creditText}>{`S$${user.credit}`}</p>
 							</div>
-							<PaymentProcessingDialog onSuccess={this.onRefresh}/>
+							<div className='padding'>
+								<TextField value={this.state.amount} onChange={this.onTopupChange}
+									hintText='enter top up amount' floatingLabelText='Top up' type='number'/>
+								<div className='flex flex-row padding-top'>
+									<RaisedButton onClick={this.onPay} label='Pay by Paypal' labelPosition='after' icon={<IconPayment/>}/>
+								</div>
+								<PaymentProcessingDialog onSuccess={this.props.loadUser}/>
+							</div>
 						</div>
-					</div>
-				}
+					}
+				</div>
 			</div>
 		);
 	}
@@ -81,9 +79,6 @@ WalletPage.propTypes = {
 };
 
 const styles = {
-	container: {
-		padding: '0 32'
-	},
 	creditText: {
 		paddingLeft: 16,
 		color: blueGrey500,

@@ -11,13 +11,13 @@ export default function (addresses = null, {type, running, error, data}) {
 				return addresses;
 			}
 		case ACTION_CREATE_ADDRESS:
-			if (!running && !error && data && data.status === 'success' && data.result) {
+			if (!running && !error && data && data.status && data.result) {
 				return [convertAddress(data.result), ...addresses];
 			} else {
 				return addresses;
 			}
 		case ACTION_EDIT_ADDRESS:
-			if (!running && !error && data && data.status === 'success' && data.result) {
+			if (!running && !error && data && data.status && data.result) {
 				const index = addresses.findIndex(address => address.id === data.result.id);
 				if (index >= 0) {
 					return [...addresses.slice(0, index), convertAddress(data.result), ...addresses.slice(index + 1)];

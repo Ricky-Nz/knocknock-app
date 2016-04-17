@@ -14,8 +14,8 @@ const mapStateToProps = createSelector(
 );
 
 const mapActionToProps = (dispatch) => ({
-	loadUser: () => {
-		dispatch(getUserProfile());
+	loadUser: (toast) => {
+		dispatch(getUserProfile(toast));
 	},
 	toast: (message) => {
 		dispatch(toastMessage(message));

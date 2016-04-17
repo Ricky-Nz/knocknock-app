@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
-import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 import { OrderSortSelector, OrderStatusSelector, OrderList } from '../containers';
+import { ActionBar } from '../widgets';
 
 class OrderManagePage extends Component {
 	constructor(props) {
@@ -25,10 +23,9 @@ class OrderManagePage extends Component {
 
 		return (
 			<div className='flex flex-fill'>
-				<AppBar title={historyOrder?'History Orders':'Active Orders'}
-					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={loading?<CircularProgress size={0.5} color='white'/>:
-						<IconButton onClick={this.props.loadOrders}><IconRefresh/></IconButton>}/>
+				<ActionBar title={historyOrder?'History Orders':'Active Orders'} running={loading}
+					leftMenu={true} onLeftMenuClicked={this.props.onDrawerClick}
+					rightIcon={<IconRefresh/>} onRightMenuClicked={this.props.loadOrders}/>
 				<div className='flex flex-fill position-relative'>
 					<div className='flex flex-fill scroll'>
 						{!historyOrder&&

@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import { CategorySelector, ProductGrid } from '../containers';
-import { SearchMenu } from '../widgets';
+import { ActionBar, SearchMenu } from '../widgets';
 
 class ProductPage extends Component {
 	constructor(props) {
@@ -17,9 +17,8 @@ class ProductPage extends Component {
 	render() {
 		return (
 			<div className='flex flex-fill'>
-				<AppBar title='Product Pricing'
-					iconElementLeft={<IconButton onClick={this.props.onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={<SearchMenu onSearchTextChange={this.onSearchTextChange}/>}/>
+				<ActionBar title='Product Pricing'
+					leftMenu={true} onLeftMenuClicked={this.props.onDrawerClick}/>
 				<div className='flex flex-fill'>
 					<CategorySelector/>
 					<ProductGrid searchText={this.state.searchText}/>

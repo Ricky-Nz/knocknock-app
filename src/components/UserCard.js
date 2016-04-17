@@ -21,14 +21,15 @@ class UserCard extends Component {
 		} else {
 			return (
 				<div className='flex flex-column flex-center' style={styles.container}>
-					<Avatar style={styles.avatar} src={user&&user.avatarMd} size={90}/>
+					<Avatar style={styles.avatar} src={user&&user.avatarMd} size={90}
+						onClick={onClick}/>
 				  <ListItem rightIcon={<IconAccountCircle color='white'/>} onClick={onClick}
 				  	primaryText={
 				  		(user&&(user.firstName||user.lastName))&&<p style={styles.text}>{user.firstName} {user.lastName}</p>
 				  	}
 				    secondaryText={
 				    	<p style={styles.text}>{user&&(user.email||user.contact)}</p>
-				    } secondaryTextLines={2}/>
+				    }/>
 				</div>
 			);
 		}
@@ -49,8 +50,7 @@ const styles = {
 		margin: '16 16 8 16'
 	},
 	text: {
-		color: 'white',
-		fontSize: '1.1em'
+		color: 'white'
 	}
 };
 

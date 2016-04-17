@@ -35,6 +35,12 @@ export function clearSession() {
 	remove('LOCAL_SESSION');
 }
 
+export function clearDefaultSetting() {
+	remove('LOCAL_ADDRESS');
+	remove('LOCAL_PICKUP_TIME');
+	remove('LOCAL_NOTE');
+}
+
 export function saveDefaultAddress(address) {
 	set('LOCAL_ADDRESS', address);
 }
@@ -48,12 +54,7 @@ export function saveDefaultPickupTime(pickupTime) {
 }
 
 export function getDefaultPickupTime() {
-	const data = get('LOCAL_PICKUP_TIME');
-	if (data) {
-		return new Date(data);
-	} else {
-		return data;
-	}
+	return get('LOCAL_PICKUP_TIME');
 }
 
 export function saveDefaultNote(note) {

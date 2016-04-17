@@ -53,8 +53,7 @@ export default function (toast = {}, {type, running, arg, error, data}) {
 							return {message: 'New order created'};
 						case ACTION_FORGOT_PASSWORD:
 							return {message: 'A new password already send to your email'};
-						case ACTION_GET_ORDER_DETAIL:
-						case ACTION_GET_ORDERS:
+						default:
 							if (arg) {
 								return {message: 'Refresh success'};
 							}

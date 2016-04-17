@@ -1,59 +1,75 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Subheader from 'material-ui/Subheader';
 import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 import { ListItem } from 'material-ui/List';
-import AddressSelectDialog from './AddressSelectDialog';
+import { AddressSelectDialog } from '../containers';
+import PickupTimeChooser from './PickupTimeChooser';
+import { ActionBar } from '../widgets';
 
 class SettingPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {dialogShow: false};
+		this.state = {dialogShow: false, timeChooserShow: false};
 		this.toggleDialog = this.toggleDialog.bind(this);
 		this.onSelectAddress = this.onSelectAddress.bind(this);
 		this.onSelectPickupTime = this.onSelectPickupTime.bind(this);
+		this.togglePickupTimeChooser = this.togglePickupTimeChooser.bind(this);
 		this.onNoteChange = this.onNoteChange.bind(this);
+		this.onAddNewAddress = this.onAddNewAddress.bind(this);
 	}
 	toggleDialog() {
+		if (1 === 2) {
+
+		}
 		this.setState({dialogShow: !this.state.dialogShow});
 	}
 	onSelectAddress(address) {
 		this.toggleDialog();
 		this.props.setDefaultAddress(address);
 	}
-  onSelectPickupTime(event, date) {
-    this.props.setDefaultPickupTime(date);
+  onSelectPickupTime(time) {
+    this.props.setDefaultPickupTime(time);
+    this.togglePickupTimeChooser();
+  }
+  togglePickupTimeChooser() {
+  	this.setState({timeChooserShow: !this.state.timeChooserShow});
   }
   onNoteChange(event) {
   	this.props.setDefaultNote(event.target.value);
+  }
+  onAddNewAddress() {
+  	this.toggleDialog();
+  	this.context.router.push('/address');
   }
 	render() {
 		const {onDrawerClick, address, pickupTime, note} = this.props;
 
 		return (
 			<div className='flex flex-fill'>
-				<AppBar title='Settings'
-					iconElementLeft={<IconButton onClick={onDrawerClick}><IconMenu/></IconButton>}/>
-				<div className='padding'>
-					<Subheader>Default pickup address</Subheader>
-		      <ListItem rightIcon={<IconEdit/>} onClick={this.toggleDialog}
-		        primaryText={address?address.address:'not set'}/>
-					<Subheader>Default pickup time</Subheader>
-					<div className='padding-left'>
-	          <TimePicker format='24hr' hintText='Time: select to set' value={pickupTime}
-	            onChange={this.onSelectPickupTime}/>
-          </div>
-					<Subheader>Default new order note</Subheader>
-					<div className='padding-horizontal'>
-						<TextField fullWidth={true} hintText='write default note here'
-							value={note||''} onChange={this.onNoteChange}/>
+				<ActionBar title='Settings'
+					leftMenu={true} onLeftMenuClicked={onDrawerClick}/>
+				<div className='flex flex-fill position-relative'>
+					<div className='scroll padding'>
+						<Subheader>Default pickup address</Subheader>
+			      <ListItem rightIcon={<IconEdit/>} onClick={this.toggleDialog}
+			        primaryText={address?`${address.address}, ${address.postal_code}`:'not set'}/>
+						<Subheader>Default pickup time</Subheader>
+						<ListItem rightIcon={<IconEdit/>} onClick={this.togglePickupTimeChooser}
+			        primaryText={pickupTime?pickupTime:'not set'}/>
+						<Subheader>Default order note</Subheader>
+						<div className='padding-horizontal'>
+							<TextField fullWidth={true} hintText='write default note here'
+								value={note||''} onChange={this.onNoteChange}/>
+						</div>
+						<PickupTimeChooser open={this.state.timeChooserShow} select={pickupTime}
+							onSelect={this.onSelectPickupTime} onCancel={this.togglePickupTimeChooser}/>
+						<AddressSelectDialog open={this.state.dialogShow} defaultAddress={address}
+							onSelect={this.onSelectAddress} onCancel={this.toggleDialog}
+							onAddNewAddress={this.onAddNewAddress}/>
+						<br/><br/><br/>
 					</div>
-					<AddressSelectDialog open={this.state.dialogShow} defaultAddress={address}
-						onSelect={this.onSelectAddress} onCancel={this.toggleDialog}/>
 				</div>
 			</div>
 		);
@@ -67,6 +83,10 @@ SettingPage.propTypes = {
 	setDefaultAddress: PropTypes.func.isRequired,
 	setDefaultPickupTime: PropTypes.func.isRequired,
 	setDefaultNote: PropTypes.func.isRequired
+};
+
+SettingPage.contextTypes = {
+  router: React.PropTypes.object
 };
 
 export default SettingPage;

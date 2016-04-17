@@ -9,7 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Avatar from 'material-ui/Avatar';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
-import { LoadingProgress } from '../widgets';
+import { ActionBar, LoadingProgress } from '../widgets';
 import { red600 } from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -88,12 +88,10 @@ class ProfilePage extends Component {
 
 		return (
 			<div className='flex flex-fill'>
-				<AppBar title='My Profile'
-					iconElementLeft={<IconButton onClick={onDrawerClick}><IconMenu/></IconButton>}
-					iconElementRight={(loading||updating)?<CircularProgress size={0.5} color='white'/>
-						:<IconButton onClick={this.onUpdateProfile}><IconDone/></IconButton>}/>
+				<ActionBar title='My Profile' leftMenu={true} onLeftMenuClicked={onDrawerClick}
+					rightIcon={<IconDone/>} onRightMenuClicked={this.onUpdateProfile} running={loading||updating}/>
 				{(loading&&!user)?<LoadingProgress/>:
-					<div className='padding'>
+					<div className='flex flex-fill scroll padding'>
 						<div className='flex flex-center flex-align-center padding'>
 							<div className='position-relative'>
 								<Avatar src={seletFile?seletFile.preview:(user&&user.avatarMd)} size={120}/>

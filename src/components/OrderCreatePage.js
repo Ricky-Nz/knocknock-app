@@ -2,10 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import IconDone from 'material-ui/svg-icons/action/done';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import Subheader from 'material-ui/Subheader';
@@ -33,7 +29,6 @@ class CreateOrderPage extends Component {
       maxPickDate: maxDate
     };
 
-		this.onClosePage = this.onClosePage.bind(this);
 		this.onSelectStep = this.onSelectStep.bind(this);
 		this.onContinue = this.onContinue.bind(this);
     this.onBack = this.onBack.bind(this);
@@ -51,9 +46,6 @@ class CreateOrderPage extends Component {
       this.context.router.goBack();  
     }
   }
-	onClosePage() {
-		this.context.router.goBack();
-	}
   onSelectStep(currentStep) {
     this.setState({
       activeStep: currentStep
@@ -166,9 +158,8 @@ class CreateOrderPage extends Component {
 
 		return (
 			<div className='flex flex-fill page' style={styles.page}>
-			  <AppBar title='Create Order'
-			    iconElementLeft={<IconButton onClick={this.onClosePage}><ArrowBack/></IconButton>}
-          iconElementRight={creating?<CircularProgress size={0.5} color='white'/>:null}/>
+        <ActionBar title='Create Order' running={creating}
+          onLeftMenuClicked={this.context.router.goBack}/>
         <div className='flex flex-fill'>
           <Stepper horizontal={true} activeStep={this.state.activeStep}
             onStepHeaderTouch={creating?null:this.onSelectStep}>
