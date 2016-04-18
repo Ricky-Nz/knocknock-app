@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconEdit from 'material-ui/svg-icons/editor/border-color';
 import IconDone from 'material-ui/svg-icons/action/done';
-import TextField from 'material-ui/TextField';
+import IconClose from 'material-ui/svg-icons/navigation/close';
 import CircularProgress from 'material-ui/CircularProgress';
 import Avatar from 'material-ui/Avatar';
 import Dropzone from 'react-dropzone';
@@ -13,56 +13,54 @@ import { ActionBar, LoadingProgress } from '../widgets';
 import { red600 } from 'material-ui/styles/colors';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import { EditText } from '../widgets';
 
 class ProfilePage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = this.onUserChange(props.user);
-		this.onFirstNameChange = this.onFirstNameChange.bind(this);
-		this.onLastNameChange = this.onLastNameChange.bind(this);
-		this.onResetPassword = this.onResetPassword.bind(this);
+		this.state = {showDialog: false};
 		this.onUpdateProfile = this.onUpdateProfile.bind(this);
 		this.onLogout = this.onLogout.bind(this);
 		this.onSelectFile = this.onSelectFile.bind(this);
 		this.onToggleDialog = this.onToggleDialog.bind(this);
 	}
 	componentDidMount() {
-		!this.props.user&&this.props.loadUser();
-	}
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.user !== this.props.user) {
-			this.setState(this.onUserChange(nextProps.user));
-		}
-	}
-	onUserChange(user) {
-		return {
-			firstName: (user&&user.firstName)||'',
-			lastName: (user&&user.lastName)||'',
-			email: (user&&user.email)||'',
-			contactNo: (user&&user.contactNo)||'',
-			showDialog: false
-		};
-	}
-	onFirstNameChange(event) {
-		this.setState({firstName: event.target.value});
-	}
-	onLastNameChange(event) {
-		this.setState({lastName: event.target.value});
+		!this.props.user&&!this.props.loading&&this.props.loadUser();
 	}
 	onUpdateProfile() {
 		if (this.state.seletFile) {
 			this.props.uploadAvatar(this.state.seletFile);
+			this.setState({seletFile: null});
 		}
 
-		const { firstName, lastName } = this.props.user;
-		if (firstName !== this.state.firstName ||
-			lastName !== this.state.lastName) {
-			this.props.updateUser({
-				email: this.state.email,
-				contactNo: this.state.contactNo,
-				firstName: this.state.firstName,
-				lastName: this.state.lastName
-			});
+		const firstName = this.refs.firstName.getValidValue();
+		const lastName = this.refs.lastName.getValidValue();
+		const user = this.props.user;
+
+		if (this.props.location.pathname === '/setup') {
+			if (firstName || lastName) {
+				this.props.updateUser({
+					firstName,
+					lastName
+				});
+			}
+
+			this.context.router.goBack();
+		} else if (user) {
+			const email = this.refs.email.getValidValue();
+			const contactNo = this.refs.contactNo.getValidValue();
+		
+			if (firstName !== user.firstName
+				|| lastName !== user.lastName
+				|| email !== user.email
+				|| contactNo !== user.contactNo) {
+				this.props.updateUser({
+					email,
+					contactNo,
+					firstName,
+					lastName
+				});
+			}
 		}
 	}
 	onResetPassword() {
@@ -83,12 +81,14 @@ class ProfilePage extends Component {
   	this.setState({showDialog: !this.state.showDialog});
   }
 	render() {
-		const { showDialog, firstName, lastName, email, contactNo, seletFile } = this.state;
-		const { loading, updating, user, onDrawerClick } = this.props;
+		const { showDialog, seletFile } = this.state;
+		const { loading, updating, user, onMenuClick } = this.props;
+		const isSetup = this.props.location.pathname === '/setup';
 
 		return (
 			<div className='flex flex-fill'>
-				<ActionBar title='My Profile' leftMenu={true} onLeftMenuClicked={onDrawerClick}
+				<ActionBar title={isSetup?'Setup Profile':'My Profile'} leftIcon={isSetup?<IconClose/>:<IconMenu/>}
+					onLeftMenuClicked={onMenuClick||this.context.router.goBack}
 					rightIcon={<IconDone/>} onRightMenuClicked={this.onUpdateProfile} running={loading||updating}/>
 				<div className='flex flex-fill position-relative'>
 					{(loading&&!user)?<LoadingProgress/>:
@@ -100,19 +100,27 @@ class ProfilePage extends Component {
 			            <Dropzone style={styles.dropZone} multiple={false} accept='image/*' onDrop={this.onSelectFile}/>
 								</div>
 							</div>
-							<TextField fullWidth={true} value={firstName}
-								floatingLabelText='Fisrt Name' onChange={this.onFirstNameChange}/>
-							<TextField fullWidth={true} value={lastName}
-								floatingLabelText='Last Name' onChange={this.onLastNameChange}/>
-							<TextField fullWidth={true} value={email} disabled={true}
-								floatingLabelText='Email'/>
-							<TextField fullWidth={true} value={contactNo}
-								floatingLabelText='Contact Number'/>
-							<div className='flex flex-row flex-end'>
-								<FlatButton label='Reset password' onClick={this.onResetPassword}/>
-							</div>
-							<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
-								backgroundColor={red600} labelColor='white' onClick={this.onToggleDialog}/>
+							<EditText ref='firstName' fullWidth={true} value={user&&user.firstName}
+								floatingLabelText='Fisrt Name'/>
+							<EditText ref='lastName' fullWidth={true} value={user&&user.lastName}
+								floatingLabelText='Last Name'/>
+							{!isSetup&&
+								<EditText ref='email' fullWidth={true} value={user&&user.email} disabled={true}
+									floatingLabelText='Email'/>
+							}
+							{!isSetup&&
+								<EditText ref='contactNo' fullWidth={true} value={user&&user.contactNo}
+									floatingLabelText='Contact Number'/>
+							}
+							{!isSetup&&
+								<div className='flex flex-row flex-end'>
+									<FlatButton label='Reset password' onClick={this.onResetPassword}/>
+								</div>
+							}
+							{!isSetup&&
+								<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
+									backgroundColor={red600} labelColor='white' onClick={this.onToggleDialog}/>
+							}
 						</div>
 					}
 				</div>
@@ -127,14 +135,14 @@ class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
-	onDrawerClick: PropTypes.func.isRequired,
 	loading: PropTypes.bool,
 	updating: PropTypes.bool,
 	user: PropTypes.object,
 	loadUser: PropTypes.func.isRequired,
 	updateUser: PropTypes.func.isRequired,
 	uploadAvatar: PropTypes.func.isRequired,
-	logout: PropTypes.func.isRequired
+	logout: PropTypes.func.isRequired,
+	onMenuClick: PropTypes.func
 };
 
 ProfilePage.contextTypes = {

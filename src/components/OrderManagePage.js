@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -24,12 +26,11 @@ class OrderManagePage extends Component {
 		return (
 			<div className='flex flex-fill'>
 				<ActionBar title={isActive?'Active Orders':'History Orders'} running={this.props.loading}
-					leftMenu={true} onLeftMenuClicked={this.props.onDrawerClick}
+					leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>} onLeftMenuClicked={this.props.onMenuClick||this.context.router.goBack}
 					rightIcon={<IconRefresh/>} onRightMenuClicked={this.props.loadOrders}/>
 				<div className='flex flex-fill position-relative'>
-					<div className='flex flex-fill scroll'>
-						<OrderList onItemClicked={this.onOrderClicked} isActive={isActive}/>
-					</div>
+					<OrderList onItemClicked={this.onOrderClicked} isActive={isActive}
+						emptyView={isActive?'no active order, click the + button below to make order':'no history order'}/>
 			    {isActive&&
 			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
 			      	<ContentAdd/>
@@ -48,7 +49,7 @@ OrderManagePage.contextTypes = {
 OrderManagePage.propTypes = {
 	loading: PropTypes.bool,
 	loadOrders: PropTypes.func.isRequired,
-	onDrawerClick: PropTypes.func.isRequired
+	onMenuClick: PropTypes.func.isRequired
 };
 
 const styles = {

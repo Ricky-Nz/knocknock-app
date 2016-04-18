@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import AddressListItem from './AddressListItem';
 import IconButton from 'material-ui/IconButton';
-import IconModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import IconModeDelete from 'material-ui/svg-icons/action/delete-forever';
 import IconCheckBox from 'material-ui/svg-icons/toggle/check-box';
 import IconCheckBoxEmpty from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import { LoadingProgress } from '../widgets';
@@ -14,35 +14,36 @@ class AddressList extends Component {
 		!this.props.addresses&&this.props.loadUserAddresses();
 	}
 	render() {
-		const { paper, selectable, selectItem, loading, addresses, onItemClicked } = this.props;
+		const { emptyView, paper, selectable, selectItem, loading, addresses, onItemClicked } = this.props;
 		
 		return (
 			<List style={styles.container}>
 				{(loading&&!addresses)?<LoadingProgress/>:
-					(addresses&&addresses.map((address, index) => {
-						let rightIcon;
-						if (selectable) {
-							rightIcon = (selectItem&&(selectItem.id===address.id))?<IconCheckBox/>:<IconCheckBoxEmpty/>;
-						} else {
-							rightIcon = <IconModeEdit/>;
-						}
+					((!addresses||addresses.length===0)?<div style={styles.emptyText}>{emptyView}</div>:
+						addresses.map((address, index) => {
+							let rightIcon;
+							if (selectable) {
+								rightIcon = <IconButton>{(selectItem&&(selectItem.id===address.id))?<IconCheckBox/>:<IconCheckBoxEmpty/>}</IconButton>;
+							} else {
+								rightIcon = <IconButton><IconModeDelete/></IconButton>;
+							}
 
-						if (paper) {
-							return (
-								<Paper key={index} className='half-margin' zDepth={1}>
-									<AddressListItem {...address} onClick={() => onItemClicked(address)}
-										rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
-								</Paper>
-							)
-						} else {
-							return (
-								<div key={index}>
-									<AddressListItem {...address} onClick={() => onItemClicked(address)}
-										rightIconButton={<IconButton>{rightIcon}</IconButton>}/>
-									<Divider/>
-								</div>
-							);
-						}
+							if (paper) {
+								return (
+									<Paper key={index} className='half-margin' zDepth={1}>
+										<AddressListItem {...address} onTouchTap={() => onItemClicked(address)}
+											rightIconButton={rightIcon}/>
+									</Paper>
+								)
+							} else {
+								return (
+									<div key={index}>
+										<AddressListItem {...address} onTouchTap={() => onItemClicked(address)}
+											rightIconButton={rightIcon}/>
+										<Divider/>
+									</div>
+								);
+							}
 					}))
 				}
 			</List>
@@ -51,6 +52,7 @@ class AddressList extends Component {
 }
 
 AddressList.propTypes = {
+	emptyView: PropTypes.node,
 	paper: PropTypes.bool,
 	selectable: PropTypes.bool,
 	selectItem: PropTypes.object,
@@ -68,6 +70,11 @@ const styles = {
 	container: {
 		paddingTop: '0px',
 		overflow: 'auto'
+	},
+	emptyText: {
+		textAlign: 'center',
+		fontSize: '1.1em',
+		padding: 32
 	}
 };
 

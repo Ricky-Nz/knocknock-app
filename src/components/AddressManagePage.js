@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -18,7 +20,8 @@ class AddressManagePage extends Component {
 		return (
 			<div className='flex flex-fill'>
 				<ActionBar title='Manage Address' running={this.props.loading}
-					leftMenu={true} onLeftMenuClicked={this.props.onDrawerClick}
+					leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>}
+					onLeftMenuClicked={this.props.onMenuClick||this.context.router.goBack}
 					rightIcon={<IconRefresh/>} onRightMenuClicked={this.props.loadUserAddresses}/>
 				<div className='flex flex-fill position-relative'>
 					<AddressList paper={true} onItemClicked={this.onCreateOrEditAddress}/>
@@ -38,7 +41,7 @@ AddressManagePage.contextTypes = {
 AddressManagePage.propTypes = {
 	loading: PropTypes.bool,
 	loadUserAddresses: PropTypes.func,
-	onDrawerClick: PropTypes.func.isRequired
+	onMenuClick: PropTypes.func
 };
 
 const styles = {

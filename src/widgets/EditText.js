@@ -4,10 +4,15 @@ import TextField from 'material-ui/TextField';
 class EditText extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {showError: false, value: ''};
+		this.state = {showError: false, value: props.value||''};
 		this.onFocus = this.onFocus.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.getValidValue = this.getValidValue.bind(this);
+	}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.value!==this.props.value) {
+			this.setState({value: nextProps.value||''});
+		}
 	}
 	onFocus() {
 		if (this.state.showError) {

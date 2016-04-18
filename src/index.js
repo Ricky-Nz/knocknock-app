@@ -61,6 +61,7 @@ ReactDOM.render(
 				<Route path='order' component={OrderCreatePage} onEnter={checkSession}/>
 				<Route path='order/:orderId' component={OrderDetailPage} onEnter={checkSession}/>
 				<Route path='resetpassword' component={ResetPasswordPage} onEnter={checkSession}/>
+				<Route path='setup' component={ProfilePage}/>
 			</Route>
 		</Router>
 	</Provider>,

@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import IconEdit from 'material-ui/svg-icons/editor/mode-edit';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
 import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
@@ -44,12 +46,12 @@ class SettingPage extends Component {
   	this.context.router.push('/address');
   }
 	render() {
-		const {onDrawerClick, address, pickupTime, note} = this.props;
+		const {onMenuClick, address, pickupTime, note} = this.props;
 
 		return (
 			<div className='flex flex-fill'>
-				<ActionBar title='Settings'
-					leftMenu={true} onLeftMenuClicked={onDrawerClick}/>
+				<ActionBar title='Settings' leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>}
+					onLeftMenuClicked={onMenuClick||this.context.router.goBack}/>
 				<div className='flex flex-fill position-relative'>
 					<div className='scroll padding'>
 						<Subheader>Default pickup address</Subheader>
@@ -82,7 +84,8 @@ SettingPage.propTypes = {
 	note: PropTypes.string,
 	setDefaultAddress: PropTypes.func.isRequired,
 	setDefaultPickupTime: PropTypes.func.isRequired,
-	setDefaultNote: PropTypes.func.isRequired
+	setDefaultNote: PropTypes.func.isRequired,
+	onMenuClick: PropTypes.func
 };
 
 SettingPage.contextTypes = {

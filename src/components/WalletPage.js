@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
 import IconPayment from 'material-ui/svg-icons/action/payment';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import { blueGrey500 } from 'material-ui/styles/colors';
@@ -36,11 +38,12 @@ class WalletPage extends Component {
 		this.props.loadUser(true);
 	}
 	render() {
-		const { onDrawerClick, user, loading } = this.props;
+		const { onMenuClick, user, loading } = this.props;
 
 		return (
 			<div className='fillHeight page'>
-				<ActionBar title='My Wallet' leftMenu={true} onLeftMenuClicked={onDrawerClick}
+				<ActionBar title='My Wallet' leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>}
+					onLeftMenuClicked={onMenuClick||this.context.router.goBack}
 					rightIcon={<IconRefresh/>} onRightMenuClicked={this.onRefresh} running={loading}/>
 				<div className='flex flex-fill position-relative'>
 					{(loading||!user)?<LoadingProgress/>:
@@ -70,7 +73,7 @@ WalletPage.contextTypes = {
 };
 
 WalletPage.propTypes = {
-	onDrawerClick: PropTypes.func.isRequired,
+	onMenuClick: PropTypes.func.isRequired,
 	loadUser: PropTypes.func.isRequired,
 	toast: PropTypes.func.isRequired,
 	topUp: PropTypes.func.isRequired,

@@ -1,95 +1,85 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import IconPersonAdd from 'material-ui/svg-icons/social/person-add';
-import { ActionBar } from '../widgets';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import { ActionBar, EditText } from '../widgets';
 
 class RegisterPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showPassword: false,
-			email: '',
-			phoneNumber: '',
-			password: '',
-			repeatPassword: ''
+			enteredPassword: ''
 		};
-		this.onEmailChange = this.onEmailChange.bind(this);
-		this.onPhoneChange = this.onPhoneChange.bind(this);
+		this.onBack = this.onBack.bind(this);
 		this.onPasswordChange = this.onPasswordChange.bind(this);
-		this.onRepeatPasswordChange = this.onRepeatPasswordChange.bind(this);
 		this.onRegisterClicked = this.onRegisterClicked.bind(this);
 		this.onShowPasswordChange = this.onShowPasswordChange.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.registering&&this.props.registering&&nextProps.registerSuccess) {
-			this.context.router.goBack();
+			this.props.login({
+				username: this.refs.email.getValidValue(),
+				password: this.refs.password.getValidValue()
+			});
+		} else if (!nextProps.loggingin&&this.props.loggingin) {
+			if (nextProps.logginginSuccess) {
+				this.context.router.replace('/home');
+				this.context.router.push('/setup');
+			} else {
+				this.context.router.replace('/login');
+			}
 		}
 	}
-	onEmailChange(event) {
-		this.setState({email: event.target.value});
-	}
-	onPhoneChange(event) {
-		this.setState({phoneNumber: event.target.value});
-	}
-	onPasswordChange(event) {
-		this.setState({password: event.target.value});
-	}
-	onRepeatPasswordChange(event) {
-		this.setState({repeatPassword: event.target.value});
+	onBack() {
+		this.context.router.replace('/login');
 	}
 	onShowPasswordChange() {
 		this.setState({showPassword: !this.state.showPassword});
 	}
+	onPasswordChange(event) {
+		this.setState({enteredPassword: event.target.value});
+	}
 	onRegisterClicked() {
-		let { email, phoneNumber, password, repeatPassword } = this.state;
+		const email = this.refs.email.getValidValue();
+		const phone = this.refs.phone.getValidValue();
+		const password = this.refs.password.getValidValue();
+		const repeatPassword = this.refs.repeatPassword.getValidValue();
 
-		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(email)) {
-			this.props.toast('Please enter a valid email address');
+    if (!email || !phone || !password || !repeatPassword) {
 			return;
     }
 
-		phoneNumber = phoneNumber&&phoneNumber.replace(/ /g,'');
-
-		if (!phoneNumber || phoneNumber.length !== 8 || isNaN(phoneNumber)) {
-			this.props.toast('Please enter a valid phone number');
-			return;
-		}
-
-		if (!password || password.length < 8) {
-			this.props.toast('Password is too short, try one with at least 8 characters');
-			return;
-		}
-
-		if (password !== repeatPassword) {
-			this.props.toast('Password not match, please reenter');
-			return;
-		}
-
-		this.props.onRegister(this.state);
+		this.props.register({
+			email,
+			phone,
+			password
+		});
 	}
 	render() {
 		const { registering } = this.props;
-		const { email, phoneNumber, password, repeatPassword, showPassword } = this.state;
+		const { enteredPassword, showPassword } = this.state;
 
 		return (
 			<div className='flex flex-fill page'>
 				<ActionBar title='Create New Account' running={registering}
-					onLeftMenuClicked={this.context.router.goBack}/>
+					leftIcon={<IconArrowBack/>} onLeftMenuClicked={this.onBack}/>
 				<div className='flex flex-fill padding margin-horizontal'>
-					<TextField fullWidth={true} value={email}
-						hintText='Email' onChange={this.onEmailChange} disabled={registering}/>
-					<TextField fullWidth={true} type='number' value={phoneNumber}
-						hintText='Phone' onChange={this.onPhoneChange} disabled={registering}/>
-					<TextField type={showPassword?'text':'password'} fullWidth={true} value={password}
-						hintText='Password' onChange={this.onPasswordChange} disabled={registering}/>
-					<TextField type={showPassword?'text':'password'} fullWidth={true} value={repeatPassword}
-						hintText='Repeat password' onChange={this.onRepeatPasswordChange} disabled={registering}/>
-					<Checkbox style={styles.checkbox} checked={showPassword} disabled={registering}
+					<EditText ref='email' fullWidth={true} hintText='Email' disabled={registering} errorText='please enter a valid email address'
+						verify={/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}/>
+					<EditText ref='phone' fullWidth={true} type='number' hintText='Phone' disabled={registering}
+						errorText='please enter a valid phone number' verify={/^[0-9]{8,8}$/}/>
+					<EditText ref='password' type={showPassword?'text':'password'} fullWidth={true}
+						hintText='Password' disabled={registering} errorText='Password is too short, try one with at least 8 characters'
+						verify={/^\w{8,}$/} onChange={this.onPasswordChange}/>
+					<EditText ref='repeatPassword' type={showPassword?'text':'password'} fullWidth={true}
+						hintText='Repeat password' disabled={registering}
+						errorText='Password not match' verify={enteredPassword}/>
+					<Checkbox checked={showPassword} disabled={registering}
 						label='Show password' onCheck={this.onShowPasswordChange}/>
-			    <RaisedButton style={styles.button} label='Create' fullWidth={true} primary={true}
+					<br/>
+			    <RaisedButton label='Create Account' fullWidth={true} primary={true}
 						icon={<IconPersonAdd/>} onClick={this.onRegisterClicked} registering={registering}/>
 					<div className='flex flex-fill flex-align-center flex-end padding-bottom'>
 						<p style={styles.terms}>By signing up, I aggree to Knocknock's Terms of Service, Privacy Prolicy, Guest Refund Policy, and Host Guarantee Terms.</p>
@@ -107,14 +97,14 @@ RegisterPage.contextTypes = {
 RegisterPage.propTypes = {
 	registering: PropTypes.bool,
 	registerSuccess: PropTypes.bool,
-	onRegister: PropTypes.func.isRequired,
+	loggingin: PropTypes.bool,
+	logginginSuccess: PropTypes.bool,
+	register: PropTypes.func.isRequired,
+	login: PropTypes.func.isRequired,
 	toast: PropTypes.func.isRequired
 };
 
 const styles = {
-	checkbox: {
-		margin: '4 0 24'
-	},
 	terms: {
 		textAlign: 'center'
 	}

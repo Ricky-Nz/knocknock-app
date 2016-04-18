@@ -2,7 +2,7 @@ import runAction from './runAction';
 
 export const ACTION_REGISTER = 'ACTION_REGISTER';
 
-export function register({email, phoneNumber, password, contactNo}) {
+export function register({email, phone, password}) {
 	return (dispatch) => {
 		runAction({
 			dispatch,
@@ -11,7 +11,7 @@ export function register({email, phoneNumber, password, contactNo}) {
 			path: `users`,
 			body: {
 				email: email,
-				contact_no: phoneNumber,
+				contact_no: phone,
 				password,
 				password_confirmation: password
 			}

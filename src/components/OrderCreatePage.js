@@ -6,9 +6,11 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
 import { AddressList } from '../containers';
+import { ActionBar } from '../widgets';
 import OrderProfile from './OrderProfile';
 import moment from 'moment';
 
@@ -29,6 +31,7 @@ class CreateOrderPage extends Component {
       maxPickDate: maxDate
     };
 
+    this.onAddAddress = this.onAddAddress.bind(this);
 		this.onSelectStep = this.onSelectStep.bind(this);
 		this.onContinue = this.onContinue.bind(this);
     this.onBack = this.onBack.bind(this);
@@ -50,6 +53,9 @@ class CreateOrderPage extends Component {
     this.setState({
       activeStep: currentStep
     });
+  }
+  onAddAddress() {
+    this.context.router.push('/address');
   }
   onContinue() {
     const { activeStep } = this.state;
@@ -117,7 +123,7 @@ class CreateOrderPage extends Component {
       case 0:
         return (
           <AddressList paper={true} selectable={true} selectItem={address}
-            onItemClicked={this.onSelectAddress}/>
+            onItemClicked={this.onSelectAddress} emptyView={<RaisedButton label='Add Address' onClick={this.onAddAddress}/>}/>
         );
       case 1:
         return (
@@ -158,7 +164,7 @@ class CreateOrderPage extends Component {
 
 		return (
 			<div className='flex flex-fill page' style={styles.page}>
-        <ActionBar title='Create Order' running={creating}
+        <ActionBar title='Create Order' running={creating} leftIcon={<IconArrowBack/>}
           onLeftMenuClicked={this.context.router.goBack}/>
         <div className='flex flex-fill'>
           <Stepper horizontal={true} activeStep={this.state.activeStep}

@@ -1,33 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import IconDone from 'material-ui/svg-icons/action/done';
-import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
-import { ActionBar } from '../widgets';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import { ActionBar, EditText } from '../widgets';
 
 class AddressEditPage extends Component {
 	constructor(props) {
 		super(props);
 		this.onSumbit = this.onSumbit.bind(this);
-		this.onAddressChange = this.onAddressChange.bind(this);
-		this.onUnitNumberChange = this.onUnitNumberChange.bind(this);
-		this.onPostalCodeChange = this.onPostalCodeChange.bind(this);
-		this.onContactNumberChange = this.onContactNumberChange.bind(this);
-
-		if (props.address) {
-			this.state = {
-				address: props.address.address||'',
-				contact_no: props.address.contact_no||'',
-				postal_code: props.address.postal_code||'',
-				unit_number: props.address.unit_number||''
-			};
-		} else {
-			this.state = {
-				address: '',
-				contact_no: '',
-				postal_code: '',
-				unit_number: ''
-			};
-		}
 	}
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.editing&&this.props.editing
@@ -36,53 +16,42 @@ class AddressEditPage extends Component {
 		}
 	}
 	onSumbit() {
-		if (!this.state.postal_code) {
-			this.props.toast('Postal code can not be empty');
+		const postal_code = this.refs.postalCode.getValidValue();
+		const address = this.refs.address.getValidValue();
+		const unit_number = this.refs.unitNumber.getValidValue();
+		const contact_no = this.refs.contactNo.getValidValue();
+
+		if (postal_code === null || address === null
+			|| unit_number === null || contact_no === null) {
 			return;
 		}
 
-		if (!this.state.address) {
-			this.props.toast('Address can not be empty');
-			return;
-		}
-
-		if (!this.state.contact_no) {
-			this.props.toast('Contact number can not be empty');
-			return;
-		}
-
-		this.props.createOrEditAddress(this.state);
-	}
-	onAddressChange(event) {
-		this.setState({address: event.target.value});
-	}
-	onUnitNumberChange(event) {
-		this.setState({unit_number: event.target.value});
-	}
-	onPostalCodeChange(event) {
-		this.setState({postal_code: event.target.value});
-	}
-	onContactNumberChange(event) {
-		this.setState({contact_no: event.target.value});
+		this.props.createOrEditAddress({
+			postal_code,
+			address,
+			unit_number,
+			contact_no
+		});
 	}
 	render() {
 		const { editing, address } = this.props;
-		const { address: addressText, contact_no, postal_code, unit_number } = this.state;
 
 		return (
 			<div className='flex flex-fill page'>
 				<ActionBar title={address?'Edit Address':'New Address'} running={editing}
 					onLeftMenuClicked={this.context.router.goBack}
-					rightIcon={<IconDone/>} onRightMenuClicked={this.onSumbit}/>
+					leftIcon={<IconArrowBack/>} rightIcon={<IconDone/>} onRightMenuClicked={this.onSumbit}/>
 				<div className='padding margin-horizontal'>
-					<TextField fullWidth={true} type='number' value={postal_code}
-							floatingLabelText='Postal Code' onChange={this.onPostalCodeChange}/>
-					<TextField fullWidth={true} value={addressText}
-							floatingLabelText='Address' onChange={this.onAddressChange}/>
-					<TextField fullWidth={true} value={unit_number}
-							floatingLabelText='Unit Number' onChange={this.onUnitNumberChange}/>
-					<TextField fullWidth={true} type='number' value={contact_no}
-							floatingLabelText='Contact Number' onChange={this.onContactNumberChange}/>
+					<EditText ref='postalCode' fullWidth={true} type='number'
+						value={address&&address.postal_code} hintText='Postal Code'
+						errorText='please enter a valid postal code, e.g. 418924' verify={/^[0-9]{6,6}$/}/>
+					<EditText ref='address' fullWidth={true}
+						value={address&&address.address} hintText='Address'/>
+					<EditText ref='unitNumber' fullWidth={true}
+						value={address&&address.unit_number} hintText='Unit Number'/>
+					<EditText ref='contactNo' fullWidth={true} type='number'
+						value={address&&address.contact_no} hintText='Contact Number'
+						errorText='please enter a valid phone number' verify={/^[0-9]{8,8}$/}/>
 				</div>
 			</div>
 		);

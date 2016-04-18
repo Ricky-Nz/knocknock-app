@@ -40,7 +40,7 @@ export default function (toast = {}, {type, running, arg, error, data}) {
 						case ACTION_PAY_ORDER_BY_CREDIT:
 							return {message: 'Payment success'};
 						case ACTION_REGISTER:
-							return {message: 'Register success, please login'};
+							return toast; // skip toast
 						case ACTION_RESET_PASSWORD:
 							return {message: 'Reset password success'};
 						case ACTION_CREATE_ADDRESS:

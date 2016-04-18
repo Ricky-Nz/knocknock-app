@@ -2,11 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconCheck from 'material-ui/svg-icons/navigation/check';
-import { deepOrange500 } from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import Dialog from 'material-ui/Dialog';
-import { LoadingProgress, EditText } from '../widgets';
+import { PRIMARY_COLOR, LoadingProgress, EditText } from '../widgets';
 
 function isValidEmail(email) {
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,7 +33,7 @@ class LoginPage extends Component {
 		}
 	}
 	onRegisterClicked() {
-		this.context.router.push('register');
+		this.context.router.replace('/register');
 	}
 	onLoginClicked() {
 		const username = this.refs.username.getValidValue();
@@ -86,7 +85,7 @@ class LoginPage extends Component {
 						icon={<IconCheck/>} onClick={this.onLoginClicked} disabled={loggingin}/>
 					<br/>
 					{loggingin&&<LoadingProgress/>}
-					<div className='flex flex-align-center flex-fill flex-end'>
+					<div className='flex flex-align-center flex-fill flex-end padding-vertical margin-vertical'>
 						<FlatButton label='Create New Knocknock Account' primary={true}
 							onClick={this.onRegisterClicked}/>
 						<FlatButton label='Forgot Password?' onClick={this.onForgotPassword}/>
@@ -119,20 +118,11 @@ LoginPage.propTypes = {
 };
 
 const styles = {
-	progressContainer: {
-		paddingTop: 40
-	},
 	title: {
 		marginTop: 56,
 		fontSize: '3em',
-		color: deepOrange500,
+		color: PRIMARY_COLOR,
 		textAlign: 'center'
-	},
-	leftButton: {
-		marginRight: 4
-	},
-	rightButton: {
-		marginLeft: 4
 	}
 };
 
