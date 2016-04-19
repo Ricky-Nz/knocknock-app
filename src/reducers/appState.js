@@ -1,23 +1,15 @@
 import {
-	ACTION_CHANGE_ACTIVE_ORDER_SORT,
-	ACTION_CHANGE_ACTIVE_ORDER_FILETER,
-	ACTION_CHANGE_PRODUCT_FILETER, ACTION_LOGOUT
+	ACTION_CHANGE_PRODUCT_FILETER,
+	ACTION_SEARCH_PRODUCT,
+	ACTION_LOGOUT
 } from '../actions';
 
-const defaultConfig = {
-	activeOrderSortType: 'created_on$new2old',
-	activeOrderFilter: 'ALL',
-	productFilter: 'ALL'
-};
-
-export default function (appState = defaultConfig, action) {
-	switch(action.type) {
-		case ACTION_CHANGE_ACTIVE_ORDER_SORT:
-			return {...appState, activeOrderSortType: action.data};
-		case ACTION_CHANGE_ACTIVE_ORDER_FILETER:
-			return {...appState, activeOrderFilter: action.data};
+export default function (appState = {productFilter: 'ALL'}, {type, data}) {
+	switch(type) {
 		case ACTION_CHANGE_PRODUCT_FILETER:
-			return {...appState, productFilter: action.data};
+			return {...appState, productFilter: data};
+		case ACTION_SEARCH_PRODUCT:
+			return {...appState, searchProduct: data};
 		case ACTION_LOGOUT:
 			return defaultConfig;
 		default:

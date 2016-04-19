@@ -13,7 +13,7 @@ class HomePage extends Component {
 	onDrawerChange(open, reason, newPath) {
 		this.setState({drawerOpen: open});
 		if (newPath && (newPath !== this.props.location.pathname)) {
-			this.context.router.replace(newPath);
+			this.context.router.replace(newPath, {navCallback: 'openDrawer'});
 		}
 	}
 	onOpenDrawer() {
@@ -24,7 +24,7 @@ class HomePage extends Component {
 			<div className='flex flex-fill page'>
 		    <HomeDrawer open={this.state.drawerOpen} path={this.props.location.pathname}
 		    	onRequestChange={this.onDrawerChange}/>
-		    {React.cloneElement(this.props.children, {onMenuClick: this.onOpenDrawer})}
+		    {React.cloneElement(this.props.children, {openDrawer: this.onOpenDrawer})}
 			</div>
 		);
 	}

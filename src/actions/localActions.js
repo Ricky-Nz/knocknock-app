@@ -7,11 +7,27 @@ export const ACTION_SET_DEFAULT_ADDRESS = 'ACTION_SET_DEFAULT_ADDRESS';
 export const ACTION_SET_DEFAULT_PICKUP_TIME = 'ACTION_SET_DEFAULT_PICKUP_TIME';
 export const ACTION_SET_DEFAULT_NOTE = 'ACTION_SET_DEFAULT_NOTE';
 export const ACTION_RECORD_LAST_ADDRESS = 'ACTION_RECORD_LAST_ADDRESS'
+export const ACTION_SELECT_PRODUCT = 'ACTION_SELECT_PRODUCT';
+export const ACTION_SEARCH_PRODUCT = 'ACTION_SEARCH_PRODUCT';
 
 export function toastMessage(data) {
 	return {
 		type: ACTION_TOAST_MESSAGE,
 		data
+	};
+}
+
+export function searchProduct(text) {
+	return {
+		type: ACTION_SEARCH_PRODUCT,
+		data: text
+	};
+}
+
+export function selectProduct(id) {
+	return {
+		type: ACTION_SELECT_PRODUCT,
+		data: id
 	};
 }
 

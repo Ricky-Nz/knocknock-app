@@ -13,6 +13,7 @@ import orderDetail from './orderDetail';
 import settings from './settings';
 import payment from './payment';
 import vouchers from './vouchers';
+import selectedProducts from './selectedProducts';
 
 export default {
 	toast,
@@ -29,5 +30,6 @@ export default {
 	orderDetail,
 	settings,
 	payment,
-	vouchers
+	vouchers,
+	selectedProducts
 };

@@ -14,7 +14,7 @@ import { OrderDetailPage, AddressEditPage, AddressManagePage,
 	VoucherManagePage } from './containers';
 import App from './components/App';
 import HomePage from './components/HomePage';
-import ProductPage from './components/ProductPage';
+import { ProductPage } from './product';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
