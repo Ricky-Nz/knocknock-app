@@ -23,7 +23,7 @@ class QuickOrderButton extends Component {
 	render() {
 		return (
 			<ListItem primaryText='Quick Order' leftIcon={<IconSend/>}
-				onClick={this.onQuickOrder}/>
+				secondaryText='Use your default settings' onClick={this.onQuickOrder}/>
 		);
 	}
 }

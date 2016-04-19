@@ -5,10 +5,10 @@ import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import { VoucherList } from '../containers';
 import { ActionBar } from '../widgets';
 
-let AddressManagePage = ({loading, getVouchers, onMenuClick, context}) => (
+let VoucherManagePage = ({loading, getVouchers, onMenuClick, context}) => (
 	<div className='flex flex-fill'>
 		<ActionBar title='My Vouchers' running={loading}
-			leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>} onLeftMenuClicked={onMenuClick||context.router.goBack}
+			leftIcon={onMenuClick?<IconMenu/>:<IconArrowBack/>} onLeftMenuClicked={onMenuClick||context.router.goBack}
 			rightIcon={<IconRefresh/>} onRightMenuClicked={getVouchers}/>
 		<div className='flex flex-fill position-relative'>
 			<VoucherList/>
@@ -16,15 +16,15 @@ let AddressManagePage = ({loading, getVouchers, onMenuClick, context}) => (
 	</div>
 );
 
-AddressManagePage.contextTypes = {
+VoucherManagePage.contextTypes = {
   router: React.PropTypes.object
 };
 
-AddressManagePage.propTypes = {
+VoucherManagePage.propTypes = {
 	loading: PropTypes.bool,
 	getVouchers: PropTypes.func.isRequired,
 	onMenuClick: PropTypes.func
 };
 
-export default AddressManagePage;
+export default VoucherManagePage;
 

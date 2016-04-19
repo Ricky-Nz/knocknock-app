@@ -21,10 +21,6 @@ let OrderListItem = ({id, paid, to_pay_price, pickup_address, status, created_on
   </Paper>
 );
 
-OrderListItem.propTypes = {
-	sortBy: PropTypes.string.isRequired
-};
-
 const styles = {
 	primaryTest: {
 		color: blueGrey800

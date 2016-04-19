@@ -46,7 +46,8 @@ class AddressEditPage extends Component {
 						value={address&&address.postal_code} hintText='Postal Code'
 						errorText='please enter a valid postal code, e.g. 418924' verify={/^[0-9]{6,6}$/}/>
 					<EditText ref='address' fullWidth={true}
-						value={address&&address.address} hintText='Address'/>
+						value={address&&address.address} hintText='Address'
+						errorText='address can not be empty' verify={/^(?!\s*$).+/}/>
 					<EditText ref='unitNumber' fullWidth={true}
 						value={address&&address.unit_number} hintText='Unit Number'/>
 					<EditText ref='contactNo' fullWidth={true} type='number'

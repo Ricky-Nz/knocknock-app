@@ -17,3 +17,4 @@ export * from './getOrderDetail';
 export * from './topUp';
 export * from './payOrder';
 export * from './forgotPassword';
+export * from './deleteAddress';

@@ -39,6 +39,15 @@ export function clearDefaultSetting() {
 	remove('LOCAL_ADDRESS');
 	remove('LOCAL_PICKUP_TIME');
 	remove('LOCAL_NOTE');
+	remove('LAST_USED_ADDRESS');
+}
+
+export function saveLastUsedAddress(address) {
+	set('LAST_USED_ADDRESS', address);
+}
+
+export function getLastUsedAddress() {
+	return get('LAST_USED_ADDRESS');
 }
 
 export function saveDefaultAddress(address) {

@@ -27,7 +27,7 @@ class SearchMenu extends Component {
 		return (
 			expend?
 				<div className='flex flex-row flex-align-center padding-left'>
-					<TextField hintText='search product' dataSource={this.props.dataSource}
+					<TextField className='flex-fill' hintText='search product' dataSource={this.props.dataSource}
 	          onChange={this.onSearchChange} inputStyle={styles.inputStyle}
 	          underlineFocusStyle={styles.underlineStyle} searchText={searchText}/>
 	        <IconButton onClick={this.onToggleExpend}><IconClose color='white'/></IconButton>

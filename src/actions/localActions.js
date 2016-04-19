@@ -6,11 +6,19 @@ export const ACTION_LOGOUT = 'ACTION_LOGOUT';
 export const ACTION_SET_DEFAULT_ADDRESS = 'ACTION_SET_DEFAULT_ADDRESS';
 export const ACTION_SET_DEFAULT_PICKUP_TIME = 'ACTION_SET_DEFAULT_PICKUP_TIME';
 export const ACTION_SET_DEFAULT_NOTE = 'ACTION_SET_DEFAULT_NOTE';
+export const ACTION_RECORD_LAST_ADDRESS = 'ACTION_RECORD_LAST_ADDRESS'
 
 export function toastMessage(data) {
 	return {
 		type: ACTION_TOAST_MESSAGE,
 		data
+	};
+}
+
+export function recordLastUsedAddress(address) {
+	return {
+		type: ACTION_RECORD_LAST_ADDRESS,
+		data: address
 	};
 }
 

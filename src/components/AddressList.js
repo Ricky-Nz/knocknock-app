@@ -5,8 +5,8 @@ import Divider from 'material-ui/Divider';
 import AddressListItem from './AddressListItem';
 import IconButton from 'material-ui/IconButton';
 import IconModeDelete from 'material-ui/svg-icons/action/delete-forever';
-import IconCheckBox from 'material-ui/svg-icons/toggle/check-box';
-import IconCheckBoxEmpty from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import IconCheckBox from 'material-ui/svg-icons/toggle/radio-button-checked';
+import IconCheckBoxEmpty from 'material-ui/svg-icons/toggle/radio-button-unchecked';
 import { LoadingProgress } from '../widgets';
 
 class AddressList extends Component {
@@ -14,18 +14,19 @@ class AddressList extends Component {
 		!this.props.addresses&&this.props.loadUserAddresses();
 	}
 	render() {
-		const { emptyView, paper, selectable, selectItem, loading, addresses, onItemClicked } = this.props;
+		const { emptyView, paper, selectable, selectItem, loading,
+			addresses, onItemClicked, onDeleteItem } = this.props;
 		
 		return (
 			<List style={styles.container}>
 				{(loading&&!addresses)?<LoadingProgress/>:
-					((!addresses||addresses.length===0)?<div style={styles.emptyText}>{emptyView}</div>:
+					((!addresses||addresses.length===0)?emptyView:
 						addresses.map((address, index) => {
 							let rightIcon;
 							if (selectable) {
 								rightIcon = <IconButton>{(selectItem&&(selectItem.id===address.id))?<IconCheckBox/>:<IconCheckBoxEmpty/>}</IconButton>;
 							} else {
-								rightIcon = <IconButton><IconModeDelete/></IconButton>;
+								rightIcon = <IconButton onClick={onDeleteItem&&(() => onDeleteItem(address))}><IconModeDelete/></IconButton>;
 							}
 
 							if (paper) {
@@ -59,7 +60,8 @@ AddressList.propTypes = {
 	loading: PropTypes.bool,
 	addresses: PropTypes.array,
 	loadUserAddresses: PropTypes.func.isRequired,
-	onItemClicked: PropTypes.func.isRequired
+	onItemClicked: PropTypes.func.isRequired,
+	onDeleteItem: PropTypes.func
 };
 
 AddressList.defaultProps = {
@@ -70,11 +72,6 @@ const styles = {
 	container: {
 		paddingTop: '0px',
 		overflow: 'auto'
-	},
-	emptyText: {
-		textAlign: 'center',
-		fontSize: '1.1em',
-		padding: 32
 	}
 };
 

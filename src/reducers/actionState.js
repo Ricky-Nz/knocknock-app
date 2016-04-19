@@ -6,7 +6,7 @@ import {
 	ACTION_EDIT_USER_PROFILE, ACTION_CREATE_ORDER, ACTION_EDIT_AVATAR,
 	ACTION_GET_ORDER_DETAIL, ACTION_TOPUP, ACTION_LOGOUT,
 	ACTION_PAY_ORDER_BY_CREDIT, ACTION_PAY_ORDER_BY_PAYPAL,
-	ACTION_FORGOT_PASSWORD
+	ACTION_FORGOT_PASSWORD, ACTION_DELETE_ADDRESS
 } from '../actions';
 
 function statusProcess(state, statusKey, {running, error}) {
@@ -54,6 +54,8 @@ export default function (actionState = {}, action) {
 			return statusProcess(actionState, 'creditPaying', action);
 		case ACTION_FORGOT_PASSWORD:
 			return statusProcess(actionState, 'forgotingPassword', action);
+		case ACTION_DELETE_ADDRESS:
+			return statusProcess(actionState, 'deletingAddress', action);
 		case ACTION_LOGOUT:
 			return {};
 		default:

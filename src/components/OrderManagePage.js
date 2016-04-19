@@ -6,7 +6,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 import { OrderList } from '../containers';
-import { ActionBar } from '../widgets';
+import { ActionBar, EmptyView } from '../widgets';
 
 class OrderManagePage extends Component {
 	constructor(props) {
@@ -30,7 +30,7 @@ class OrderManagePage extends Component {
 					rightIcon={<IconRefresh/>} onRightMenuClicked={this.props.loadOrders}/>
 				<div className='flex flex-fill position-relative'>
 					<OrderList onItemClicked={this.onOrderClicked} isActive={isActive}
-						emptyView={isActive?'no active order, click the + button below to make order':'no history order'}/>
+						emptyView={<EmptyView text='no active order, click the + button below to make order'/>}/>
 			    {isActive&&
 			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
 			      	<ContentAdd/>

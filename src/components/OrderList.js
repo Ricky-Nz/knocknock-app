@@ -13,7 +13,7 @@ class OrderList extends Component {
 		return (
 			<List style={styles.container}>
 				{(loading&&!orders)?<LoadingProgress/>:
-					((!orders||orders.length===0)?<div style={styles.emptyText}>{emptyView}</div>:
+					((!orders||orders.length===0)?emptyView:
 						orders.map((order, index) =>
 							<OrderListItem key={index} onClick={() => onItemClicked(order)} {...order}/>)
 					)
@@ -35,11 +35,6 @@ const styles = {
 	container: {
 		paddingTop: '0px',
 		overflow: 'auto'
-	},
-	emptyText: {
-		textAlign: 'center',
-		fontSize: '1.1em',
-		padding: 32
 	}
 };
 

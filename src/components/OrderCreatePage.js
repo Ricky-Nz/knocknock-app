@@ -3,15 +3,17 @@ import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
-import TimePicker from 'material-ui/TimePicker';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
 import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import IconCheck from 'material-ui/svg-icons/action/check-circle';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
 import { AddressList } from '../containers';
-import { ActionBar } from '../widgets';
+import { ActionBar, EmptyView, RangeTimeChooser } from '../widgets';
 import OrderProfile from './OrderProfile';
+import AddressListItem from './AddressListItem';
 import moment from 'moment';
 
 class CreateOrderPage extends Component {
@@ -23,12 +25,13 @@ class CreateOrderPage extends Component {
 
     this.state = {
       activeStep: props.location.query.express?2:0,
-      address: props.defaultAddress,
+      address: props.defaultAddress||props.lastUsedAddress,
       note: props.defaultNote,
       pickupTime: props.defaultPickupTime,
       pickupDate: minDate,
       minPickDate: minDate,
-      maxPickDate: maxDate
+      maxPickDate: maxDate,
+      note: ''
     };
 
     this.onAddAddress = this.onAddAddress.bind(this);
@@ -39,14 +42,14 @@ class CreateOrderPage extends Component {
     this.onSelectDate = this.onSelectDate.bind(this);
     this.onPickupDateChange = this.onPickupDateChange.bind(this);
     this.onPickupTimeChange = this.onPickupTimeChange.bind(this);
-    this.onDropOffDateChange = this.onDropOffDateChange.bind(this);
-    this.onDropOffTimeChange = this.onDropOffTimeChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
 	}
   componentWillReceiveProps(nextProps) {
     if (!nextProps.creating&&this.props.creating&&nextProps.success) {
       this.props.refreshOrders();
       this.context.router.goBack();  
+    } else if (nextProps.addresses&&nextProps.addresses[0]&&!this.state.address) {
+      this.setState({address: nextProps.addresses[0]});
     }
   }
   onSelectStep(currentStep) {
@@ -78,13 +81,16 @@ class CreateOrderPage extends Component {
     }
 
     if (activeStep === 2) {
-      const { address, pickupDate, pickupTime, dropOffDate, dropOffTime, note } = this.state;
+      const { address, pickupDate, pickupTime, note } = this.state;
+      const formatDate = moment(pickupDate).hour(pickupTime.split(':')[0])
+        .minute(0).second(0).millisecond(0).format('YYYY-MM-DD HH:mm:ss');
       this.props.createOrder({
         description: note,
         pickupPostalCode: address.postal_code,
         pickupAddress: address.address,
-        pickupDate: moment(pickupDate).format('YYYY-MM-DD HH:mm:ss')
+        pickupDate: formatDate
       });
+      this.props.recordLastUsedAddress(address);
     } else {
       this.setState({
         activeStep: activeStep + 1
@@ -105,44 +111,40 @@ class CreateOrderPage extends Component {
   onPickupDateChange(event, date) {
     this.setState({pickupDate: date});
   }
-  onPickupTimeChange(event, date) {
+  onPickupTimeChange(date) {
     this.setState({pickupTime: date});
-  }
-  onDropOffDateChange(event, date) {
-    this.setState({dropOffDate: date});
-  }
-  onDropOffTimeChange(event, date) {
-    this.setState({dropOffTime: date});
   }
   onNoteChange(event) {
     this.setState({note: event.target.value});
   }
   renderStepContent({activeStep, minPickDate, maxPickDate, 
-      address, note, pickupDate, pickupTime, dropOffDate, dropOffTime}, creating) {
+      address, note, pickupDate, pickupTime }, creating) {
     switch(activeStep) {
       case 0:
         return (
-          <AddressList paper={true} selectable={true} selectItem={address}
-            onItemClicked={this.onSelectAddress} emptyView={<RaisedButton label='Add Address' onClick={this.onAddAddress}/>}/>
+          <div>
+            <Subheader>Selected</Subheader>
+            {address?
+              <Paper className='half-margin' zDepth={1}>
+                <AddressListItem {...address} rightIconButton={<IconButton><IconCheck/></IconButton>}/>
+              </Paper>:
+              <div className='flex flex-center flex-align-center padding'>not selected</div>
+            }
+            <Subheader>All Addresses</Subheader>
+            <AddressList paper={true} selectable={true} selectItem={address}
+              onItemClicked={this.onSelectAddress}
+              emptyView={<EmptyView text='you havnt add any addresses yet' actionNode={<RaisedButton label='Add Address' onClick={this.onAddAddress}/>}/>}/>
+          </div>
         );
       case 1:
         return (
-          <div className='padding'>
+          <div>
             <Subheader>Pickup date:</Subheader>
             <div className='padding-horizontal'>
-              <DatePicker hintText='Date: please select' value={pickupDate}
+              <DatePicker textFieldStyle={styles.datePicker} hintText='Date: please select' value={pickupDate}
                 disableYearSelection={true} defaultDate={minPickDate} minDate={minPickDate} maxDate={maxPickDate}
                 formatDate={this.onSelectDate} onChange={this.onPickupDateChange}/>
-              <TimePicker format='24hr' hintText='Time: please select' value={pickupTime}
-                onChange={this.onPickupTimeChange}/>
-            </div>
-            <Subheader>Drop off date:</Subheader>
-            <div className='padding-horizontal'>
-              <DatePicker hintText='Date: please select (optional)' value={dropOffDate}
-                disableYearSelection={true}
-                formatDate={this.onSelectDate} onChange={this.onDropOffDateChange}/>
-              <TimePicker format='24hr' hintText='Time: please select (optional)' value={dropOffTime}
-                onChange={this.onDropOffTimeChange}/>
+              <RangeTimeChooser time={pickupTime} onTimeChange={this.onPickupTimeChange}/>
             </div>
           </div>
         );
@@ -151,7 +153,7 @@ class CreateOrderPage extends Component {
           <Paper className='padding margin' zDepth={1}>
             <p className='font-lg padding-bottom'>New Order Preview</p>
             {address&&<OrderProfile {...address} pickupTime={pickupTime}
-              pickupDate={pickupDate} dropOffDate={dropOffDate} dropOffTime={dropOffTime}/>}
+              pickupDate={pickupDate}/>}
             <TextField fullWidth={true} value={note} hintText='any special requirement?'
               floatingLabelText='Note' disabled={creating} onChange={this.onNoteChange}/>
           </Paper>
@@ -195,16 +197,22 @@ CreateOrderPage.propTypes = {
   defaultAddress: PropTypes.object,
   defaultPickupTime: PropTypes.any,
   defaultNote: PropTypes.string,
+  lastUsedAddress: PropTypes.object,
   creating: PropTypes.bool,
   success: PropTypes.bool,
   createOrder: PropTypes.func.isRequired,
   refreshOrders: PropTypes.func.isRequired,
-  toast: PropTypes.func.isRequired
+  recordLastUsedAddress: PropTypes.func.isRequired,
+  toast: PropTypes.func.isRequired,
+  addresses: PropTypes.array
 };
 
 const styles = {
   page: {
     overflow: 'hidden'
+  },
+  datePicker: {
+    paddingLeft: 16
   }
 };
 

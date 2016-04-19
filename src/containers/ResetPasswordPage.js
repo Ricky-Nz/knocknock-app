@@ -3,11 +3,14 @@ import { createSelector } from 'reselect';
 import { resetPassword } from '../actions';
 import ResetPasswordPage from '../components/ResetPasswordPage';
 
-const resetStateSelector = state => state.actionState.resettingPassword;
+const resetStateSelector = state => state.actionState.updatingPassword;
+
+const resetResultSelector = state => state.actionState.updatingPasswordSuccess;
 
 const mapStateToProps = createSelector(
 	resetStateSelector,
-	(resetting) => ({resetting})
+	resetResultSelector,
+	(resetting, resetResult) => ({resetting, resetResult})
 );
 
 const mapActionToProps = (dispatch) => ({

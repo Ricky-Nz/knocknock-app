@@ -3,6 +3,7 @@ import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import OrderProfile from './OrderProfile';
 import CircularProgress from 'material-ui/CircularProgress';
+import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Paper from 'material-ui/Paper';
 import { LoadingProgress } from '../widgets';
 import { deepOrange500 } from 'material-ui/styles/colors';
@@ -35,7 +36,7 @@ class OrderDetailPage extends Component {
 			<div className='flex flex-fill page'>
 				<ActionBar title={(!id&&loading)?'Loading...':`Order No.${id}`} running={this.props.loading}
 					onLeftMenuClicked={this.context.router.goBack} running={loading||paying}
-					rightIcon={<IconRefresh/>} onRightMenuClicked={this.onRefresh}/>
+					leftIcon={<IconArrowBack/>} rightIcon={<IconRefresh/>} onRightMenuClicked={this.onRefresh}/>
 				{(!this.props.order||(loading&&id!=this.props.params.orderId))?<LoadingProgress/>:
 					<div className='flex flex-fill position-relative'>
 						<div className='scroll'>

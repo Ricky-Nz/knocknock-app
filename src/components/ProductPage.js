@@ -19,7 +19,8 @@ class ProductPage extends Component {
 		return (
 			<div className='flex flex-fill'>
 				<ActionBar title='Product Pricing' leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>}
-					onLeftMenuClicked={this.props.onMenuClick||this.context.router.goBack}/>
+					onLeftMenuClicked={this.props.onMenuClick||this.context.router.goBack}
+					customMenu={<SearchMenu onSearchTextChange={this.onSearchTextChange}/>}/>
 				<div className='flex flex-fill'>
 					<CategorySelector/>
 					<ProductGrid searchText={this.state.searchText}/>

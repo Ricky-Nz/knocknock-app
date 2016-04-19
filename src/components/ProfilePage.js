@@ -23,6 +23,7 @@ class ProfilePage extends Component {
 		this.onLogout = this.onLogout.bind(this);
 		this.onSelectFile = this.onSelectFile.bind(this);
 		this.onToggleDialog = this.onToggleDialog.bind(this);
+		this.onResetPassword = this.onResetPassword.bind(this);
 	}
 	componentDidMount() {
 		!this.props.user&&!this.props.loading&&this.props.loadUser();
@@ -35,6 +36,11 @@ class ProfilePage extends Component {
 
 		const firstName = this.refs.firstName.getValidValue();
 		const lastName = this.refs.lastName.getValidValue();
+
+		if (firstName === null || lastName === null) {
+			return;
+		}
+
 		const user = this.props.user;
 
 		if (this.props.location.pathname === '/setup') {
@@ -49,18 +55,17 @@ class ProfilePage extends Component {
 		} else if (user) {
 			const email = this.refs.email.getValidValue();
 			const contactNo = this.refs.contactNo.getValidValue();
-		
-			if (firstName !== user.firstName
-				|| lastName !== user.lastName
-				|| email !== user.email
-				|| contactNo !== user.contactNo) {
-				this.props.updateUser({
-					email,
-					contactNo,
-					firstName,
-					lastName
-				});
+
+			if (contactNo === null) {
+				return;
 			}
+		
+			this.props.updateUser({
+				email,
+				contactNo,
+				firstName,
+				lastName
+			});
 		}
 	}
 	onResetPassword() {
@@ -101,24 +106,27 @@ class ProfilePage extends Component {
 								</div>
 							</div>
 							<EditText ref='firstName' fullWidth={true} value={user&&user.firstName}
-								floatingLabelText='Fisrt Name'/>
+								floatingLabelText='Fisrt Name' errorText='fist name can not be empty' verify={/^(?!\s*$).+/}/>
 							<EditText ref='lastName' fullWidth={true} value={user&&user.lastName}
-								floatingLabelText='Last Name'/>
+								floatingLabelText='Last Name' errorText='last name can not be empty' verify={/^(?!\s*$).+/}/>
 							{!isSetup&&
 								<EditText ref='email' fullWidth={true} value={user&&user.email} disabled={true}
 									floatingLabelText='Email'/>
 							}
 							{!isSetup&&
-								<EditText ref='contactNo' fullWidth={true} value={user&&user.contactNo}
-									floatingLabelText='Contact Number'/>
+								<EditText ref='contactNo' fullWidth={true} type='number'
+									value={user&&user.contactNo} floatingLabelText='Contact Number'
+									errorText='please enter a valid phone number' verify={/^[0-9]{8,8}$/}/>
 							}
+							<br/>
 							{!isSetup&&
 								<div className='flex flex-row flex-end'>
 									<FlatButton label='Reset password' onClick={this.onResetPassword}/>
 								</div>
 							}
+							<br/><br/>
 							{!isSetup&&
-								<RaisedButton fullWidth={true} label='Logout' style={styles.logoutButton}
+								<RaisedButton fullWidth={true} label='Logout'
 									backgroundColor={red600} labelColor='white' onClick={this.onToggleDialog}/>
 							}
 						</div>
@@ -150,9 +158,6 @@ ProfilePage.contextTypes = {
 };
 
 const styles = {
-	logoutButton: {
-		marginTop: 40
-	},
 	dropZone: {
 		height: 120,
 		width: 120,

@@ -19,6 +19,7 @@ export { default as CategorySelector } from './CategorySelector';
 export { default as QuickOrderButton } from './QuickOrderButton';
 export { default as OrderStatusActionBanner } from './OrderStatusActionBanner';
 export { default as AddressSelectDialog } from './AddressSelectDialog';
+export { default as DeleteAddressDialog } from './DeleteAddressDialog';
 
 export { default as OrderCreatePage } from './OrderCreatePage';
 export { default as OrderDetailPage } from './OrderDetailPage';
