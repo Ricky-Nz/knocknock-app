@@ -8,13 +8,15 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { OrderDetailPage, AddressEditPage, AddressManagePage,
-	LoginPage, OrderCreatePage, OrderManagePage, WalletPage,
-	ProfilePage, RegisterPage, SettingPage, ResetPasswordPage,
-	VoucherManagePage } from './containers';
-import App from './components/App';
-import HomePage from './components/HomePage';
-import { ProductPage } from './product';
+// components
+import { Application, HomePage } from './app_common';
+import { LoginPage, RegisterPage, ResetPasswordPage } from './auth';
+import { ProfilePage, SettingPage } from './user';
+import { OrderManagePage, OrderDetailPage, OrderCreatePage } from './order';
+import { AddressManagePage, AddressCreateEditPage } from './address';
+import { ProductManagePage } from './product';
+import { WalletPage } from './payment';
+import { VoucherManagePage } from './voucher';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release
@@ -41,7 +43,7 @@ function checkSession({location}, replace) {
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={history}>
-			<Route path='/' component={App}>
+			<Route path='/' component={Application}>
 				<IndexRoute component={LoginPage}/>
 				<Route path='login' component={LoginPage}/>
 				<Route path='register' component={RegisterPage}/>
@@ -50,14 +52,14 @@ ReactDOM.render(
 					<IndexRoute component={OrderManagePage}/>
 					<Route path='history' component={OrderManagePage}/>
 					<Route path='addresses' component={AddressManagePage}/>
-					<Route path='pricing' component={ProductPage}/>
+					<Route path='pricing' component={ProductManagePage}/>
 					<Route path='profile' component={ProfilePage}/>
 					<Route path='wallet' component={WalletPage}/>
 					<Route path='setting' component={SettingPage}/>
 					<Route path='voucher' component={VoucherManagePage}/>
 				</Route>
-				<Route path='address' component={AddressEditPage} onEnter={checkSession}/>
-				<Route path='address/:addressId' component={AddressEditPage} onEnter={checkSession}/>
+				<Route path='address' component={AddressCreateEditPage} onEnter={checkSession}/>
+				<Route path='address/:addressId' component={AddressCreateEditPage} onEnter={checkSession}/>
 				<Route path='order' component={OrderCreatePage} onEnter={checkSession}/>
 				<Route path='order/:orderId' component={OrderDetailPage} onEnter={checkSession}/>
 				<Route path='resetpassword' component={ResetPasswordPage} onEnter={checkSession}/>
