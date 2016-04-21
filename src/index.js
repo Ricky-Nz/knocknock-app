@@ -8,30 +8,49 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-// components
-import { Application, HomePage } from './app_common';
-import { LoginPage, RegisterPage, ResetPasswordPage } from './auth';
-import { ProfilePage, SettingPage } from './user';
-import { OrderManagePage, OrderDetailPage, OrderCreatePage } from './order';
-import { AddressManagePage, AddressCreateEditPage } from './address';
-import { ProductManagePage } from './product';
-import { WalletPage } from './payment';
-import { VoucherManagePage } from './voucher';
-
 // Needed for onTouchTap
 // Can go away when react 1.0 release
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
+// components
+import { Application, HomePage } from './app_common';
+import { AddressManagePage, AddressCreateEditPage } from './address';
+import { LoginPage, RegisterPage, ResetPasswordPage } from './auth';
+import { OrderManagePage, OrderDetailPage, OrderCreatePage } from './order';
+import { WalletPage } from './payment';
+import { ProductManagePage } from './product';
+import { ProfilePage, SettingPage } from './user';
+import { VoucherManagePage } from './voucher';
+
+// reducers
+import { reducers as commonReducers } from './app_common';
+import { reducers as addressReducers } from './address';
+import { reducers as authReducers } from './auth';
+import { reducers as orderReducers } from './order';
+import { reducers as paymentReducers } from './payment';
+import { reducers as productReducers } from './product';
+import { reducers as userReducers } from './user';
+import { reducers as voucherReducers } from './voucher';
+
+// create store
 const store = createStore(
 	combineReducers({
-		...reducers,
+		...commonReducers,
+		...addressReducers,
+		...authReducers,
+		...orderReducers,
+		...paymentReducers,
+		...productReducers,
+		...userReducers,
+		...voucherReducers,
 		routing: routerReducer
 	}),
 	applyMiddleware(thunk, createLogger())
 );
 
+// sync history
 const history = syncHistoryWithStore(hashHistory, store);
 
 function checkSession({location}, replace) {

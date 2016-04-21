@@ -1,61 +1,56 @@
 import React, { Component, PropTypes } from 'react';
+import IconButton from 'material-ui/IconButton';
 import IconEdit from 'material-ui/svg-icons/editor/mode-edit';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
-import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
-import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 import { ListItem } from 'material-ui/List';
-import { AddressSelectDialog } from '../containers';
 import { ActionBar, RangeTimeChooser } from '../widgets';
+import { AddressSelectDialog } from '../address';
 
 class SettingPage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {dialogShow: false};
-		this.toggleDialog = this.toggleDialog.bind(this);
-		this.onSelectAddress = this.onSelectAddress.bind(this);
-		this.onSelectPickupTime = this.onSelectPickupTime.bind(this);
-		this.onNoteChange = this.onNoteChange.bind(this);
-		this.onAddNewAddress = this.onAddNewAddress.bind(this);
+		this.state = {open: false};
 	}
-	toggleDialog() {
-		this.setState({dialogShow: !this.state.dialogShow});
+	toggleDialog = () => {
+		this.setState({open: !this.state.open});
 	}
-	onSelectAddress(address) {
+	onSelectAddress = (address) => {
 		this.toggleDialog();
-		this.props.setDefaultAddress(address);
+		this.props.recordDefaultAddress(address);
 	}
-  onSelectPickupTime(time) {
-    this.props.setDefaultPickupTime(time);
+  onSelectPickupTime = (time) => {
+    this.props.recordDefaultPickupTime(time);
   }
-  onNoteChange(event) {
-  	this.props.setDefaultNote(event.target.value);
+  onNoteChange = (event) => {
+  	this.props.recordDefaultNote(event.target.value);
   }
-  onAddNewAddress() {
+  onAddNewAddress = () => {
   	this.toggleDialog();
   	this.context.router.push('/address');
   }
 	render() {
-		const {onMenuClick, address, pickupTime, note} = this.props;
+		const {defaultAddress, defaultPickupTime, defaultNote} = this.props;
 
 		return (
-			<div className='flex flex-fill'>
-				<ActionBar title='Settings' leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>}
-					onLeftMenuClicked={onMenuClick||this.context.router.goBack}/>
+			<div className='flex flex-fill page'>
+				<ActionBar title='Settings'
+					leftMenu={<IconButton onClick={this.context.router.goBack}><IconBack></IconButton>}/>
 				<div className='flex flex-fill position-relative'>
-					<div className='scroll padding'>
+					<div className='flex flex-fill scroll padding'>
 						<Subheader>Default pickup address</Subheader>
 			      <ListItem rightIcon={<IconEdit/>} onClick={this.toggleDialog}
-			        primaryText={address?`${address.address}, ${address.postal_code}`:'not set'}/>
+			        primaryText={defaultAddress?`${defaultAddress.address}, ${defaultAddress.postal_code}`:'not set'}/>
 						<Subheader>Default pickup time</Subheader>
-						<RangeTimeChooser time={pickupTime} onTimeChange={this.onSelectPickupTime}/>
+						<RangeTimeChooser time={defaultPickupTime} onTimeChange={this.onSelectPickupTime}/>
 						<Subheader>Default order note</Subheader>
 						<div className='padding-horizontal'>
 							<TextField fullWidth={true} hintText='write default note here'
-								value={note||''} onChange={this.onNoteChange}/>
+								value={defaultNote||''} onChange={this.onNoteChange}/>
 						</div>
-						<AddressSelectDialog open={this.state.dialogShow} defaultAddress={address}
+						<AddressSelectDialog open={this.state.open} defaultAddress={defaultAddress}
 							onSelect={this.onSelectAddress} onCancel={this.toggleDialog}
 							onAddNewAddress={this.onAddNewAddress}/>
 						<br/><br/><br/>
@@ -67,13 +62,12 @@ class SettingPage extends Component {
 }
 
 SettingPage.propTypes = {
-	address: PropTypes.any,
-	pickupTime: PropTypes.any,
-	note: PropTypes.string,
-	setDefaultAddress: PropTypes.func.isRequired,
-	setDefaultPickupTime: PropTypes.func.isRequired,
-	setDefaultNote: PropTypes.func.isRequired,
-	onMenuClick: PropTypes.func
+	defaultAddress: PropTypes.any,
+	defaultPickupTime: PropTypes.any,
+	defaultNote: PropTypes.string,
+	recordDefaultAddress: PropTypes.func.isRequired,
+	recordDefaultPickupTime: PropTypes.func.isRequired,
+	recordDefaultNote: PropTypes.func.isRequired
 };
 
 SettingPage.contextTypes = {

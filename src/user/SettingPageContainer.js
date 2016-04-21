@@ -1,24 +1,31 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { setDefaultAddress, setDefaultPickupTime, setDefaultNote } from '../actions';
+import { recordDefaultAddress, recordDefaultPickupTime, recordDefaultNote } from '../actions';
 import SettingPage from '../components/SettingPage';
 
-const settingSelector = state => state.settings;
+const addressSelector = state => state.defaultAddress;
+
+const pickupTimeSelector = state => state.defaultPickupTime;
+
+const noteSelector = state => state.defaultNote;
 
 const mapStateToProps = createSelector(
-	settingSelector,
-	(settings) => ({...settings})
+	addressSelector,
+	pickupTimeSelector,
+	noteSelector
+	(defaultAddress, defaultPickupTime, defaultNote) =>
+		({defaultAddress, defaultPickupTime, defaultNote})
 );
 
 const mapActionToProps = (dispatch) => ({
-	setDefaultAddress: (address) => {
-		dispatch(setDefaultAddress(address));
+	recordDefaultAddress: (address) => {
+		dispatch(recordDefaultAddress(address));
 	},
-	setDefaultPickupTime: (pickupTime) => {
-		dispatch(setDefaultPickupTime(pickupTime));
+	recordDefaultPickupTime: (pickupTime) => {
+		dispatch(recordDefaultPickupTime(pickupTime));
 	},
-	setDefaultNote: (note) => {
-		dispatch(setDefaultNote(note));
+	recordDefaultNote: (note) => {
+		dispatch(recordDefaultNote(note));
 	}
 });
 

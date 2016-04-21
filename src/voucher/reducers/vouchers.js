@@ -1,5 +1,5 @@
 import { ACTION_LIST_VOUCHERS } from '../actions';
-import { convertVouchers } from './dataConvertor';
+import { convertVouchers } from './convertor';
 
 export default function (vochers = null, {type, running, error, data}) {
 	switch(type) {

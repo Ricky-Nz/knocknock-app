@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import TextField from 'material-ui/TextField';
-import CircularProgress from 'material-ui/CircularProgress';
+import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
 import IconDone from 'material-ui/svg-icons/action/done';
-import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
 import { ActionBar, EditText } from '../widgets';
 
 class ResetPasswordPage extends Component {
@@ -13,22 +12,19 @@ class ResetPasswordPage extends Component {
 			showPassword: false,
 			password: ''
 		};
-		this.onPasswordChange = this.onPasswordChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-		this.onShowPasswordChange = this.onShowPasswordChange.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.resetResult&&!nextProps.resetting&&this.props.resetting) {
 			this.context.router.goBack();
 		}
 	}
-	onPasswordChange(event) {
+	onPasswordChange = (event) => {
 		this.setState({password: event.target.value});
 	}
-	onShowPasswordChange() {
-		this.setState({showPassword: !this.state.showPassword});
+	onShowPasswordChange = (event, checked) => {
+		this.setState({showPassword: checked});
 	}
-	onSubmit() {
+	onSubmit = () => {
 		const password = this.refs.password.getValidValue();
 		const repeatPassword = this.refs.repeatPassword.getValidValue();
 
@@ -39,23 +35,23 @@ class ResetPasswordPage extends Component {
 		this.props.resetPassword(password);
 	}
 	render() {
-		const { resetting } = this.props;
+		const { processing } = this.props;
 		const { password, showPassword } = this.state;
 
 		return (
 			<div className='flex flex-fill page'>
-				<ActionBar title='Reset Password' running={resetting}
-					onLeftMenuClicked={this.context.router.goBack} running={resetting}
-					leftIcon={<IconArrowBack/>} rightIcon={<IconDone/>} onRightMenuClicked={this.onSubmit}/>
+				<ActionBar title='Reset Password'
+					leftMenu={<IconButton onClick={this.context.router.goBack}><IconBack/></IconButton>}
+					rightMenu={<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>
 				<div className='flex flex-fill padding margin-horizontal'>
 					<EditText ref='password' type={showPassword?'text':'password'} fullWidth={true}
-						hintText='Password' disabled={resetting} errorText='Password is too short, try one with at least 8 characters'
-						verify={/^\w{8,}$/} onChange={this.onPasswordChange}/>
+						hintText='Password' disabled={processing} errorText='Password is too short, try one with at least 8 characters'
+						verify='password' onChange={this.onPasswordChange}/>
 					<EditText ref='repeatPassword' type={showPassword?'text':'password'} fullWidth={true}
-						hintText='Repeat password' disabled={resetting}
+						hintText='Repeat password' disabled={processing}
 						errorText='Password not match' verify={password}/>
 					<br/>
-					<Checkbox checked={showPassword} disabled={resetting}
+					<Checkbox checked={showPassword} disabled={processing}
 						label='Show password' onCheck={this.onShowPasswordChange}/>
 				</div>
 			</div>
@@ -68,8 +64,8 @@ ResetPasswordPage.contextTypes = {
 };
 
 ResetPasswordPage.propTypes = {
-	resetting: PropTypes.bool,
-	resetResult: PropTypes.bool,
+	processing: PropTypes.bool,
+	processSuccess: PropTypes.bool,
 	resetPassword: PropTypes.func.isRequired
 };
 

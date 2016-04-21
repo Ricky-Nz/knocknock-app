@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { List } from 'material-ui/List';
-import VoucherListItem from './VoucherListItem';
+import ListItem from './ListItem';
 import { LoadingProgress } from '../widgets';
 
 class VoucherList extends Component {
 	componentDidMount() {
-		!this.props.loading&&this.props.getVouchers();
+		!this.props.processing&&this.props.listVouchers();
 	}
 	render() {
-		const { loading, vouchers } = this.props;
+		const { processing, vouchers } = this.props;
 		
 		return (
-			<List style={styles.container}>
-				{(loading&&!vouchers)?<LoadingProgress/>:
+			<List className='scroll'>
+				{(processing&&!vouchers)?<LoadingProgress/>:
 					(vouchers&&vouchers.map((voucher, index) =>
-						<VoucherListItem key={index} {...voucher}/>
+						<ListItem key={index} {...voucher}/>
 					))
 				}
 			</List>
@@ -23,16 +23,9 @@ class VoucherList extends Component {
 }
 
 VoucherList.propTypes = {
-	loading: PropTypes.bool,
+	processing: PropTypes.bool,
 	vouchers: PropTypes.array,
-	getVouchers: PropTypes.func.isRequired
-};
-
-const styles = {
-	container: {
-		paddingTop: '0px',
-		overflow: 'auto'
-	}
+	listVouchers: PropTypes.func.isRequired
 };
 
 export default VoucherList;

@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { resetPassword } from '../actions';
-import ResetPasswordPage from '../components/ResetPasswordPage';
+import { resetPassword } from './actions';
+import ResetPasswordPage from './ResetPasswordPage';
 
-const resetStateSelector = state => state.actionState.updatingPassword;
+const statusSelector = state => state.userStatus.processing;
 
-const resetResultSelector = state => state.actionState.updatingPasswordSuccess;
+const resultSelector = state => state.userStatus.processSuccess;
 
 const mapStateToProps = createSelector(
-	resetStateSelector,
-	resetResultSelector,
-	(resetting, resetResult) => ({resetting, resetResult})
+	statusSelector,
+	resultSelector,
+	(processing, processSuccess) => ({processing, processSuccess})
 );
 
 const mapActionToProps = (dispatch) => ({
-	resetPassword: (newPassword) => {
-		dispatch(resetPassword(newPassword));
+	resetPassword: (password) => {
+		dispatch(resetPassword(password));
 	}
 });
 
