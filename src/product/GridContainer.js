@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { listProducts } from '../actions';
+import { listProducts } from './actions';
 import Grid from './Grid';
 
 const statusSelector = state => state.productStatus.processing;

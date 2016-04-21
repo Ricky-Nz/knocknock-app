@@ -6,7 +6,6 @@ import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-rou
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import reducers from './reducers';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 // Needed for onTouchTap
 // Can go away when react 1.0 release

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { preDeleteAddress } from '../actions';
+import { preDeleteAddress } from './actions';
 import ManagePage from './ManagePage';
 
 const mapActionToProps = (dispatch) => ({

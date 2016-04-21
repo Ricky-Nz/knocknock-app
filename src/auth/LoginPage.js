@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import IconCheck from 'material-ui/svg-icons/navigation/check';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
-import { PRIMARY_COLOR, LoadingProgress, EditText } from '../widgets';
+import { PRIMARY_COLOR, LoadingProgress, EditText } from '../app_widgets';
 import ForgotPasswordDialogContainer from './ForgotPasswordDialogContainer';
 
 class LoginPage extends Component {

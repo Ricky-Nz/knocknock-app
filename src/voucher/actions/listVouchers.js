@@ -1,4 +1,4 @@
-import runAction from './runAction';
+import fetch from '../../fetch';
 
 export const ACTION_LIST_VOUCHERS = 'ACTION_LIST_VOUCHERS';
 
@@ -6,7 +6,7 @@ export function listVouchers(toast) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_LIST_VOUCHERS,
 			arg: toast,

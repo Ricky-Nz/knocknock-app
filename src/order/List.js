@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { List } from 'material-ui/List';
 import ListItem from './ListItem';
-import { LoadingProgress } from '../widgets';
+import { LoadingProgress } from '../app_widgets';
 
 class OrderList extends Component {
 	componentDidMount() {

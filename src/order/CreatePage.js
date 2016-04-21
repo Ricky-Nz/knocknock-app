@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
 import CircularProgress from 'material-ui/CircularProgress';
 import Paper from 'material-ui/Paper';
-import { ActionBar } from '../widgets';
+import { ActionBar } from '../app_widgets';
 import CreateStepPickAddress from './CreateStepPickAddress';
 import CreateStepPickTime from './CreateStepPickTime';
 import CreateStepPreview from './CreateStepPreview';

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { GridList } from 'material-ui/GridList';
-import { LoadingProgress, EmptyView } from '../widgets';
+import { LoadingProgress, EmptyView } from '../app_widgets';
 import GridItem from './GridItem';
 import GridSelectableItemContainer from './GridSelectableItemContainer';
 

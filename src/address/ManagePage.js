@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EmptyView, AddButton } from '../widgets';
+import { ActionBar, EmptyView, AddButton } from '../app_widgets';
 import RefreshMenuContainer from './RefreshMenuContainer';
 import DeleteDialogContainer from './DeleteDialogContainer';
 import List from './List';

@@ -4,7 +4,7 @@ import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import IconPersonAdd from 'material-ui/svg-icons/social/person-add';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EditText } from '../widgets';
+import { ActionBar, EditText } from '../app_widgets';
 
 class RegisterPage extends Component {
 	constructor(props) {

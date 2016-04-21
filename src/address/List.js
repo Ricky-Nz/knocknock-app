@@ -6,7 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import IconModeDelete from 'material-ui/svg-icons/action/delete-forever';
 import IconCheckBox from 'material-ui/svg-icons/toggle/radio-button-checked';
 import IconCheckBoxEmpty from 'material-ui/svg-icons/toggle/radio-button-unchecked';
-import { LoadingProgress } from '../widgets';
+import { LoadingProgress } from '../app_widgets';
 import ListItem from './ListItem';
 
 class AddressList extends Component {

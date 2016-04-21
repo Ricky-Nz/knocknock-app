@@ -10,29 +10,24 @@ import IconMoney from 'material-ui/svg-icons/editor/attach-money';
 import IconWallet from 'material-ui/svg-icons/action/account-balance-wallet';
 import IconSettings from 'material-ui/svg-icons/action/settings';
 import IconGift from 'material-ui/svg-icons/action/card-giftcard';
-import { UserCard, QuickOrderButton } from '../containers';
+import { ProfileCard } from '../user';
+import { QuickOrderListItem } from '../order';
 
 class HomeDrawer extends Component {
-	constructor(props) {
-		super(props);
-		this.onMenuSelect = this.onMenuSelect.bind(this);
-		this.onSelectUser = this.onSelectUser.bind(this);
-		this.onQuickOrder = this.onQuickOrder.bind(this);
-	}
-	onMenuSelect(event, item) {
+	onMenuSelect = (event, item) => {
 		this.props.onRequestChange(false, 'click', item.props.value);
 	}
-	onSelectUser() {
+	onSelectUser = () => {
 		this.props.onRequestChange(false, 'click', '/home/profile');
 	}
-	onQuickOrder() {
+	onQuickOrder = () => {
 		this.props.onRequestChange(false, 'click');	
 	}
 	render() {
 		return (
 			<Drawer docked={false} open={this.props.open} onRequestChange={this.props.onRequestChange}>
-				<UserCard onClick={this.onSelectUser}/>
-				<QuickOrderButton onClick={this.onQuickOrder}/>
+				<ProfileCard onClick={this.onSelectUser}/>
+				<QuickOrderListItem onClick={this.onQuickOrder}/>
 				<Divider/>
 			  <Menu value={this.props.path} onItemTouchTap={this.onMenuSelect}>
 			    <MenuItem primaryText='Active Orders' leftIcon={<IconLocalShipping/>} value='/home'/>

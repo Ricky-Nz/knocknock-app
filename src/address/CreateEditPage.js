@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/IconButton';
 import IconDone from 'material-ui/svg-icons/action/done';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EditText } from '../widgets';
+import { ActionBar, EditText } from '../app_widgets';
 
 class CreateEditPage extends Component {
 	constructor(props) {

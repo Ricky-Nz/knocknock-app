@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { forgotPassword } from '../actions';
+import { forgotPassword } from './actions';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
 
 const statusSelector = state => state.authStatus.processing;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { listVouchers } from '../actions';
+import { listVouchers } from './actions';
 import RefreshMenu from './RefreshMenu';
 
 const statusSelector = state => state.voucherStatus.processing;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { MessageToast } from '../widgets';
+import { MessageToast } from '../app_widgets';
 
 const toastSelector = state => state.toast;
 

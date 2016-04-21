@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { logIn, preForgotPassword } from '../actions';
-import LoginPage from '../components/LoginPage';
+import { logIn, preForgotPassword } from './actions';
+import LoginPage from './LoginPage';
 
 const statusSelector = state => state.authStatus.processing;
 

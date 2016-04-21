@@ -3,11 +3,11 @@ import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Paper from 'material-ui/Paper';
-import { ActionBar, LoadingProgress } from '../widgets';
+import { ActionBar, LoadingProgress } from '../app_widgets';
 import { deepOrange500 } from 'material-ui/styles/colors';
 import { ProductList } from '../product';
 import RefreshMenuContainer from './RefreshMenuContainer';
-import StatusActionBannerContainer from './StatusActionBannerContainer';
+import { OrderPaymentBanner } from '../payment';
 import BasicProfile from './BasicProfile';
 
 class OrderDetailPage extends Component {
@@ -30,8 +30,7 @@ class OrderDetailPage extends Component {
 				{orderNotReady?<LoadingProgress/>:
 					<div className='flex flex-fill position-relative'>
 						<div className='scroll'>
-							<StatusActionBannerContainer id={id} status={status}
-								to_pay_price={to_pay_price} paid={paid}/>
+							<OrderPaymentBanner/>
 							<Paper zDepth={2}>
 								<Tabs tabItemContainerStyle={styles.tabBar} inkBarStyle={styles.inkBarStyle}>
 									<Tab style={styles.tabItem} label='Details'>

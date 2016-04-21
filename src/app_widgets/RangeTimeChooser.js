@@ -4,7 +4,6 @@ import IconEdit from 'material-ui/svg-icons/editor/mode-edit';
 import IconCheckBox from 'material-ui/svg-icons/toggle/check-box';
 import IconCheckBoxEmpty from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import Divider from 'material-ui/Divider';
-import { AddressList } from '../containers';
 import { List, ListItem } from 'material-ui/List';
 
 class RangeTimeChooser extends Component {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { showProduct } from '../actions';
+import { showProduct } from './actions';
 import List from './List';
 
 const mapActionToProps = (dispatch) => ({

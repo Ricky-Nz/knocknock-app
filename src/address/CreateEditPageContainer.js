@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { createAddress, updateAddress, getAddress } from '../actions';
+import { createAddress, updateAddress, getAddress } from './actions';
 import CreateEditPage from './CreateEditPage';
 
 const statusSelector = state => state.addressStatus.processing;

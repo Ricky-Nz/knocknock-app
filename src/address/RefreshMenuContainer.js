@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { listAddresses } from '../actions';
+import { listAddresses } from './actions';
 import RefreshMenu from './RefreshMenu';
 
 const statusSelector = state => state.addressStatus.processing;

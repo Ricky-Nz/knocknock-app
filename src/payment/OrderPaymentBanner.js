@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import IconAtm from 'material-ui/svg-icons/maps/local-atm';
 import IconPayment from 'material-ui/svg-icons/action/payment';
 import { LoadingProgress } from '../app_widgets';
-import PayProcessDialogContainer from './PayProcessDialogContainer';
+import PaypalProcessDialogContainer from './PaypalProcessDialogContainer';
 
 class OrderPaymentBanner extends Component {
   onPayByCredit = () => {
@@ -42,7 +42,7 @@ class OrderPaymentBanner extends Component {
 						}
 					</div>
 				}
-				<PayProcessDialogContainer/>
+				<PaypalProcessDialogContainer/>
 			</div>
 		);
 	}

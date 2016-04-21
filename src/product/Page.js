@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar } from '../widgets';
+import { ActionBar } from '../app_widgets';
 import GridContainer from './GridContainer';
 import CategoryFilter from './CategoryFilter';
 import ProductSearchMenu from './ProductSearchMenu';

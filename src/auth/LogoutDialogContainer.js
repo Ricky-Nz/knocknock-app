@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { logOut } from '../actions';
+import { logOut } from './actions';
 import LogoutDialog from './LogoutDialog';
 
 const mapActionToProps = (dispatch) => ({

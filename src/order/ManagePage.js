@@ -3,7 +3,7 @@ import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import CircularProgress from 'material-ui/CircularProgress';
-import { ActionBar, EmptyView, AddButton } from '../widgets';
+import { ActionBar, EmptyView, AddButton } from '../app_widgets';
 import List from './List';
 import RefreshMenuContainer from './RefreshMenuContainer';
 

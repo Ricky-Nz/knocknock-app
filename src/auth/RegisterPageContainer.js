@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { register, logIn } from '../actions';
-import RegisterPage from '../components/RegisterPage';
+import { register, logIn } from './actions';
+import RegisterPage from './RegisterPage';
 
 const loggingStatusSelector = state => state.authStatus.logging;
 

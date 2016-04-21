@@ -10,7 +10,7 @@ class CreateStepChooseAddress extends Component {
     this.context.router.push('/address');
   }
 	render() {
-    const = { selectAddress, stepSelectAddress } = this.props;
+    const { selectAddress, stepSelectAddress } = this.props;
 
 		return (
       <div>

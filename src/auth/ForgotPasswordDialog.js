@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { LoadingProgress } from '../widgets';
+import { LoadingProgress } from '../app_widgets';
 
 class ForgotPasswordDialog extends Component {
 	constructor(props) {
