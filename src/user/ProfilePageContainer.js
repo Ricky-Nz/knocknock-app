@@ -1,33 +1,28 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getUserProfile, editUserProfile, editAvatar, logout } from '../actions';
+import { getProfile, updateProfile } from './actions';
+import { startLogOut } from '../auth';
 import ProfilePage from '../components/ProfilePage';
 
-const loadingStateSelector = state => state.actionState.loadingUserProfile;
-
-const updatingStateSelector = state => state.actionState.updatingUserProfile;
+const statusSelector = state => state.userStatus.processing;
 
 const dataSelector = state => state.user;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
-	updatingStateSelector,
+	statusSelector,
 	dataSelector,
-	(loading, updating, user) => ({loading, updating, user})
+	(processing, profile) => ({processing, profile})
 );
 
 const mapActionToProps = (dispatch) => ({
-	loadUser: () => {
-		dispatch(getUserProfile());
+	getProfile: () => {
+		dispatch(getProfile());
 	},
-	updateUser: (args) => {
-		dispatch(editUserProfile(args));
+	updateProfile: (args) => {
+		dispatch(updateProfile(args));
 	},
-	uploadAvatar: (content) => {
-		dispatch(editAvatar(content));
-	},
-	logout: () => {
-		dispatch(logout());
+	startLogOut: () => {
+		dispatch(startLogOut());
 	}
 });
 

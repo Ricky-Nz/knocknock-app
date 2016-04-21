@@ -1,14 +1,14 @@
-import runAction from './runAction';
+import fetch from '../../fetch';
 
-export const ACTION_GET_ORDERS = 'ACTION_GET_ORDERS';
+export const ACTION_LIST_ORDERS = 'ACTION_LIST_ORDERS';
 
-export function getOrders(refresh) {
+export function listOrders(refresh) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
-			actionName: ACTION_GET_ORDERS,
+			actionName: ACTION_LIST_ORDERS,
 			arg: refresh,
 			method: 'GET',
 			path: 'orders',

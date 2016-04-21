@@ -1,27 +1,21 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getUserProfile, toastMessage, topUp } from '../actions';
-import WalletPage from '../components/WalletPage';
+import { topUpByPaypal } from './actions';
+import WalletPage from './WalletPage';
 
-const loadingStateSelector = state => state.actionState.updatingUserProfile;
+const statusSelector = state => state.paymentStatus.processing;
 
-const dataSelector = state => state.user;
+const userSelector = state => state.user;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
-	dataSelector,
-	(loading, user) => ({loading, user})
+	statusSelector,
+	userSelector,
+	(processing, user) => ({processing, user})
 );
 
 const mapActionToProps = (dispatch) => ({
-	loadUser: (toast) => {
-		dispatch(getUserProfile(toast));
-	},
-	toast: (message) => {
-		dispatch(toastMessage(message));
-	},
-	topUp: (amount) => {
-		dispatch(topUp(amount));
+	topUpByPaypal: (amount) => {
+		dispatch(topUpByPaypal(amount));
 	}
 });
 

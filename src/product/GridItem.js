@@ -36,10 +36,4 @@ GridItem.propTypes = {
   image_url: PropTypes.string.isRequired
 };
 
-const styles = {
-	titleContainer: {
-		paddingRight: 16
-	}
-}
-
 export default GridItem;

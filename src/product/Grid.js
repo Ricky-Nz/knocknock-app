@@ -2,16 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { GridList } from 'material-ui/GridList';
 import { LoadingProgress, EmptyView } from '../widgets';
 import GridItem from './GridItem';
-import GridSelectableItem from './GridSelectableItem';
+import GridSelectableItemContainer from './GridSelectableItemContainer';
 
 class ProductGrid extends Component {
 	componentDidMount() {
 		!this.props.loading&&!this.props.products&&this.props.loadProducts();
 	}
 	render() {
-		let { selectable, loading, products } = this.props;
+		const { selectable, processing, products } = this.props;
 
-		if (loading&&!products) {
+		if (processing&&!products) {
 			return <LoadingProgress/>;
 		} else if (!products) {
 			return <EmptyView text='none available product'/>
@@ -20,7 +20,7 @@ class ProductGrid extends Component {
 		return (
 	    <GridList className='scroll half-padding' padding={4} cols={2}>
 	    	{products.map((item, index) =>
-		       selectable?<GridSelectableItem key={index} {...item}/>
+		       selectable?<GridSelectableItemContainer key={index} {...item}/>
 		       	:<GridItem key={index} {...item}/>)
 	      }
 	    </GridList>
@@ -30,9 +30,9 @@ class ProductGrid extends Component {
 
 ProductGrid.propTypes = {
 	selectable: PropTypes.bool,
-	loading: PropTypes.bool,
+	processing: PropTypes.bool,
 	products: PropTypes.array,
-	loadProducts: PropTypes.func.isRequired
+	listProducts: PropTypes.func.isRequired
 };
 
 ProductGrid.defaultProps = {

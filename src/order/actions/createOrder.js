@@ -1,4 +1,4 @@
-import runAction from './runAction';
+import fetch from '../../fetch';
 
 export const ACTION_CREATE_ORDER = 'ACTION_CREATE_ORDER';
 
@@ -7,7 +7,7 @@ export function createOrder({description, pickupPostalCode,
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_CREATE_ORDER,
 			method: 'POST',

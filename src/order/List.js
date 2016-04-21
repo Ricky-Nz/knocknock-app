@@ -1,21 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { List } from 'material-ui/List';
-import OrderListItem from './OrderListItem';
+import ListItem from './ListItem';
 import { LoadingProgress } from '../widgets';
 
 class OrderList extends Component {
 	componentDidMount() {
-		!this.props.orders&&this.props.loadOrders();
+		!this.props.processing&&this.props.listOrders();
 	}
 	render() {
-		const { emptyView, loading, orders, onItemClicked } = this.props;
+		const { emptyView, processing, orders, onItemClicked } = this.props;
 		
 		return (
-			<List style={styles.container}>
-				{(loading&&!orders)?<LoadingProgress/>:
+			<List className='scroll'>
+				{(processing&&!orders)?<LoadingProgress/>:
 					((!orders||orders.length===0)?emptyView:
 						orders.map((order, index) =>
-							<OrderListItem key={index} onClick={() => onItemClicked(order)} {...order}/>)
+							<ListItem key={index} onClick={() => onItemClicked(order)} {...order}/>)
 					)
 				}
 			</List>
@@ -24,18 +24,12 @@ class OrderList extends Component {
 }
 
 OrderList.propTypes = {
+	isActive: PropTypes.bool.isRequired,
 	emptyView: PropTypes.node,
-	loading: PropTypes.bool,
+	processing: PropTypes.bool,
 	orders: PropTypes.array,
 	onItemClicked: PropTypes.func.isRequired,
-	loadOrders: PropTypes.func.isRequired
-};
-
-const styles = {
-	container: {
-		paddingTop: '0px',
-		overflow: 'auto'
-	}
+	listOrders: PropTypes.func.isRequired
 };
 
 export default OrderList;

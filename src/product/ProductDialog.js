@@ -1,26 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import Avatar from 'material-ui/Avatar';
 import { ListItem } from 'material-ui/List';
 
-class ProductInfoDialog extends Component {
+class ProductDialog extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {show: false};
-		this.handleClose = this.handleClose.bind(this);
 	}
-	show(product) {
-		this.setState({
-			show: true,
-			product
-		});
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.product!==this.props.product) {
+			this.setState({show: true});
+		}
 	}
-	handleClose() {
+	handleClose = () => {
 		this.setState({show: false});
 	}
 	render() {
-		const { name_en, image_url, wash_iron_price, dry_clean_price } = this.state.product||{};
+		const { name_en, image_url, iron_price, wash_iron_price, dry_clean_price } = this.props.product||{};
 
 		return (
       <Dialog title={name_en} actions={[<FlatButton label='ok' primary={true} onTouchTap={this.handleClose}/>]}
@@ -37,10 +34,8 @@ class ProductInfoDialog extends Component {
 	}
 }
 
-const styles = {
-	avatar: {
-		borderRadius: 0
-	}
+ProductDialog.propTypes = {
+	product: PropTypes.object
 };
 
-export default ProductInfoDialog;
+export default ProductDialog;

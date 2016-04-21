@@ -2,22 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
-import { OrderList } from '../containers';
-import { ActionBar, EmptyView } from '../widgets';
+import { ActionBar, EmptyView, AddButton } from '../widgets';
+import List from './List';
+import RefreshMenuContainer from './RefreshMenuContainer';
 
 class OrderManagePage extends Component {
-	constructor(props) {
-		super(props);
-		this.onNewOrder = this.onNewOrder.bind(this);
-		this.onOrderClicked = this.onOrderClicked.bind(this);
-	}
-	onNewOrder() {
+	onNewOrder = () => {
 		this.context.router.push('order');
 	}
-	onOrderClicked(order) {
+	onEditOrder = (order) => {
 		this.context.router.push(`order/${order.id}`);
 	}
 	render() {
@@ -25,17 +19,13 @@ class OrderManagePage extends Component {
 
 		return (
 			<div className='flex flex-fill'>
-				<ActionBar title={isActive?'Active Orders':'History Orders'} running={this.props.loading}
-					leftIcon={this.props.onMenuClick?<IconMenu/>:<IconArrowBack/>} onLeftMenuClicked={this.props.onMenuClick||this.context.router.goBack}
-					rightIcon={<IconRefresh/>} onRightMenuClicked={this.props.loadOrders}/>
+				<ActionBar title={isActive?'Active Orders':'History Orders'}
+					leftMenu={<IconButton onClick={this.context.router.goBack}><IconMenu/></IconButton>}
+					rightMenu={<RefreshMenuContainer/>}/>
 				<div className='flex flex-fill position-relative'>
-					<OrderList onItemClicked={this.onOrderClicked} isActive={isActive}
+					<List onItemClicked={this.onEditOrder} isActive={isActive}
 						emptyView={<EmptyView text='no active order, click the + button below to make order'/>}/>
-			    {isActive&&
-			    	<FloatingActionButton style={styles.floatBtn} onClick={this.onNewOrder}>
-			      	<ContentAdd/>
-			    	</FloatingActionButton>
-			    }
+			    {isActive&&<AddButton style={styles.floatBtn} onClick={this.onNewOrder}/>}
 				</div>
 			</div>
 		);
@@ -44,12 +34,6 @@ class OrderManagePage extends Component {
 
 OrderManagePage.contextTypes = {
   router: React.PropTypes.object
-};
-
-OrderManagePage.propTypes = {
-	loading: PropTypes.bool,
-	loadOrders: PropTypes.func.isRequired,
-	onMenuClick: PropTypes.func.isRequired
 };
 
 const styles = {

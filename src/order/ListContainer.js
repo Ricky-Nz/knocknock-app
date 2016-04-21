@@ -1,22 +1,36 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getOrders } from '../actions';
-import OrderList from '../components/OrderList';
+import { listOrders } from './actions';
+import List from './List';
 
-const loadingStateSelector = (state) => state.actionState.loadingOrders;
+const statusSelector = state => state.orderStatus.processing;
 
-const dataSelector = (state, {isActive}) => isActive?state.activeOrders:state.historyOrders;
+const ordersSelector = state => state.orders;
+
+const activeSelector = (state, {isActive}) => isActive;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
-	dataSelector,
-	(loading, orders) => ({loading, orders})
+	statusSelector,
+	ordersSelector,
+	activeSelector,
+	(processing, orders, isActive) => {
+		return {
+			processing,
+			orders: orders&&orders.filter(item => {
+				if (isActive) {
+					return item.paid&&item.status === 'Order Complete';
+				} else {
+					return !item.paid||item.status !== 'Order Complete';
+				}
+			})
+		}
+	}
 );
 
 const mapActionToProps = (dispatch) => ({
-	loadOrders: () => {
-		dispatch(getOrders());
+	listOrders: () => {
+		dispatch(listOrders());
 	}
 });
 
-export default connect(mapStateToProps, mapActionToProps)(OrderList);
+export default connect(mapStateToProps, mapActionToProps)(List);

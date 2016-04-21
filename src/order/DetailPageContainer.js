@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getOrderDetail } from '../actions';
+import { getOrder } from '../actions';
 import OrderDetailPage from '../components/OrderDetailPage';
 
 const orderSelector = state => state.orderDetail;
 
-const loadingStateSelector = state => state.actionState.loadingOrder;
+const statusSelector = state => state.orderStatus.processing;
 
 const mapStateToProps = createSelector(
 	orderSelector,
-	loadingStateSelector,
-	(order, loading) => ({order, loading})
+	statusSelector,
+	(order, processing) => ({order, processing})
 );
 
 const mapActionToProps = (dispatch) => ({
-	load: (orderId, arg) => {
-		dispatch(getOrderDetail(orderId, arg));
+	getOrder: (orderId) => {
+		dispatch(getOrder(orderId));
 	}
 })
 

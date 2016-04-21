@@ -7,7 +7,7 @@ export default function (order = null, {type, running, error, data}) {
 			if (!running && !error && data) {
 				return convertDetailOrder(data);
 			} else {
-				return order;
+				return null;
 			}
 		case ACTION_LOGOUT:
 			return null;

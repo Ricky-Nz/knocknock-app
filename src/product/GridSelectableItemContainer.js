@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { selectProduct } from '../actions';
+import { selectProduct } from './actions';
 import GridSelectableItem from '../components/GridSelectableItem';
 
 const checkedSelector = (state, {id}) => state.selectedProducts[id];

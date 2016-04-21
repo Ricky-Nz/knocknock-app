@@ -3,34 +3,20 @@ import { yellowA100, greenA100, grey300, blueGrey800 } from 'material-ui/styles/
 import RaisedButton from 'material-ui/RaisedButton';
 import IconAtm from 'material-ui/svg-icons/maps/local-atm';
 import IconPayment from 'material-ui/svg-icons/action/payment';
-import { PaymentProcessingDialog } from '../containers';
-import { LoadingProgress } from '../widgets';
+import { LoadingProgress } from '../app_widgets';
+import PayProcessDialogContainer from './PayProcessDialogContainer';
 
-class OrderStatusActionBanner extends Component {
-	constructor(props) {
-		super(props);
-		this.onPayByCredit = this.onPayByCredit.bind(this);
-		this.onPayByPaypal = this.onPayByPaypal.bind(this);
-		this.onPaymentSuccess = this.onPaymentSuccess.bind(this);
-	}
-	componentWillReceiveProps(nextProps) {
-		if (!nextProps.creditPaying&&this.props.creditPaying&&nextProps.creditPaySuccess) {
-			this.onPaymentSuccess();
-		}
-	}
-  onPayByCredit() {
-  	this.props.payOrderByCredit(this.props.id);
+class OrderPaymentBanner extends Component {
+  onPayByCredit = () => {
+  	this.props.payOrderByCredit(this.props.order.id);
   }
-  onPayByPaypal() {
-  	this.props.payOrderByPaypal(this.props.id,
-  		this.props.to_pay_price);
-  }
-  onPaymentSuccess() {
-  	this.props.refreshOrder(this.props.id);
+  onPayByPaypal = () => {
+  	this.props.payOrderByPaypal(this.props.order.id, this.props.order.to_pay_price);
   }
 	render() {
-		const { id, status, to_pay_price, paid, creditPaying } = this.props;
+		const { id, status, to_pay_price, paid } = this.props.order||{};
 		const hasPrice = to_pay_price > 0;
+		const processing = this.props.processing;
 		
 		return (
 			<div className='padding'
@@ -46,7 +32,7 @@ class OrderStatusActionBanner extends Component {
 				{!paid&&hasPrice&&
 					<div className='padding-top'>
 						<p style={styles.promptText}>Make Payment</p>
-						{creditPaying?<LoadingProgress size={0.5} label='processing...'/>:
+						{processing?<LoadingProgress size={0.5} label='processing...'/>:
 							<div className='flex flex-row'>
 								<RaisedButton style={styles.leftButton} className='flex-fill'
 									onClick={this.onPayByCredit} label='by Credit' labelPosition='after' icon={<IconAtm/>}/>
@@ -56,22 +42,17 @@ class OrderStatusActionBanner extends Component {
 						}
 					</div>
 				}
-				<PaymentProcessingDialog onSuccess={this.onPaymentSuccess}/>
+				<PayProcessDialogContainer/>
 			</div>
 		);
 	}
 }
 
-OrderStatusActionBanner.propTypes = {
-	id: PropTypes.any.isRequired,
-	status: PropTypes.string.isRequired,
-	to_pay_price: PropTypes.any,
-	paid: PropTypes.bool,
-	payOrderByCredit: PropTypes.func.isRequired,
-	payOrderByPaypal: PropTypes.func.isRequired,
-	refreshOrder: PropTypes.func.isRequired,
-	creditPaying: PropTypes.bool,
-	creditPaySuccess: PropTypes.bool
+OrderPaymentBanner.propTypes = {
+	processing: PropTypes.bool,
+	order: PropTypes.object,
+	payByCredit: PropTypes.func.isRequired,
+	payByPaypal: PropTypes.func.isRequired
 };
 
 const styles = {
@@ -101,4 +82,4 @@ const styles = {
 	}
 };
 
-export default OrderStatusActionBanner;
+export default OrderPaymentBanner;

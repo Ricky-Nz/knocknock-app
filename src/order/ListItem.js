@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 import { TimeDisplay } from '../widgets';
 import { yellowA100, blueGrey800 } from 'material-ui/styles/colors';
 import IconPayment from 'material-ui/svg-icons/action/payment';

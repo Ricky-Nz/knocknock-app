@@ -2,16 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 import IconSend from 'material-ui/svg-icons/content/send';
 
-class QuickOrderButton extends Component {
-	constructor(props) {
-		super(props);
-		this.onQuickOrder = this.onQuickOrder.bind(this);
-	}
-	onQuickOrder() {
-		const { address, pickupTime, toast, onClick } = this.props;
-		if (!address || !pickupTime) {
-			toast('Please set the default pickup address and pickup time in Settings tab');
-			return;
+class QuickOrderListItem extends Component {
+	onQuickOrder = () => {
+		const { defaultAddress, defaultPickupTime, toast, onClick } = this.props;
+		if (!defaultAddress || !defaultPickupTime) {
+			return toast('Please set the default pickup address and pickup time in Settings tab');
 		}
 
 		onClick&&onClick();
@@ -28,14 +23,14 @@ class QuickOrderButton extends Component {
 	}
 }
 
-QuickOrderButton.contextTypes = {
+QuickOrderListItem.contextTypes = {
   router: React.PropTypes.object
 };
 
-QuickOrderButton.propTypes = {
-	address: PropTypes.object,
-	pickupTime: PropTypes.any,
+QuickOrderListItem.propTypes = {
+	defaultAddress: PropTypes.object,
+	defaultPickupTime: PropTypes.any,
 	toast: PropTypes.func.isRequired
 };
 
-export default QuickOrderButton;
+export default QuickOrderListItem;

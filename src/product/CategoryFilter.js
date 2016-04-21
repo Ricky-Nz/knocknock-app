@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { changeProductFilter } from '../actions';
-import { DropDownSelector } from '../widgets';
+import { filterProduct } from './actions';
+import { DropDownSelector } from '../app_widgets';
 
 const dataSelector = state => state.categories;
 
-const filterSelector = state => state.appState.productFilter;
+const filterSelector = state => state.selectedFilter;
 
 const mapStateToProps = createSelector(
 	dataSelector,
@@ -24,7 +24,7 @@ const mapStateToProps = createSelector(
 
 const mapActionToProps = (dispatch) => ({
 	onSelectItem: (value) => {
-		dispatch(changeProductFilter(value));
+		dispatch(filterProduct(value));
 	}
 });
 

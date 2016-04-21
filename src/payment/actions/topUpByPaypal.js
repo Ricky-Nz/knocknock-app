@@ -1,14 +1,14 @@
 import fetch from '../../fetch';
 
-export const ACTION_TOPUP = 'ACTION_TOPUP';
+export const ACTION_TOPUP_BY_PAYPAL = 'ACTION_TOPUP_BY_PAYPAL';
 
-export function topUp(amount) {
+export function topUpByPaypal(amount) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
 		fetch({
 			dispatch,
-			actionName: ACTION_TOPUP,
+			actionName: ACTION_TOPUP_BY_PAYPAL,
 			method: 'POST',
 			path: 'credits/paypal',
 			headers: {

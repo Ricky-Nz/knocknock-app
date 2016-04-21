@@ -1,46 +1,35 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { createOrder, getOrders, recordLastUsedAddress, toastMessage } from '../actions';
+import { createOrder, listOrders } from '../actions';
+import { recordLastUsedAddress } from '../../address';
+import { toast } from '../../app_common';
 import OrderCreatePage from '../components/OrderCreatePage';
 
-const defaultAddressSelector = state => state.settings.address;
+const penndingOrderSelector = state => state.penndingOrder;
 
-const defaultPickupTimeSelector = state => state.settings.pickupTime;
+const creatingStatusSelector = state => state.orderStatus.creating;
 
-const defaultNoteSelector = state => state.settings.note;
-
-const lastUsedAddressSelector = state => state.settings.lastUsedAddress;
-
-const creatingStateSelector = state => state.actionState.creatingOrder;
-
-const resultSelector = state => state.actionState.creatingOrderSuccess;
-
-const addressesSelector = state => state.addresses;
+const actionResultSelector = state => state.orderStatus.processSuccess;
 
 const mapStateToProps = createSelector(
-	defaultAddressSelector,
-	defaultPickupTimeSelector,
-	defaultNoteSelector,
-	lastUsedAddressSelector,
-	creatingStateSelector,
-	resultSelector,
-	addressesSelector,
-	(defaultAddress, defaultPickupTime, defaultNote, lastUsedAddress, creating, success, addresses) =>
-		({defaultAddress, defaultPickupTime, defaultNote, lastUsedAddress, creating, success, addresses})
+	penndingOrderSelector,
+	creatingStatusSelector,
+	actionResultSelector,
+	(penndingOrder, creating, processSuccess) => ({penndingOrder, creating, processSuccess})
 );
 
-const mapActionToProps = (dispatch, props) => ({
-	createOrder: (args) => {
-		dispatch(createOrder(args));
+const mapActionToProps = (dispatch) => ({
+	createOrder: (order) => {
+		dispatch(createOrder(order));
 	},
-	refreshOrders: () => {
-		dispatch(getOrders());
+	listOrders: () => {
+		dispatch(listOrders());
+	},
+	toast: (message) => {
+		dispatch(toast(message));
 	},
 	recordLastUsedAddress: (address) => {
 		dispatch(recordLastUsedAddress(address));
-	},
-	toast: (message) => {
-		dispatch(toastMessage(message));
 	}
 });
 

@@ -1,0 +1,1 @@
+export { default as OrderPaymentBanner } from './OrderPaymentBannerContainer';

@@ -24,7 +24,8 @@ export function convertCompactOrder({
 		drop_off_time,
 		paid,
 		to_pay_price,
-		status: order_status.status
+		status: order_status.status,
+		status_step: order_status.step
 	};
 }
 

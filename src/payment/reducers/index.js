@@ -1,7 +1,7 @@
 import paypal from './paypal';
-import topUp from './topUp';
+import paymentStatus from './paymentStatus';
 
 export default {
 	paypal,
-	topUp
+	paymentStatus
 };

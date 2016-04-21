@@ -14,167 +14,80 @@ import { red600 } from 'material-ui/styles/colors';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { EditText } from '../widgets';
+import ProfileAvatarContaienr from './ProfileAvatarContaienr';
 
 class ProfilePage extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {showDialog: false};
-		this.onUpdateProfile = this.onUpdateProfile.bind(this);
-		this.onLogout = this.onLogout.bind(this);
-		this.onSelectFile = this.onSelectFile.bind(this);
-		this.onToggleDialog = this.onToggleDialog.bind(this);
-		this.onResetPassword = this.onResetPassword.bind(this);
-	}
 	componentDidMount() {
-		!this.props.user&&!this.props.loading&&this.props.loadUser();
+		!this.props.profile&&!this.props.processing&&this.props.getProfile();
 	}
-	onUpdateProfile() {
-		if (this.state.seletFile) {
-			this.props.uploadAvatar(this.state.seletFile);
-			this.setState({seletFile: null});
-		}
-
+	onComplete = () => {
 		const firstName = this.refs.firstName.getValidValue();
 		const lastName = this.refs.lastName.getValidValue();
+		const email = this.refs.email.getValidValue();
+		const contactNo = this.refs.contactNo.getValidValue();
 
-		if (firstName === null || lastName === null) {
+		if (firstName === null || lastName === null
+			|| email === null || contactNo === null) {
 			return;
 		}
-
-		const user = this.props.user;
-
-		if (this.props.location.pathname === '/setup') {
-			if (firstName || lastName) {
-				this.props.updateUser({
-					firstName,
-					lastName
-				});
-			}
-
-			this.context.router.goBack();
-		} else if (user) {
-			const email = this.refs.email.getValidValue();
-			const contactNo = this.refs.contactNo.getValidValue();
-
-			if (contactNo === null) {
-				return;
-			}
-		
-			this.props.updateUser({
-				email,
-				contactNo,
-				firstName,
-				lastName
-			});
-		}
+	
+		this.props.updateUser({
+			email,
+			contactNo,
+			firstName,
+			lastName
+		});
 	}
-	onResetPassword() {
+	onResetPassword = () => {
 		this.context.router.push('/resetpassword');
 	}
-	onLogout() {
-		this.props.logout();
-		this.context.router.replace('/login');
-	}
-	onSelectFile(files) {
-		if (files&&files[0]) {
-			if (files[0].type.startsWith('image')) {
-				this.setState({seletFile: files[0]});
-			}
-		}
-  }
-  onToggleDialog() {
-  	this.setState({showDialog: !this.state.showDialog});
-  }
 	render() {
-		const { showDialog, seletFile } = this.state;
-		const { loading, updating, user, onMenuClick } = this.props;
-		const isSetup = this.props.location.pathname === '/setup';
+		const { navCallback } = this.props.location.query;
+		const { firstName, lastName, email, contactNo } = this.props.profile||{};
 
 		return (
 			<div className='flex flex-fill'>
-				<ActionBar title={isSetup?'Setup Profile':'My Profile'} leftIcon={isSetup?<IconClose/>:<IconMenu/>}
-					onLeftMenuClicked={onMenuClick||this.context.router.goBack}
-					rightIcon={<IconDone/>} onRightMenuClicked={this.onUpdateProfile} running={loading||updating}/>
+				<ActionBar title='My Profile'
+					leftMenu={<IconButton onClick={navCallback?this.props[navCallback]:this.context.router.goBack}>{navCallback?<IconMenu/>:<IconClose/>}</IconButton>}
+					rightMenu={<IconButton onClick={this.onComplete}><IconDone/></IconButton>}/>
 				<div className='flex flex-fill position-relative'>
-					{(loading&&!user)?<LoadingProgress/>:
+					{(this.props.processing&&!profile)?<LoadingProgress/>:
 						<div className='flex flex-fill scroll padding'>
-							<div>
-								<div style={styles.avatarContainer} className='position-relative'>
-									<Avatar src={seletFile?seletFile.preview:(user&&user.avatarMd)} size={120}/>
-									<IconEdit style={styles.avatarEditIcon}/>
-			            <Dropzone style={styles.dropZone} multiple={false} accept='image/*' onDrop={this.onSelectFile}/>
-								</div>
-							</div>
-							<EditText ref='firstName' fullWidth={true} value={user&&user.firstName}
-								floatingLabelText='Fisrt Name' errorText='fist name can not be empty' verify={/^(?!\s*$).+/}/>
-							<EditText ref='lastName' fullWidth={true} value={user&&user.lastName}
-								floatingLabelText='Last Name' errorText='last name can not be empty' verify={/^(?!\s*$).+/}/>
-							{!isSetup&&
-								<EditText ref='email' fullWidth={true} value={user&&user.email} disabled={true}
-									floatingLabelText='Email'/>
-							}
-							{!isSetup&&
-								<EditText ref='contactNo' fullWidth={true} type='number'
-									value={user&&user.contactNo} floatingLabelText='Contact Number'
-									errorText='please enter a valid phone number' verify={/^[0-9]{8,8}$/}/>
-							}
+							<ProfileAvatarContaienr/>
+							<EditText ref='firstName' fullWidth={true} value={firstName}
+								floatingLabelText='Fisrt Name' errorText='fist name can not be empty' verify='notempty'/>
+							<EditText ref='lastName' fullWidth={true} value={lastName}
+								floatingLabelText='Last Name' errorText='last name can not be empty' verify='notempty'/>
+							<EditText ref='email' fullWidth={true} value={email} disabled={true}
+								floatingLabelText='Email' errorText='please enter a valid email address' verify='email'/>
+							<EditText ref='contactNo' fullWidth={true} type='number'
+								value={contactNo} floatingLabelText='Contact Number'
+								errorText='please enter a valid phone number' verify='phonenumber'/>
 							<br/>
-							{!isSetup&&
-								<div className='flex flex-row flex-end'>
-									<FlatButton label='Reset password' onClick={this.onResetPassword}/>
-								</div>
-							}
+							<div className='flex flex-row flex-end'>
+								<FlatButton label='Reset password' onClick={this.onResetPassword}/>
+							</div>
 							<br/><br/>
-							{!isSetup&&
-								<RaisedButton fullWidth={true} label='Logout'
-									backgroundColor={red600} labelColor='white' onClick={this.onToggleDialog}/>
-							}
+							<RaisedButton fullWidth={true} label='Logout'
+								backgroundColor={red600} labelColor='white' onClick={this.props.startLogOut}/>
 						</div>
 					}
 				</div>
-        <Dialog title='Log out?' actions={[
-	        	<FlatButton label='Cancel' onClick={this.onToggleDialog}/>,
-	      		<FlatButton label='Log out' primary={true} onClick={this.onLogout}/>
-        	]} modal={false}
-          open={showDialog} onRequestClose={this.onToggleDialog}/>
 			</div>
 		);
 	}
 }
 
 ProfilePage.propTypes = {
-	loading: PropTypes.bool,
-	updating: PropTypes.bool,
-	user: PropTypes.object,
-	loadUser: PropTypes.func.isRequired,
-	updateUser: PropTypes.func.isRequired,
-	uploadAvatar: PropTypes.func.isRequired,
-	logout: PropTypes.func.isRequired,
-	onMenuClick: PropTypes.func
+	processing: PropTypes.bool,
+	profile: PropTypes.object,
+	getProfile: PropTypes.func.isRequired,
+	updateProfile: PropTypes.func.isRequired,
+	startLogOut: PropTypes.func.isRequired
 };
 
 ProfilePage.contextTypes = {
   router: React.PropTypes.object
-};
-
-const styles = {
-	dropZone: {
-		height: 120,
-		width: 120,
-		position: 'absolute',
-		top: 0,
-		left: 0
-	},
-	avatarEditIcon: {
-		position: 'absolute',
-		bottom: 0,
-		right: 0
-	},
-	avatarContainer: {
-		height: 120,
-		width: 120,
-		margin: 'auto'
-	}
 };
 
 export default ProfilePage;

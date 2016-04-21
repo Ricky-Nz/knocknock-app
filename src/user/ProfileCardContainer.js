@@ -1,22 +1,22 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getUserProfile } from '../actions';
-import UserCard from '../components/UserCard';
+import { getProfile } from '../actions';
+import ProfileCard from './ProfileCard';
 
-const loadingStateSelector = state => state.actionState.loadingUserProfile;
+const statusSelector = state => state.userStatus.processing;
 
 const dataSelector = state => state.user;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
+	statusSelector,
 	dataSelector,
-	(loading, user) => ({loading, user})
+	(processing, profile) => ({processing, profile})
 );
 
 const mapActionToProps = (dispatch) => ({
-	loadUser: () => {
-		dispatch(getUserProfile());
+	getProfile: () => {
+		dispatch(getProfile());
 	}
 });
 
-export default connect(mapStateToProps, mapActionToProps)(UserCard);
+export default connect(mapStateToProps, mapActionToProps)(ProfileCard);
