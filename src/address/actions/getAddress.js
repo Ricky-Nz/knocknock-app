@@ -6,7 +6,7 @@ export function getAddress(id) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_GET_ADDRESSES,
 			method: 'GET',

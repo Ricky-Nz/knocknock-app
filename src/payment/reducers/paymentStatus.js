@@ -1,15 +1,12 @@
 import { ACTION_TOPUP, ACTION_PAY_BY_PAYPAL, ACTION_PAY_BY_CREDIT } from '../actions';
+import { processStatus } from '../../utils';
 
-export default function (status = {}, {type, running, error}) {
-	switch(type) {
+export default function (status = {}, action) {
+	switch(action.type) {
 		case ACTION_TOPUP:
 		case ACTION_PAY_BY_PAYPAL:
 		case ACTION_PAY_BY_CREDIT:
-			if (running) {
-				return {processing: true};
-			} else {
-				return {processing: false, processSuccess: !error}
-			}
+			return processStatus(action);
 		default:
 			return status;
 	}

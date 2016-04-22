@@ -6,7 +6,7 @@ export function updateAvatar(fileContent) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_UPDATE_AVATAR,
 			method: 'POST',

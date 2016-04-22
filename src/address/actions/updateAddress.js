@@ -6,7 +6,7 @@ export function updateAddress({id, address, postal_code, contact_no, unit_number
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_UPDATE_ADDRESS,
 			method: 'PUT',

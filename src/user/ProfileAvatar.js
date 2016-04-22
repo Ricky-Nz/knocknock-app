@@ -1,19 +1,34 @@
 import React, { Component, PropTypes } from 'react';
+import Avatar from 'material-ui/Avatar';
+import IconEdit from 'material-ui/svg-icons/image/edit';
+import Dropzone from 'react-dropzone';
 
 class ProfileAvatar extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.processing&&!this.props.processing&&this.state.seletFile) {
+			this.props.updateAvatar(this.state.seletFile);
+			this.setState({seletFile: null});
+		}
+	}
 	onSelectFile = (files) => {
 		if (files&&files[0]) {
 			if (files[0].type.startsWith('image')) {
-				this.props.updateAvatar(files[0]);
+				this.setState({seletFile: files[0]});
 			}
 		}
   }
 	render() {
+		const seletFile = this.state.seletFile;
+
 		return (
-			<div style={styles.avatarContainer} className='position-relative'>
+			<div style={styles.container} className='position-relative'>
 				<Avatar src={seletFile?seletFile.preview:this.props.src} size={120}/>
-				<IconEdit style={styles.avatarEditIcon}/>
         <Dropzone style={styles.dropZone} multiple={false} accept='image/*' onDrop={this.onSelectFile}/>
+        <IconEdit style={styles.editIcon}/>
 			</div>
 		);
 	}
@@ -21,10 +36,15 @@ class ProfileAvatar extends Component {
 
 ProfileAvatar.propTypes = {
 	src: PropTypes.string,
+	processing: PropTypes.bool,
 	updateAvatar: PropTypes.func.isRequired
 };
 
 const styles = {
+	container: {
+		height: 120,
+		width: 120
+	},
 	dropZone: {
 		height: 120,
 		width: 120,
@@ -32,15 +52,10 @@ const styles = {
 		top: 0,
 		left: 0
 	},
-	avatarEditIcon: {
+	editIcon: {
 		position: 'absolute',
 		bottom: 0,
 		right: 0
-	},
-	avatarContainer: {
-		height: 120,
-		width: 120,
-		margin: 'auto'
 	}
 };
 

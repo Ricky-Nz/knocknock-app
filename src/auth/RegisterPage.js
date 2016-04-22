@@ -3,8 +3,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import IconPersonAdd from 'material-ui/svg-icons/social/person-add';
-import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EditText } from '../app_widgets';
+import IconClose from 'material-ui/svg-icons/navigation/close';
+import { Page, LoadingProgress, EditText, NoteText, COLOR_GRAY } from '../app_widgets';
 
 class RegisterPage extends Component {
 	constructor(props) {
@@ -13,10 +13,6 @@ class RegisterPage extends Component {
 			showPassword: false,
 			enteredPassword: ''
 		};
-		this.onBack = this.onBack.bind(this);
-		this.onPasswordChange = this.onPasswordChange.bind(this);
-		this.onRegisterClicked = this.onRegisterClicked.bind(this);
-		this.onShowPasswordChange = this.onShowPasswordChange.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.registing&&this.props.registing&&nextProps.processSuccess) {
@@ -33,16 +29,16 @@ class RegisterPage extends Component {
 			}
 		}
 	}
-	onBack() {
+	onBack = () => {
 		this.context.router.replace('/login');
 	}
-	onShowPasswordChange() {
+	onShowPasswordChange = () => {
 		this.setState({showPassword: !this.state.showPassword});
 	}
-	onPasswordChange(event) {
+	onPasswordChange = (event) => {
 		this.setState({enteredPassword: event.target.value});
 	}
-	onRegisterClicked() {
+	onRegister = () => {
 		const email = this.refs.email.getValidValue();
 		const phone = this.refs.phone.getValidValue();
 		const password = this.refs.password.getValidValue();
@@ -63,30 +59,30 @@ class RegisterPage extends Component {
 		const { enteredPassword, showPassword } = this.state;
 
 		return (
-			<div className='flex flex-fill page'>
-				<ActionBar title='Create New Account'
-					leftMenu={<IconButton onClick={this.onBack}><IconBack/></IconButton>}/>
+			<Page title='Create New Account'
+				navCallback={this.props.location.query.navCallback}>
 				<div className='flex flex-fill padding margin-horizontal'>
-					<EditText ref='email' fullWidth={true} hintText='Email' disabled={processing}
+					<EditText ref='email' fullWidth={true} hintText='Email'
 						errorText='please enter a valid email address' verify='email'/>
-					<EditText ref='phone' fullWidth={true} type='number' hintText='Phone' disabled={processing}
+					<EditText ref='phone' fullWidth={true} type='number' hintText='Phone'
 						errorText='please enter a valid phone number' verify='phonenumber'/>
 					<EditText ref='password' type={showPassword?'text':'password'} fullWidth={true}
-						hintText='Password' disabled={processing} errorText='Password is too short, try one with at least 8 characters'
+						hintText='Password' errorText='Password is too short, try one with at least 8 characters'
 						verify='password' onChange={this.onPasswordChange}/>
 					<EditText ref='repeatPassword' type={showPassword?'text':'password'} fullWidth={true}
-						hintText='Repeat password' disabled={processing} errorText='Password not match' verify={enteredPassword}/>
+						hintText='Repeat password' errorText='Password not match' verify={enteredPassword}/>
 					<br/>
-					<Checkbox checked={showPassword} disabled={processing}
+					<Checkbox checked={showPassword}
 						label='Show password' onCheck={this.onShowPasswordChange}/>
 					<br/>
 			    <RaisedButton label='Create Account' fullWidth={true} primary={true}
-						icon={<IconPersonAdd/>} onClick={this.onRegisterClicked} disabled={processing}/>
+						icon={<IconPersonAdd/>} onClick={this.onRegister} disabled={processing}/>
+					{processing&&<LoadingProgress/>}
 					<div className='flex flex-fill flex-align-center flex-end padding-bottom'>
-						<p className='text-center'>By signing up, I aggree to Knocknocks Terms of Service, Privacy Prolicy, Guest Refund Policy, and Host Guarantee Terms.</p>
+						<NoteText>By signing up, I aggree to Knocknocks Terms of Service, Privacy Prolicy, Guest Refund Policy, and Host Guarantee Terms.</NoteText>
 					</div>
 				</div>
-			</div>
+			</Page>
 		);
 	}
 }

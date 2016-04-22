@@ -1,15 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/IconButton';
 import IconDone from 'material-ui/svg-icons/action/done';
-import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EditText } from '../app_widgets';
+import CircularProgress from 'material-ui/CircularProgress';
+import { Page, EditText } from '../app_widgets';
 
 class CreateEditPage extends Component {
-	constructor(props) {
-		super(props);
-		this.onSumbit = this.onSumbit.bind(this);
-	}
 	componentDidMount() {
+		// fetch order in edit mode
 		const { processing, params, getAddress } = this.props;
 		!processing&&params&&params.addressId&&getAddress(params.addressId);
 	}
@@ -20,7 +17,7 @@ class CreateEditPage extends Component {
 			this.context.router.goBack();
 		}
 	}
-	onSumbit() {
+	onSumbit = () => {
 		const postal_code = this.refs.postalCode.getValidValue();
 		const address = this.refs.address.getValidValue();
 		const unit_number = this.refs.unitNumber.getValidValue();
@@ -50,27 +47,27 @@ class CreateEditPage extends Component {
 	}
 	render() {
 		const editing = this.props.params&&this.props.params.addressId;
-		const { processing, address } = this.props;
+		const { processing, address: addressObj } = this.props;
+		const { postal_code, address, unit_number, contact_no } = addressObj||{};
 
 		return (
-			<div className='flex flex-fill page'>
-				<ActionBar title={editing?'Edit Address':'New Address'}
-					leftMenu={<IconButton onClick={this.context.router.goBack}><IconBack/></IconButton>}
-					rightMenu={<IconButton onClick={this.onSumbit}><IconDone/></IconButton>}/>
+			<Page title={editing?'Edit Address':'New Address'}
+				navCallback={this.props.location.query.navCallback}
+				rightMenu={processing?<CircularProgress size={0.5}/>:<IconButton onClick={this.onSumbit}><IconDone/></IconButton>}>
 				<div className='padding margin-horizontal'>
 					<EditText ref='postalCode' fullWidth={true} type='number'
-						value={address&&address.postal_code} hintText='Postal Code'
+						value={postal_code} hintText='Postal Code'
 						errorText='please enter a valid postal code, e.g. 418924' verify='postalcode'/>
 					<EditText ref='address' fullWidth={true}
-						value={address&&address.address} hintText='Address'
+						value={address} hintText='Address'
 						errorText='address can not be empty' verify='notempty'/>
 					<EditText ref='unitNumber' fullWidth={true}
-						value={address&&address.unit_number} hintText='Unit Number'/>
+						value={unit_number} hintText='Unit Number'/>
 					<EditText ref='contactNo' fullWidth={true} type='number'
-						value={address&&address.contact_no} hintText='Contact Number'
+						value={contact_no} hintText='Contact Number'
 						errorText='please enter a valid phone number' verify='phonenumber'/>
 				</div>
-			</div>
+			</Page>
 		);
 	}
 }

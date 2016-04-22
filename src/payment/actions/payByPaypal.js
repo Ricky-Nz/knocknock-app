@@ -6,7 +6,7 @@ export function payByPaypal(orderId, amount) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_PAY_BY_PAYPAL,
 			method: 'POST',

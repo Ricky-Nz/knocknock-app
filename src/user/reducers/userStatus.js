@@ -1,23 +1,14 @@
-import {
-	ACTION_LOGIN, ACTION_REGISTER, ACTION_RESET_PASSWORD
-} from '../actions';
+import { ACTION_RESET_PASSWORD,
+	ACTION_UPDATE_AVATAR, ACTION_UPDATE_PROFILE, ACTION_GET_PROFILE } from '../actions';
+import { processStatus } from '../../utils';
 
-function statusProcess(statusName, running, error) {
-	if (running) {
-		return {[statusName]: true};
-	} else {
-		return {[statusName]: false, processSuccess: !error};
-	}
-}
-
-export default function (status = {}, {type, running, error}) {
-	switch(type) {
-		case ACTION_LOGIN:
-			return statusProcess('logging');
-		case ACTION_REGISTER:
-			return statusProcess('registing');
+export default function (status = {}, action) {
+	switch(action.type) {
 		case ACTION_RESET_PASSWORD:
-			return statusProcess('processing');
+		case ACTION_UPDATE_AVATAR:
+		case ACTION_UPDATE_PROFILE:
+		case ACTION_GET_PROFILE:
+			return processStatus(action);
 		default:
 			return status;
 	}

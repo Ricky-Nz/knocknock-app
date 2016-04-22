@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
 import IconDone from 'material-ui/svg-icons/action/done';
-import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EditText } from '../app_widgets';
+import { Page, EditText } from '../app_widgets';
 
 class ResetPasswordPage extends Component {
 	constructor(props) {
@@ -39,10 +38,9 @@ class ResetPasswordPage extends Component {
 		const { password, showPassword } = this.state;
 
 		return (
-			<div className='flex flex-fill page'>
-				<ActionBar title='Reset Password'
-					leftMenu={<IconButton onClick={this.context.router.goBack}><IconBack/></IconButton>}
-					rightMenu={<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}/>
+			<Page title='Reset Password'
+				navCallback={this.props.location.query.navCallback}
+				rightMenu={<IconButton onClick={this.onSubmit}><IconDone/></IconButton>}>
 				<div className='flex flex-fill padding margin-horizontal'>
 					<EditText ref='password' type={showPassword?'text':'password'} fullWidth={true}
 						hintText='Password' disabled={processing} errorText='Password is too short, try one with at least 8 characters'
@@ -54,7 +52,7 @@ class ResetPasswordPage extends Component {
 					<Checkbox checked={showPassword} disabled={processing}
 						label='Show password' onCheck={this.onShowPasswordChange}/>
 				</div>
-			</div>
+			</Page>
 		);
 	}
 }

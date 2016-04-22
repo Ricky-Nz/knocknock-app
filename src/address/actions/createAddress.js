@@ -6,7 +6,7 @@ export function createAddress({address, postal_code, contact_no, unit_number}) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_CREATE_ADDRESS,
 			method: 'POST',

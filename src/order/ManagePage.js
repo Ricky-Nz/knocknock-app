@@ -1,9 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import IconRefresh from 'material-ui/svg-icons/navigation/refresh';
-import IconMenu from 'material-ui/svg-icons/navigation/menu';
-import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import CircularProgress from 'material-ui/CircularProgress';
-import { ActionBar, EmptyView, AddButton } from '../app_widgets';
+import { Page, EmptyView, AddButton } from '../app_widgets';
 import List from './List';
 import RefreshMenuContainer from './RefreshMenuContainer';
 
@@ -18,16 +14,13 @@ class OrderManagePage extends Component {
 		const isActive = this.props.location.pathname==='/home';
 
 		return (
-			<div className='flex flex-fill'>
-				<ActionBar title={isActive?'Active Orders':'History Orders'}
-					leftMenu={<IconButton onClick={this.context.router.goBack}><IconMenu/></IconButton>}
-					rightMenu={<RefreshMenuContainer/>}/>
-				<div className='flex flex-fill position-relative'>
-					<List onItemClicked={this.onEditOrder} isActive={isActive}
-						emptyView={<EmptyView text='no active order, click the + button below to make order'/>}/>
-			    {isActive&&<AddButton style={styles.floatBtn} onClick={this.onNewOrder}/>}
-				</div>
-			</div>
+			<Page title={isActive?'Active Orders':'History Orders'}
+				navCallback={this.props.location.query.navCallback}
+				rightMenu={<RefreshMenuContainer/>}>
+				<List onItemClicked={this.onEditOrder} isActive={isActive}
+					emptyView={<EmptyView text='no active order, click the + button below to make order'/>}/>
+		    {isActive&&<AddButton style={styles.floatBtn} onClick={this.onNewOrder}/>}
+			</Page>
 		);
 	}
 }

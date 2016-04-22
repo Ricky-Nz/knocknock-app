@@ -1,8 +1,10 @@
-export const RECORD_LAST_USED_ADDRESS = 'RECORD_LAST_USED_ADDRESS';
+import { ACTION_RECORD_LAST_USED_ADDRESS } from '../actions';
 
-export function recordLastUsedAddress(address) {
-	return {
-		type: RECORD_LAST_USED_ADDRESS,
-		data: address
-	};
+export default function (address = null, {type, data}) {
+	switch(type) {
+		case ACTION_RECORD_LAST_USED_ADDRESS:
+			return data;
+		default:
+			return address;
+	}
 }

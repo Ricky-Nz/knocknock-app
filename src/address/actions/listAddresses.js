@@ -6,7 +6,7 @@ export function listAddresses(toast) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_LIST_ADDRESSES,
 			arg: toast,

@@ -6,7 +6,7 @@ export function payByCredit(orderId) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_PAY_BY_CREDIT,
 			method: 'POST',

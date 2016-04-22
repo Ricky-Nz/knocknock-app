@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
-import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
 import CircularProgress from 'material-ui/CircularProgress';
 import Paper from 'material-ui/Paper';
-import { ActionBar } from '../app_widgets';
+import { Page } from '../app_widgets';
 import CreateStepPickAddress from './CreateStepPickAddress';
 import CreateStepPickTime from './CreateStepPickTime';
 import CreateStepPreview from './CreateStepPreview';
@@ -72,26 +70,23 @@ class CreateOrderPage extends Component {
     }
 
 		return (
-			<div className='flex flex-fill page' style={styles.page}>
-        <ActionBar title='Create Order'
-          leftMenu={<IconButton onClick={this.context.router.goBack}><IconBack/></IconButton>}
-          rightMenu={creating?<CircularProgress size={0.5}/>:null}/>
+      <Page title='Create Order'
+        navCallback={this.props.location.query.navCallback}
+        rightMenu={creating?<CircularProgress size={0.5}/>:null}>
+        <Stepper horizontal={true} activeStep={activeStep}>
+          <Step><StepLabel>Pick Address</StepLabel></Step>
+          <Step><StepLabel>Pick Date</StepLabel></Step>
+          <Step><StepLabel>Submit</StepLabel></Step>
+        </Stepper>
         <div className='flex flex-fill'>
-          <Stepper horizontal={true} activeStep={activeStep}>
-            <Step><StepLabel>Pick Address</StepLabel></Step>
-            <Step><StepLabel>Pick Date</StepLabel></Step>
-            <Step><StepLabel>Submit</StepLabel></Step>
-          </Stepper>
-          <div className='flex flex-fill'>
-            {stepContent}
-          </div>
-          <Paper className='flex flex-row flex-space-between flex-align-center padding' zDepth={2}>
-            {(activeStep > 0)?<FlatButton label='Back' onClick={this.onBack} disabled={creating}/>:<p/>}
-            <RaisedButton label={activeStep===2?'Submit New Order':'Continue'}
-              primary={true} onClick={this.onContinue} disabled={creating}/>
-          </Paper>
+          {stepContent}
         </div>
-			</div>
+        <Paper className='flex flex-row flex-space-between flex-align-center padding' zDepth={2}>
+          {(activeStep > 0)?<FlatButton label='Back' onClick={this.onBack} disabled={creating}/>:<p/>}
+          <RaisedButton label={activeStep===2?'Submit New Order':'Continue'}
+            primary={true} onClick={this.onContinue} disabled={creating}/>
+        </Paper>
+      </Page>
 		);
 	}
 }

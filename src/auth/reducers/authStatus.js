@@ -1,21 +1,14 @@
 import { ACTION_LOGIN, ACTION_REGISTER, ACTION_FORGOT_PASSWORD } from '../actions';
-
-function statusProcess(statusName, {running, error}) {
-	if (running) {
-		return {[statusName]: true};
-	} else {
-		return {[statusName]: false, processSuccess: !error};
-	}
-}
+import { processStatus } from '../../utils';
 
 export default function (status = {}, action) {
 	switch(action.type) {
 		case ACTION_LOGIN:
-			return statusProcess('logging', action);
+			return statusProcess(action, 'logging', status);
 		case ACTION_REGISTER:
-			return statusProcess('registing', action);
+			return statusProcess(action, 'registing', status);
 		case ACTION_FORGOT_PASSWORD:
-			return statusProcess('processing', action)
+			return statusProcess(action, 'processing', status)
 		default:
 			return status;
 	}

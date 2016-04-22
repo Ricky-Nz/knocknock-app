@@ -21,7 +21,7 @@ class HomePage extends Component {
 	}
 	render() {
 		return (
-			<div className='flex flex-fill page'>
+			<div className='flex flex-fill'>
 		    <HomeDrawer open={this.state.drawerOpen} path={this.props.location.pathname}
 		    	onRequestChange={this.onDrawerChange}/>
 		    {React.cloneElement(this.props.children, {openDrawer: this.onOpenDrawer})}

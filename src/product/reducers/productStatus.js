@@ -1,13 +1,10 @@
 import { ACTION_LIST_PRODUCTS } from '../actions';
+import { processStatus } from '../../utils';
 
-export default function (status = {}, {type, running, error}) {
-	switch(type) {
+export default function (status = {}, action) {
+	switch(action.type) {
 		case ACTION_LIST_PRODUCTS:
-			if (running) {
-				return {processing: true};
-			} else {
-				return {processing: false, processSuccess: !error}
-			}
+			return processStatus(action);
 		default:
 			return status;
 	}

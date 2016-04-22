@@ -1,17 +1,10 @@
 import { ACTION_LIST_VOUCHERS } from '../actions';
+import { processStatus } from '../../utils';
 
-function statusProcess(statusName, running, error) {
-	if (running) {
-		return {[statusName]: true};
-	} else {
-		return {[statusName]: false, processSuccess: !error};
-	}
-}
-
-export default function (status = {}, {type, running, error}) {
-	switch(type) {
+export default function (status = {}, action) {
+	switch(action.type) {
 		case ACTION_LIST_VOUCHERS:
-			return statusProcess('processing', running, error);
+			return processStatus(action);
 		default:
 			return status;
 	}
