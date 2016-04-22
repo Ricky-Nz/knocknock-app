@@ -1,4 +1,4 @@
-import fetch from './fetch';
+import fetch from '../../fetch';
 
 export const ACTION_UPDATE_PROFILE = 'ACTION_UPDATE_PROFILE';
 

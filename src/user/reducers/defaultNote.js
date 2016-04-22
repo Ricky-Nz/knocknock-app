@@ -1,5 +1,5 @@
 import { ACTION_SET_DEFAULT_NOTE } from '../actions';
-import { saveDefaultNote, getDefaultNote } from './localStorage';
+import { saveDefaultNote, getDefaultNote } from '../../localStorage';
 
 export default function (defaultNote = getDefaultNote(), {type, data}) {
 	switch(type) {

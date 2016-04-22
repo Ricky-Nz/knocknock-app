@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { recordDefaultAddress, recordDefaultPickupTime, recordDefaultNote } from '../actions';
-import SettingPage from '../components/SettingPage';
+import { recordDefaultAddress, recordDefaultPickupTime, recordDefaultNote } from './actions';
+import SettingPage from './SettingPage';
 
 const addressSelector = state => state.defaultAddress;
 
@@ -12,7 +12,7 @@ const noteSelector = state => state.defaultNote;
 const mapStateToProps = createSelector(
 	addressSelector,
 	pickupTimeSelector,
-	noteSelector
+	noteSelector,
 	(defaultAddress, defaultPickupTime, defaultNote) =>
 		({defaultAddress, defaultPickupTime, defaultNote})
 );

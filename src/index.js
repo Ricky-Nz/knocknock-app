@@ -16,11 +16,11 @@ injectTapEventPlugin();
 // components
 import { Application, HomePage } from './app_common';
 import { AddressManagePage, AddressCreateEditPage } from './address';
-import { LoginPage, RegisterPage, ResetPasswordPage } from './auth';
+import { LoginPage, RegisterPage } from './auth';
 import { OrderManagePage, OrderDetailPage, OrderCreatePage } from './order';
 import { WalletPage } from './payment';
 import { ProductManagePage } from './product';
-import { ProfilePage, SettingPage } from './user';
+import { ProfilePage, SettingPage, ResetPasswordPage, SetupPage } from './user';
 import { VoucherManagePage } from './voucher';
 
 // reducers
@@ -81,7 +81,7 @@ ReactDOM.render(
 				<Route path='order' component={OrderCreatePage} onEnter={checkSession}/>
 				<Route path='order/:orderId' component={OrderDetailPage} onEnter={checkSession}/>
 				<Route path='resetpassword' component={ResetPasswordPage} onEnter={checkSession}/>
-				<Route path='setup' component={ProfilePage}/>
+				<Route path='setup' component={SetupPage}/>
 			</Route>
 		</Router>
 	</Provider>,

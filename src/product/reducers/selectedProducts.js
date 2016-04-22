@@ -11,6 +11,6 @@ export default function (selectedProducts = {}, {type, data}) {
 				return {...selectedProducts, [data]: true};
 			}
 		default:
-			return filter;
+			return selectedProducts;
 	}
 }

@@ -7,7 +7,7 @@ const statusSelector = state => state.addressStatus.processing;
 const addressSelector = state => state.addresses;
 
 const mapStateToProps = createSelector(
-	loadingStateSelector,
+	statusSelector,
 	addressSelector,
 	(processing, addresses) => ({processing, addresses})
 );

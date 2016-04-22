@@ -10,10 +10,6 @@ class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { showPassword: false };
-		this.onLoginClicked = this.onLoginClicked.bind(this);
-		this.onRegisterClicked = this.onRegisterClicked.bind(this);
-		this.onShowPasswordChange = this.onShowPasswordChange.bind(this);
-		this.onForgotPassword = this.onForgotPassword.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (!nextProps.loggingin&&this.props.loggingin&&nextProps.loginSuccess) {
@@ -22,10 +18,13 @@ class LoginPage extends Component {
 			this.setState({dialogShow: false});
 		}
 	}
-	onRegisterClicked() {
+	onShowPasswordChange = (e, checked) => {
+		this.setState({showPassword: checked});
+	}
+	onRegister = () => {
 		this.context.router.replace('/register');
 	}
-	onLoginClicked() {
+	onLogin = () => {
 		const email = this.refs.email.getValidValue();
 		const password = this.refs.email.getValidValue();
 		if (!email || !password) {
@@ -34,10 +33,7 @@ class LoginPage extends Component {
 
 		this.props.login({email, password});
 	}
-	onShowPasswordChange(e, checked) {
-		this.setState({showPassword: checked});
-	}
-	onForgotPassword() {
+	onForgotPassword = () => {
 		const email = this.refs.email.getValidValue();
 		if (!email) {
 			return;
@@ -51,9 +47,7 @@ class LoginPage extends Component {
 
 		return (
 			<div className='flex flex-fill page'>
-				<div className='flex flex-center flex-align-center'>
-					<p style={styles.title}>Knocknock</p>
-				</div>
+				<div style={styles.title}>Knocknock</div>
 				<div className='flex flex-fill padding-horizontal margin-horizontal'>
 					<EditText ref='email' fullWidth={true} disabled={processing}
 						floatingLabelText='Email' errorText='please enter a valid email address' verify='email'/>
@@ -64,12 +58,12 @@ class LoginPage extends Component {
 						label='Show password' onCheck={this.onShowPasswordChange}/>
 					<br/>
 			    <RaisedButton label='Log In' primary={true} fillWidth={true}
-						icon={<IconCheck/>} onClick={this.onLoginClicked} disabled={processing}/>
+						icon={<IconCheck/>} onClick={this.onLogin} disabled={processing}/>
 					<br/>
 					{processing&&<LoadingProgress/>}
 					<div className='flex flex-align-center flex-fill flex-end padding-vertical margin-vertical'>
 						<FlatButton label='Create New Knocknock Account' primary={true}
-							onClick={this.onRegisterClicked}/>
+							onClick={this.onRegister}/>
 						<FlatButton label='Forgot Password?' onClick={this.onForgotPassword}/>
 					</div>
 				</div>
@@ -93,6 +87,7 @@ LoginPage.propTypes = {
 const styles = {
 	title: {
 		marginTop: 56,
+		marginBottom: 4,
 		fontSize: '3em',
 		color: PRIMARY_COLOR,
 		textAlign: 'center'

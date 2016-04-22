@@ -1,20 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
-import IconEdit from 'material-ui/svg-icons/editor/border-color';
 import IconDone from 'material-ui/svg-icons/action/done';
 import IconClose from 'material-ui/svg-icons/navigation/close';
-import CircularProgress from 'material-ui/CircularProgress';
-import Avatar from 'material-ui/Avatar';
-import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
-import { ActionBar, LoadingProgress } from '../widgets';
 import { red600 } from 'material-ui/styles/colors';
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { EditText } from '../widgets';
-import ProfileAvatarContaienr from './ProfileAvatarContaienr';
+import { ActionBar, LoadingProgress, EditText } from '../app_widgets';
+import ProfileAvatarContainer from './ProfileAvatarContainer';
 
 class ProfilePage extends Component {
 	componentDidMount() {
@@ -53,7 +46,7 @@ class ProfilePage extends Component {
 				<div className='flex flex-fill position-relative'>
 					{(this.props.processing&&!profile)?<LoadingProgress/>:
 						<div className='flex flex-fill scroll padding'>
-							<ProfileAvatarContaienr/>
+							<ProfileAvatarContainer/>
 							<EditText ref='firstName' fullWidth={true} value={firstName}
 								floatingLabelText='Fisrt Name' errorText='fist name can not be empty' verify='notempty'/>
 							<EditText ref='lastName' fullWidth={true} value={lastName}

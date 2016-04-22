@@ -1,4 +1,4 @@
-import runAction from './runAction';
+import fetch from '../../fetch';
 
 export const ACTION_GET_PROFILE = 'ACTION_GET_PROFILE';
 
@@ -6,7 +6,7 @@ export function getProfile(toast) {
 	return (dispatch, getState) => {
 		const { session } = getState();
 
-		runAction({
+		fetch({
 			dispatch,
 			actionName: ACTION_GET_PROFILE,
 			arg: toast,

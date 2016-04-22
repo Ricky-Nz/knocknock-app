@@ -3,7 +3,7 @@ import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
 import IconDone from 'material-ui/svg-icons/action/done';
 import IconBack from 'material-ui/svg-icons/navigation/arrow-back';
-import { ActionBar, EditText } from '../widgets';
+import { ActionBar, EditText } from '../app_widgets';
 
 class ResetPasswordPage extends Component {
 	constructor(props) {

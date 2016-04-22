@@ -31,7 +31,7 @@ class ForgotPasswordDialog extends Component {
         actions={processing?null:[
 		      <FlatButton label='Cancel' onClick={this.onRequestClose}/>,
 		      <FlatButton label='OK' primary={true} onClick={this.onForgotPassword}/>,
-	    	]} modal={false} open={dialogShow} onRequestClose={this.onRequestClose}>
+	    	]} modal={false} open={this.state.show} onRequestClose={this.onRequestClose}>
         {processing?<LoadingProgress/>:`Send a new password to ${penndingForgotEmail?penndingForgotEmail.address:''}?`}
       </Dialog>
 		);
@@ -40,7 +40,7 @@ class ForgotPasswordDialog extends Component {
 
 ForgotPasswordDialog.propTypes = {
 	processing: PropTypes.bool,
-	penndingForgotEmail: PropTypes.string,
+	penndingForgotEmail: PropTypes.object,
 	forgotPassword: PropTypes.func.isRequired
 };
 

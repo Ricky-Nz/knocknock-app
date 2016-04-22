@@ -19,7 +19,7 @@ class MessageToast extends Component {
 		const toast = this.props.toast;
 
 		return (
-      <Snackbar open={this.state.show} message={toast.message||''}
+      <Snackbar open={this.state.show} message={(toast&&toast.message)||''}
         autoHideDuration={2500} onRequestClose={this.onDismiss}/>
 		);
 	}

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { logIn, preForgotPassword } from './actions';
 import LoginPage from './LoginPage';
 
-const statusSelector = state => state.authStatus.processing;
+const statusSelector = state => state.authStatus.logging;
 
 const resultSelector = state => state.authStatus.processResult;
 

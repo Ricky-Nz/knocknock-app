@@ -11,13 +11,13 @@ export default function (order = null, {type, data}) {
 				note: getDefaultNote()
 			};
 		case ACTION_STEP_CHANGE_NOTE:
-			return {...order, {note: data}};
+			return {...order, note: data};
 		case ACTION_STEP_SELECT_ADRESS:
-			return {...order, {address: data}};
+			return {...order, address: data};
 		case ACTION_STEP_SELECT_PICKUP_DATE:
-			return {...order, {pickupDate: data}};
+			return {...order, pickupDate: data};
 		case ACTION_STEP_SELECT_PICKUP_TIME:
-			return {...order, {pickupTime: data}};
+			return {...order, pickupTime: data};
 		default:
 			return order;
 	}

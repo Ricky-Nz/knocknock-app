@@ -1,5 +1,5 @@
 import { ACTION_SET_DEFAULT_ADDRESS } from '../actions';
-import { saveDefaultAddress, getDefaultAddress } from './localStorage';
+import { saveDefaultAddress, getDefaultAddress } from '../../localStorage';
 
 export default function (defaultAddress = getDefaultAddress(), {type, data}) {
 	switch(type) {

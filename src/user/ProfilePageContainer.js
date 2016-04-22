@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getProfile, updateProfile } from './actions';
 import { startLogOut } from '../auth';
-import ProfilePage from '../components/ProfilePage';
+import ProfilePage from './ProfilePage';
 
 const statusSelector = state => state.userStatus.processing;
 

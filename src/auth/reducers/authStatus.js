@@ -1,21 +1,21 @@
-import {
-	ACTION_LOGIN, ACTION_REGISTER
-} from '../actions';
+import { ACTION_LOGIN, ACTION_REGISTER, ACTION_FORGOT_PASSWORD } from '../actions';
 
-export default function (status = {}, {type, running, error}) {
-	switch(type) {
+function statusProcess(statusName, {running, error}) {
+	if (running) {
+		return {[statusName]: true};
+	} else {
+		return {[statusName]: false, processSuccess: !error};
+	}
+}
+
+export default function (status = {}, action) {
+	switch(action.type) {
 		case ACTION_LOGIN:
-			if (running) {
-				return {logging: true};
-			} else {
-				return {logging: false, processSuccess: !error};
-			}
+			return statusProcess('logging', action);
 		case ACTION_REGISTER:
-			if (running) {
-				return {registing: true};
-			} else {
-				return {registing: false, processSuccess: !error};
-			}
+			return statusProcess('registing', action);
+		case ACTION_FORGOT_PASSWORD:
+			return statusProcess('processing', action)
 		default:
 			return status;
 	}

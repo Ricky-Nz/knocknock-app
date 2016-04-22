@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateProfile } from '../actions';
+import { updateProfile } from './actions';
 import SetupPage from './SetupPage';
 
 const mapActionToProps = (dispatch) => ({

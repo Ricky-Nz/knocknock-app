@@ -1,8 +1,8 @@
-export const ACTION_PREF_FORGOT_PASSWORD = 'ACTION_PREF_FORGOT_PASSWORD';
+export const ACTION_PRE_FORGOT_PASSWORD = 'ACTION_PRE_FORGOT_PASSWORD';
 
 export function preForgotPassword(address) {
 	return {
-		type: ACTION_PREF_FORGOT_PASSWORD,
+		type: ACTION_PRE_FORGOT_PASSWORD,
 		data: address
 	};
 }

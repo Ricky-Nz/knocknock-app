@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Subheader from 'material-ui/Subheader';
 import DatePicker from 'material-ui/DatePicker';
 import { RangeTimeChooser } from '../app_widgets';

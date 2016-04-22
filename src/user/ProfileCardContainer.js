@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getProfile } from '../actions';
+import { getProfile } from './actions';
 import ProfileCard from './ProfileCard';
 
 const statusSelector = state => state.userStatus.processing;

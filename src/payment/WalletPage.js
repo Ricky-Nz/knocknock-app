@@ -6,8 +6,8 @@ import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import { blueGrey500 } from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
-import { ActionBar, LoadingProgress, EditText } from '../widgets';
-import { RefreshUserMenu } from '../../user';
+import { ActionBar, LoadingProgress, EditText } from '../app_widgets';
+import { RefreshUserMenu } from '../user';
 import PaypalProcessDialogContainer from './PaypalProcessDialogContainer';
 
 class WalletPage extends Component {
@@ -57,7 +57,7 @@ WalletPage.contextTypes = {
 
 WalletPage.propTypes = {
 	processing: PropTypes.bool,
-	user: PropTypes.object
+	user: PropTypes.object,
 	topUpByPaypal: PropTypes.func.isRequired
 };
 

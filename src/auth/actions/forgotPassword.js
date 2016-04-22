@@ -7,6 +7,7 @@ export function forgotPassword(email) {
 		fetch({
 			dispatch,
 			actionName: ACTION_FORGOT_PASSWORD,
+			arg: email,
 			method: 'POST',
 			path: `users/reset_password`,
 			body: {

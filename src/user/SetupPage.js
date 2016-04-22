@@ -9,11 +9,10 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Avatar from 'material-ui/Avatar';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
-import { ActionBar, LoadingProgress } from '../widgets';
 import { red600 } from 'material-ui/styles/colors';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { EditText } from '../widgets';
+import { ActionBar, LoadingProgress, EditText } from '../app_widgets';
 import ProfileAvatarContainer from './ProfileAvatarContainer';
 
 class SetupPage extends Component {
